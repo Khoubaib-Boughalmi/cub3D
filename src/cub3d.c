@@ -6,11 +6,11 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/21 17:58:29 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/04/21 23:42:34 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "../inc/wall.h"
 
 t_vars *g_vars;
 
@@ -27,15 +27,11 @@ int g_map[10][10] = {
 	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 };
 
-// int32_t create_color(uint8_t red, uint8_t green, 255, uint8_t blue)
-// {
-// 	return ((uint32_t)255 << 24) | ((uint32_t)red << 16) | ((uint32_t)green << 8) | (uint32_t)blue;
-// }
-
 int32_t create_color(int32_t r, int32_t g, int32_t b, int32_t a)
 {
     return (r << 24 | g << 16 | b << 8 | a);
 }
+
 void	draw_partcle(t_vars *vars)
 {
 	int			radius;
@@ -60,13 +56,6 @@ void	draw_partcle(t_vars *vars)
 				mlx_put_pixel(vars->img, x ,y , color);
 		}
 	}
-}
-
-double ft_abs(double nb)
-{
-	if(nb < 0)
-		return (-nb);
-	return (nb);
 }
 
 void	clean_partcle(t_vars *vars)
@@ -96,17 +85,60 @@ void	clean_partcle(t_vars *vars)
 	}
 }
 
+// void	deprecated_draw_rays(t_vars *vars)
+// {
+// 	double 		angle_rad;
+// 	double 		inc_x;
+// 	double 		inc_y;
+// 	int			radius;
+// 	uint32_t	color;
+// 	double 		x;
+// 	double 		y;
+// 	int			i;
+
+// 	i = -1;
+// 	color = create_color(0, 255, 0, 255);
+// 	vars->rays_lst = (double *)malloc(sizeof(double) * 120);
+// 	if(!vars->rays_lst)
+// 		return ;
+// 	while (++i < 120)
+// 		vars->rays_lst[i] = vars->player.direction - 9.6 + (0.16 * i); // for a 60deg view (-9.6 ==> (0.16 * 120) / 2  to shift it up)
+// 	i = -1;	
+// 	while (++i < 120)
+// 	{
+// 		angle_rad = vars->rays_lst[i] * M_PI / 60;  // Convert angle to radians
+// 		inc_x = cos(angle_rad);  // Calculate x increment based on angle
+// 		inc_y = sin(angle_rad);  // Calculate y increment based on angle
+
+// 		x = vars->player.x + (64 * vars->player.x) + 28;
+// 		y = vars->player.y + (64 * vars->player.y) + 28;
+
+// 		for (int j = 0; j < 220; j++)
+// 		{
+// 			if(y < 0 || y > 640)
+// 				y = 0;
+// 			mlx_put_pixel(vars->img, x, y < 0 ? 0 : y , color); //y will sigfault if < 0 || y > 640
+// 			x += inc_x;
+// 			y += inc_y;
+// 		}
+// 	}
+// 	free(vars->rays_lst);
+// }
+
 void	draw_rays(t_vars *vars)
 {
-	double 		angle_rad;
-	double 		inc_x;
-	double 		inc_y;
-	int			radius;
-	uint32_t	color;
-	double 		x;
-	double 		y;
 	int			i;
-
+	uint32_t	color;
+	double 		end_x;
+	double 		end_y;
+	double 		angle;
+	double 		length;
+	double 		start_x;
+	double 		start_y;
+	double 		new_end_x;
+	double 		new_end_y;
+	double 		angle_rad;
+	
 	i = -1;
 	color = create_color(0, 255, 0, 255);
 	vars->rays_lst = (double *)malloc(sizeof(double) * 120);
@@ -117,23 +149,22 @@ void	draw_rays(t_vars *vars)
 	i = -1;	
 	while (++i < 120)
 	{
-		angle_rad = vars->rays_lst[i] * M_PI / 60;  // Convert angle to radians
-		inc_x = cos(angle_rad);  // Calculate x increment based on angle
-		inc_y = sin(angle_rad);  // Calculate y increment based on angle
-
-		x = vars->player.x + (64 * vars->player.x) + 28;
-		y = vars->player.y + (64 * vars->player.y) + 28;
-
-		for (int j = 0; j < 220; j++)
-		{
-			if(y < 0 || y > 640)
-				y = 0;
-			mlx_put_pixel(vars->img, x, y < 0 ? 0 : y , color); //y will sigfault if < 0 || y > 640
-			x += inc_x;
-			y += inc_y;
-		}
+		angle = vars->rays_lst[119] * M_PI; // Angle in degrees
+		length = 220.0; // Length of the line
+		start_x = vars->player.x + (64 * vars->player.x) + 28; // Starting x-coordinate at the center of the window
+		start_y =  vars->player.y + (64 * vars->player.y) + 28; // Starting y-coordinate at the center of the window
+		end_x = start_x + length * cos(angle * M_PI / 180.0); // Ending x-coordinate based on angle and length
+		end_y = start_y - length * sin(angle * M_PI / 180.0); // Ending y-coordinate based on angle and length
+		put_line(vars->mlx, vars->win, start_x, start_y, end_x, end_y, 0xFFFFFF); // Draw the line
+		find_first_intersection(vars, i);
+		// if(i % 2)
+		// {
+		// 	new_end_x = end_x + 50 * cos(angle * M_PI / 180.0) ; // Ending x-coordinate based on angle and length
+		// 	new_end_y = end_y - 50 * sin(angle * M_PI / 180.0); // Ending y-coordinate based on angle and length
+		// 	put_line(vars->mlx, vars->win, end_x, end_y , new_end_x, new_end_y, 0xFFFFFF); // Draw the line
+		// }
 	}
-	free(vars->rays_lst);
+	// free(vars->rays_lst);	
 }
 
 void	draw_tile(t_vars *vars, int y, int x)
@@ -242,7 +273,6 @@ void	render_window(t_vars *vars)
 	draw_map(vars);
 	draw_partcle(vars);
 	draw_rays(vars);
-	// find_first_intersection(vars);
 	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler, vars);
 	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
 	mlx_loop(vars->mlx);

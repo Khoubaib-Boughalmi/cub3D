@@ -28,6 +28,13 @@ typedef struct s_intersect {
 	double		y;
 }				t_intersect;
 
+
+typedef struct s_coord {
+	int			x;
+	int			y;
+}				t_coord;
+
+
 typedef struct s_player {
 	float       x;
 	float       y;
