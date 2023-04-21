@@ -15,27 +15,27 @@
 t_vars *g_vars;
 
 int g_map[10][10] = {
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-    {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-    {1, 1, 0, 0, 0, 0, 0, 0, 0, 1},
-    {1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 1, 1, 0, 0, 0, 0, 0, 1},
-    {1, 0, 0, 1, 0, 0, 0, 1, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 1, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+	{1, 1, 0, 0, 0, 0, 0, 0, 0, 1},
+	{1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
+	{1, 0, 1, 1, 0, 0, 0, 0, 0, 1},
+	{1, 0, 0, 1, 0, 0, 0, 1, 0, 1},
+	{1, 0, 0, 0, 0, 0, 0, 1, 0, 1},
+	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 };
 
 uint32_t create_color(uint8_t red, uint8_t green, uint8_t blue)
 {
-    return ((uint32_t)255 << 24) | ((uint32_t)red << 16) | ((uint32_t)green << 8) | (uint32_t)blue;
+	return ((uint32_t)255 << 24) | ((uint32_t)red << 16) | ((uint32_t)green << 8) | (uint32_t)blue;
 }
 
 void	draw_partcle(t_vars *vars)
 {
 	int			radius;
-	int 		i;	
+	int 		i;
 	int 		j;
 	int 		py;
 	int 		px;
@@ -47,79 +47,73 @@ void	draw_partcle(t_vars *vars)
 	py = vars->player.y;
 	color = create_color(255, 255, 255);
 	px = px + (64 * vars->player.x) + 28;
-    py = py + (64 * vars->player.y) + 28;
-	
-	// for (int i = 0; i < 50 * radius; i++)
-    // {
-    //     for (int j = 0; j < 50 * radius; j++)
-    //     {
-    //         if ((i - px) * (i - px) + (j - py) * (j - py) <= radius * radius)
-    //         {
-    //             mlx_put_pixel(vars->img, i + px, j + py, color);
-    //         }
-    //     }
-    // }
-
-    for (int x = 0; x < 640; x++)
-    {
-        for (int y = 0; y < 640; y++)
-        {
-			if ((x - px) * (x - px) + (y - py) * (y - py) <= radius * radius)
-			{
-				// mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0xFFFFFF); // Color the pixel (in this case, white)
+	py = py + (64 * vars->player.y) + 28;
+	for (int x = 0; x < 640; x++)
+	{
+		for (int y = 0; y < 640; y++)
+		{
+			if ((x - px) * (x - px) + (y - py) * (y - py) < radius * radius)
 				mlx_put_pixel(vars->img, x ,y , color);
-			}
-        }
-    }
+		}
+	}
 }
 
 
 void	clean_partcle(t_vars *vars)
 {
 	int			radius;
-	int 		i;	
+	int 		i;
 	int 		j;
-	int 		py;
-	int 		px;
+	float 		py;
+	float 		px;
 	uint32_t	color;
 
 	i = -1;
 	radius = 10;
 	px = vars->player.x;
 	py = vars->player.y;
-	color = create_color(255, 255, 255);
+	uint32_t color_black = create_color(0, 0, 0);
 	px = px + (64 * vars->player.x) + 28;
-    py = py + (64 * vars->player.y) + 28;
-	
-	// for (int i = 0; i < 50 * radius; i++)
-    // {
-    //     for (int j = 0; j < 50 * radius; j++)
-    //     {
-    //         if ((i - px) * (i - px) + (j - py) * (j - py) <= radius * radius)
-    //         {
-    //             mlx_put_pixel(vars->img, i + px, j + py, color);
-    //         }
-    //     }
-    // }
+	py = py + (64 * vars->player.y) + 28;
 
-    for (int x = 0; x < 640; x++)
-    {
-        for (int y = 0; y < 640; y++)
-        {
+	for (int x = 0; x < 640; x++)
+	{
+		for (int y = 0; y < 640; y++)
+		{
 			if ((x - px) * (x - px) + (y - py) * (y - py) <= radius * radius)
-			{
-				// mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0xFFFFFF); // Color the pixel (in this case, white)
-				mlx_put_pixel(vars->img, x ,y , 0xFFFFFF);
-			}
-        }
-    }
+				mlx_put_pixel(vars->img, x ,y , color_black);
+		}
+	}
 }
 
+void	draw_ray(t_vars *vars)
+{
+	int			radius;
+	int 		i;
+	int 		j;
+	int 		py;
+	int 		px;
+	uint32_t	color;
+
+	i = -1;
+	px = vars->player.x;
+	py = vars->player.y;
+	color = create_color(50, 100, 255);
+	px = px + (64 * vars->player.x) + 28;
+	py = py + (64 * vars->player.y) + 28;
+	for (int x = 0; x < 60; x++)
+	{
+		i ++;
+		mlx_put_pixel(vars->img, px+x+i, py+x+i , color);
+	}
+
+}
 
 void	draw_tile(t_vars *vars, int y, int x)
 {
 	int	i;
 	int	j;
+	uint32_t color_black = create_color(0, 0, 0);
 	uint32_t color_white = create_color(255, 255, 255);
 	uint32_t color_red = create_color(0, 0, 210);
 	i = -1;
@@ -128,13 +122,14 @@ void	draw_tile(t_vars *vars, int y, int x)
 		j = -1;
 		while (++j < 64)
 		{
+			mlx_put_pixel(vars->img, (64 * y) + j, (64 * x) + i, color_black);
 			if(g_map[y][x])
-            	mlx_put_pixel(vars->img, (64 * y) + j, (64 * x) + i, color_red);
+				mlx_put_pixel(vars->img, (64 * y) + j, (64 * x) + i, color_red);
 			if(j == 63 || i == 63)
 				mlx_put_pixel(vars->img, (64 * y) + j, (64 * x) + i, color_white);
 		}
 	}
-	
+
 }
 
 void	draw_map(t_vars *vars)
@@ -149,23 +144,42 @@ void	draw_map(t_vars *vars)
 		while (++x < 10)
 			draw_tile(vars, y, x);
 	}
-	
+
 }
 
 
-void	key_press_handler(void *param)
+int key_press_handler(mlx_key_data_t keydata, void *param)
 {
 	t_vars	*vars;
 
 	vars = (t_vars *)param;
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_D))
+	{
+		draw_map(vars);
+		vars->player.x += 0.05;
+		draw_partcle(vars);
+		draw_ray(vars);
+	}
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
+	{
+		draw_map(vars);
+		vars->player.x -= 0.05;
+		draw_partcle(vars);
+		draw_ray(vars);
+	}
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_S))
+	{
+		draw_map(vars);
+		vars->player.y += 0.05;
+		draw_partcle(vars);
+		draw_ray(vars);
+	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_W))
 	{
-		// vars->player.y += 0.1;
-		printf("pressed\n");
-		clean_partcle(vars);
-		vars->player.x += 1;
+		draw_map(vars);
+		vars->player.y -= 0.05;
 		draw_partcle(vars);
-		// player_advance(vars->map, vars->player, 1);
+		draw_ray(vars);
 	}
 	// if (mlx_is_key_down(vars->mlx, MLX_KEY_S))
 	// 	player_advance(vars->map, vars->player, -1);
@@ -182,6 +196,7 @@ void	key_press_handler(void *param)
 	// 	exit(0);
 	// }
 	// paint(vars);
+	return (0);
 }
 
 void	render_window(t_vars *vars)
@@ -196,7 +211,8 @@ void	render_window(t_vars *vars)
 	vars->img = mlx_new_image(vars->mlx, width, height);
 	draw_map(vars);
 	draw_partcle(vars);
-	mlx_loop_hook(vars->mlx, key_press_handler, vars);
+	draw_ray(vars);
+	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler, vars);
 	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
 	mlx_loop(vars->mlx);
 	mlx_terminate(vars->mlx);
@@ -219,10 +235,10 @@ int	init_vars(void)
 
 int main(int argc, char **argv)
 {
-    (void) argc;
-    (void) argv;
+	(void) argc;
+	(void) argv;
 	if(!init_vars())
 		return (0);
-    render_window(g_vars);
-    return (0);
+	render_window(g_vars);
+	return (0);
 }

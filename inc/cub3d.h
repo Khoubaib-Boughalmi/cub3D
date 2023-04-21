@@ -7,6 +7,7 @@
 # include <string.h>
 # include <stdbool.h>
 # include <fcntl.h>
+# include <math.h>
 
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "../libft/ft_printf/ft_printf.h"
@@ -23,8 +24,8 @@ typedef struct s_map {
 }				t_map;
 
 typedef struct s_player {
-    int32_t     x;
-    int32_t     y;
+    float     x;
+    float     y;
     int32_t     dx;
     int32_t     dy;
 
