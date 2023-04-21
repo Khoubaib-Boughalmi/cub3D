@@ -6,6 +6,7 @@ INCLUDES = $(INC)/cub3d.h
 
 
 SRCS = $(SRC)/cub3d.c \
+		$(SRC)/wall.c
 
 OBJS = $(SRCS:.c=.o)
 NAME = cub3d

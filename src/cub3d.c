@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/21 16:55:13 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/04/21 17:58:29 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,15 @@ int g_map[10][10] = {
 	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 };
 
-uint32_t create_color(uint8_t red, uint8_t green, uint8_t blue)
-{
-	return ((uint32_t)255 << 24) | ((uint32_t)red << 16) | ((uint32_t)green << 8) | (uint32_t)blue;
-}
+// int32_t create_color(uint8_t red, uint8_t green, 255, uint8_t blue)
+// {
+// 	return ((uint32_t)255 << 24) | ((uint32_t)red << 16) | ((uint32_t)green << 8) | (uint32_t)blue;
+// }
 
+int32_t create_color(int32_t r, int32_t g, int32_t b, int32_t a)
+{
+    return (r << 24 | g << 16 | b << 8 | a);
+}
 void	draw_partcle(t_vars *vars)
 {
 	int			radius;
@@ -45,7 +49,7 @@ void	draw_partcle(t_vars *vars)
 	radius = 10;
 	px = vars->player.x;
 	py = vars->player.y;
-	color = create_color(255, 255, 255);
+	color = create_color(255, 255, 255, 255);
 	px = px + (64 * vars->player.x) + 28;
 	py = py + (64 * vars->player.y) + 28;
 	for (int x = 0; x < 640; x++)
@@ -78,7 +82,7 @@ void	clean_partcle(t_vars *vars)
 	radius = 10;
 	px = vars->player.x;
 	py = vars->player.y;
-	uint32_t color_black = create_color(0, 0, 0);
+	uint32_t color_black = create_color(0, 0, 0, 255);
 	px = px + (64 * vars->player.x) + 28;
 	py = py + (64 * vars->player.y) + 28;
 
@@ -94,24 +98,26 @@ void	clean_partcle(t_vars *vars)
 
 void	draw_rays(t_vars *vars)
 {
-	double		rays_lst[120];
-	int			radius;
 	double 		angle_rad;
-	uint32_t		color;
 	double 		inc_x;
 	double 		inc_y;
+	int			radius;
+	uint32_t	color;
 	double 		x;
 	double 		y;
 	int			i;
 
 	i = -1;
-	color = create_color(50, 60, 255);
+	color = create_color(0, 255, 0, 255);
+	vars->rays_lst = (double *)malloc(sizeof(double) * 120);
+	if(!vars->rays_lst)
+		return ;
 	while (++i < 120)
-		rays_lst[i] = vars->player.direction + (0.16 * i); // for a 60deg view
+		vars->rays_lst[i] = vars->player.direction - 9.6 + (0.16 * i); // for a 60deg view (-9.6 ==> (0.16 * 120) / 2  to shift it up)
 	i = -1;	
 	while (++i < 120)
 	{
-		angle_rad = rays_lst[i] * M_PI / 60;  // Convert angle to radians
+		angle_rad = vars->rays_lst[i] * M_PI / 60;  // Convert angle to radians
 		inc_x = cos(angle_rad);  // Calculate x increment based on angle
 		inc_y = sin(angle_rad);  // Calculate y increment based on angle
 
@@ -127,16 +133,16 @@ void	draw_rays(t_vars *vars)
 			y += inc_y;
 		}
 	}
-
+	free(vars->rays_lst);
 }
 
 void	draw_tile(t_vars *vars, int y, int x)
 {
 	int	i;
 	int	j;
-	uint32_t color_black = create_color(0, 0, 0);
-	uint32_t color_white = create_color(255, 255, 255);
-	uint32_t color_red = create_color(0, 0, 210);
+	uint32_t color_black = create_color(0, 0, 0, 255);
+	uint32_t color_white = create_color(255, 255, 255, 255);
+	uint32_t color_red = create_color(255, 0, 0, 255);
 	i = -1;
 	while (++i < 64)
 	{
@@ -208,26 +214,18 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 	{
 		draw_map(vars);
 		draw_partcle(vars);
-		draw_rays(vars);
 		vars->player.direction--;
+		draw_rays(vars);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
 	{
 		draw_map(vars);
 		draw_partcle(vars);
-		draw_rays(vars);
 		vars->player.direction++;
+		draw_rays(vars);
 	}
-		// rotate(vars->player, 1);
-	// if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
-	// 	player_advance_lateral(vars->map, vars->player, 1);
-	// if (mlx_is_key_down(vars->mlx, MLX_KEY_D))
-	// 	player_advance_lateral(vars->map, vars->player, -1);
-	// if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE))
-	// {
-	// 	exit(0);
-	// }
-	// paint(vars);
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE)) //free shit
+		exit(0);
 	return (0);
 }
 
@@ -244,6 +242,7 @@ void	render_window(t_vars *vars)
 	draw_map(vars);
 	draw_partcle(vars);
 	draw_rays(vars);
+	// find_first_intersection(vars);
 	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler, vars);
 	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
 	mlx_loop(vars->mlx);

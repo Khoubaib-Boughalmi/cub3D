@@ -14,32 +14,38 @@
 # include "../libft/libft.h"
 
 typedef struct s_window {
-    int32_t     height;
-    int32_t     width;
+	int32_t     height;
+	int32_t     width;
 }				t_window;
 
 typedef struct s_map {
-    int32_t     height;
-    int32_t     width;
+	int32_t     height;
+	int32_t     width;
 }				t_map;
 
+typedef struct s_intersect {
+	double      x;
+	double		y;
+}				t_intersect;
+
 typedef struct s_player {
-    float       x;
-    float       y;
-    int32_t     dx;
-    int32_t     dy;
-    int32_t     direction;
+	float       x;
+	float       y;
+	int32_t     dx;
+	int32_t     dy;
+	int32_t     direction;
 
 }				t_player;
 
 typedef struct s_vars {
 	mlx_t			*mlx;
 	void			*win;
-    mlx_image_t     *img;
+	mlx_image_t     *img;
 	char			**map;
-    t_player        player;
+	t_player        player;
 	t_window		window_info;
 	t_map		    t_map_info;
+	double			*rays_lst;
 }				t_vars;
 
 extern t_vars *g_vars;
