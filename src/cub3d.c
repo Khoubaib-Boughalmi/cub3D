@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/21 01:14:52 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/04/21 01:50:10 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,26 @@ void	draw_partcle(t_vars *vars)
 	px = px + (64 * vars->player.x) + 28;
     py = py + (64 * vars->player.y) + 28;
 	
-	for (int i = 0; i < 50*radius; i++)
+	// for (int i = 0; i < 50 * radius; i++)
+    // {
+    //     for (int j = 0; j < 50 * radius; j++)
+    //     {
+    //         if ((i - px) * (i - px) + (j - py) * (j - py) <= radius * radius)
+    //         {
+    //             mlx_put_pixel(vars->img, i + px, j + py, color);
+    //         }
+    //     }
+    // }
+
+    for (int x = 0; x < 640; x++)
     {
-        for (int j = 0; j < 50*radius; j++)
+        for (int y = 0; y < 640; y++)
         {
-            if ((i - px) * (i - px) + (j - py) * (j - py) <= radius * radius)
-            {
-                mlx_put_pixel(vars->img, i, j, color);
-            }
+			if ((x - px) * (x - px) + (y - py) * (y - py) <= radius * radius)
+			{
+				// mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0xFFFFFF); // Color the pixel (in this case, white)
+				mlx_put_pixel(vars->img, x ,y , color);
+			}
         }
     }
 }
@@ -106,7 +118,11 @@ void	key_press_handler(void *param)
 	vars = (t_vars *)param;
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_W))
 	{
+		// vars->player.y += 0.1;
 		printf("pressed\n");
+		clean_partcle(vars);
+		vars->player.x += 1;
+		draw_partcle(vars);
 		// player_advance(vars->map, vars->player, 1);
 	}
 	// if (mlx_is_key_down(vars->mlx, MLX_KEY_S))
