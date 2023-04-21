@@ -88,7 +88,7 @@ void	clean_partcle(t_vars *vars)
 
 void	draw_rays(t_vars *vars)
 {
-	double		rays_lst[100];
+	double		rays_lst[120];
 	int			radius;
 	double 		angle_rad;
 	uint32_t		color;
@@ -100,10 +100,10 @@ void	draw_rays(t_vars *vars)
 
 	i = -1;
 	color = create_color(50, 60, 255);
-	while (++i < 60)
-		rays_lst[i] = 45 + (0.5 * i);
+	while (++i < 120)
+		rays_lst[i] = vars->player.direction + (0.2 * i);
 	i = -1;	
-	while (++i < 60)
+	while (++i < 120)
 	{
 		angle_rad = rays_lst[i] * M_PI / 60;  // Convert angle to radians
 		inc_x = cos(angle_rad);  // Calculate x increment based on angle
@@ -196,10 +196,21 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 	}
 	// if (mlx_is_key_down(vars->mlx, MLX_KEY_S))
 	// 	player_advance(vars->map, vars->player, -1);
-	// if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
-	// 	rotate(vars->player, -1);
-	// if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
-	// 	rotate(vars->player, 1);
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
+	{
+		draw_map(vars);
+		draw_partcle(vars);
+		draw_rays(vars);
+		vars->player.direction--;
+	}
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
+	{
+		draw_map(vars);
+		draw_partcle(vars);
+		draw_rays(vars);
+		vars->player.direction++;
+	}
+		// rotate(vars->player, 1);
 	// if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
 	// 	player_advance_lateral(vars->map, vars->player, 1);
 	// if (mlx_is_key_down(vars->mlx, MLX_KEY_D))
@@ -238,6 +249,7 @@ int	init_vars(void)
 		return (0);
 	g_vars->window_info.height = 640;
 	g_vars->window_info.width = 640;
+	g_vars->player.direction = 60;
 	g_vars->player.x = 5;
 	g_vars->player.y = 4;
 	g_vars->player.dx = 0;

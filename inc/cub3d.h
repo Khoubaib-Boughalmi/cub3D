@@ -24,10 +24,11 @@ typedef struct s_map {
 }				t_map;
 
 typedef struct s_player {
-    float     x;
-    float     y;
+    float       x;
+    float       y;
     int32_t     dx;
     int32_t     dy;
+    int32_t     direction;
 
 }				t_player;
 
