@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/21 01:54:48 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/04/21 16:55:13 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,12 @@ void	draw_partcle(t_vars *vars)
 	}
 }
 
+double ft_abs(double nb)
+{
+	if(nb < 0)
+		return (-nb);
+	return (nb);
+}
 
 void	clean_partcle(t_vars *vars)
 {
@@ -101,7 +107,7 @@ void	draw_rays(t_vars *vars)
 	i = -1;
 	color = create_color(50, 60, 255);
 	while (++i < 120)
-		rays_lst[i] = vars->player.direction + (0.2 * i);
+		rays_lst[i] = vars->player.direction + (0.16 * i); // for a 60deg view
 	i = -1;	
 	while (++i < 120)
 	{
@@ -112,9 +118,11 @@ void	draw_rays(t_vars *vars)
 		x = vars->player.x + (64 * vars->player.x) + 28;
 		y = vars->player.y + (64 * vars->player.y) + 28;
 
-		for (int j = 0; j < 260; j++)
+		for (int j = 0; j < 220; j++)
 		{
-			mlx_put_pixel(vars->img, x, y , color);
+			if(y < 0 || y > 640)
+				y = 0;
+			mlx_put_pixel(vars->img, x, y < 0 ? 0 : y , color); //y will sigfault if < 0 || y > 640
 			x += inc_x;
 			y += inc_y;
 		}
@@ -169,28 +177,28 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_D))
 	{
 		draw_map(vars);
-		vars->player.x += 0.05;
+		vars->player.x += 0.1;
 		draw_partcle(vars);
 		draw_rays(vars);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
 	{
 		draw_map(vars);
-		vars->player.x -= 0.05;
+		vars->player.x -= 0.1;
 		draw_partcle(vars);
 		draw_rays(vars);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_S))
 	{
 		draw_map(vars);
-		vars->player.y += 0.05;
+		vars->player.y += 0.1;
 		draw_partcle(vars);
 		draw_rays(vars);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_W))
 	{
 		draw_map(vars);
-		vars->player.y -= 0.05;
+		vars->player.y -= 0.1;
 		draw_partcle(vars);
 		draw_rays(vars);
 	}
@@ -249,7 +257,7 @@ int	init_vars(void)
 		return (0);
 	g_vars->window_info.height = 640;
 	g_vars->window_info.width = 640;
-	g_vars->player.direction = 60;
+	g_vars->player.direction = 0;
 	g_vars->player.x = 5;
 	g_vars->player.y = 4;
 	g_vars->player.dx = 0;
