@@ -86,25 +86,38 @@ void	clean_partcle(t_vars *vars)
 	}
 }
 
-void	draw_ray(t_vars *vars)
+void	draw_rays(t_vars *vars)
 {
+	double		rays_lst[100];
 	int			radius;
-	int 		i;
-	int 		j;
-	int 		py;
-	int 		px;
-	uint32_t	color;
+	double 		angle_rad;
+	uint32_t		color;
+	double 		inc_x;
+	double 		inc_y;
+	double 		x;
+	double 		y;
+	int			i;
 
 	i = -1;
-	px = vars->player.x;
-	py = vars->player.y;
-	color = create_color(50, 100, 255);
-	px = px + (64 * vars->player.x) + 28;
-	py = py + (64 * vars->player.y) + 28;
-	for (int x = 0; x < 60; x++)
+	color = create_color(50, 60, 255);
+	while (++i < 60)
+		rays_lst[i] = 45 + (0.5 * i);
+	i = -1;	
+	while (++i < 60)
 	{
-		i ++;
-		mlx_put_pixel(vars->img, px+x+i, py+x+i , color);
+		angle_rad = rays_lst[i] * M_PI / 60;  // Convert angle to radians
+		inc_x = cos(angle_rad);  // Calculate x increment based on angle
+		inc_y = sin(angle_rad);  // Calculate y increment based on angle
+
+		x = vars->player.x + (64 * vars->player.x) + 28;
+		y = vars->player.y + (64 * vars->player.y) + 28;
+
+		for (int j = 0; j < 260; j++)
+		{
+			mlx_put_pixel(vars->img, x, y , color);
+			x += inc_x;
+			y += inc_y;
+		}
 	}
 
 }
@@ -158,28 +171,28 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 		draw_map(vars);
 		vars->player.x += 0.05;
 		draw_partcle(vars);
-		draw_ray(vars);
+		draw_rays(vars);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
 	{
 		draw_map(vars);
 		vars->player.x -= 0.05;
 		draw_partcle(vars);
-		draw_ray(vars);
+		draw_rays(vars);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_S))
 	{
 		draw_map(vars);
 		vars->player.y += 0.05;
 		draw_partcle(vars);
-		draw_ray(vars);
+		draw_rays(vars);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_W))
 	{
 		draw_map(vars);
 		vars->player.y -= 0.05;
 		draw_partcle(vars);
-		draw_ray(vars);
+		draw_rays(vars);
 	}
 	// if (mlx_is_key_down(vars->mlx, MLX_KEY_S))
 	// 	player_advance(vars->map, vars->player, -1);
@@ -211,7 +224,7 @@ void	render_window(t_vars *vars)
 	vars->img = mlx_new_image(vars->mlx, width, height);
 	draw_map(vars);
 	draw_partcle(vars);
-	draw_ray(vars);
+	draw_rays(vars);
 	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler, vars);
 	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
 	mlx_loop(vars->mlx);
@@ -225,7 +238,7 @@ int	init_vars(void)
 		return (0);
 	g_vars->window_info.height = 640;
 	g_vars->window_info.width = 640;
-	g_vars->player.x = 2;
+	g_vars->player.x = 5;
 	g_vars->player.y = 4;
 	g_vars->player.dx = 0;
 	g_vars->player.dy = 0;
