@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = #-Wall -Werror -Wextra -g
 INC = inc
 SRC = src
 INCLUDES = $(INC)/cub3d.h
