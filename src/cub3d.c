@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/21 01:50:10 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/04/21 01:54:48 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,48 @@ void	draw_partcle(t_vars *vars)
 			{
 				// mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0xFFFFFF); // Color the pixel (in this case, white)
 				mlx_put_pixel(vars->img, x ,y , color);
+			}
+        }
+    }
+}
+
+
+void	clean_partcle(t_vars *vars)
+{
+	int			radius;
+	int 		i;	
+	int 		j;
+	int 		py;
+	int 		px;
+	uint32_t	color;
+
+	i = -1;
+	radius = 10;
+	px = vars->player.x;
+	py = vars->player.y;
+	color = create_color(255, 255, 255);
+	px = px + (64 * vars->player.x) + 28;
+    py = py + (64 * vars->player.y) + 28;
+	
+	// for (int i = 0; i < 50 * radius; i++)
+    // {
+    //     for (int j = 0; j < 50 * radius; j++)
+    //     {
+    //         if ((i - px) * (i - px) + (j - py) * (j - py) <= radius * radius)
+    //         {
+    //             mlx_put_pixel(vars->img, i + px, j + py, color);
+    //         }
+    //     }
+    // }
+
+    for (int x = 0; x < 640; x++)
+    {
+        for (int y = 0; y < 640; y++)
+        {
+			if ((x - px) * (x - px) + (y - py) * (y - py) <= radius * radius)
+			{
+				// mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0xFFFFFF); // Color the pixel (in this case, white)
+				mlx_put_pixel(vars->img, x ,y , 0xFFFFFF);
 			}
         }
     }
