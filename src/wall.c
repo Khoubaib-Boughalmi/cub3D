@@ -43,13 +43,14 @@ void    find_first_intersection(t_vars *vars, int ray_id)
     }
     // >>> 96+(224-math.floor(224/64)*64 - 1)*math.tan(60)
     // A.x = Px + (Py-A.y)/tan(ALPHA);
-    point_A.x = (vars->player.x * 64 + 32) + (point_A.y - floor(point_A.y/64)*64 - 1)*slop;
+    // printf("angle %f\n", vars->rays_lst[ray_id] * M_PI);
+    point_A.x = (vars->player.x * 64 + 32) + (point_A.y - floor(point_A.y/64)*64 - 1)*slop + 32;
     // >>> 96+(191-math.floor(191/64)*64 -1)*math.tan(60)
-    printf("xx: %f %f\n", point_A.x, point_A.y);
-    coord_A.x = point_A.x / 64 ;
-    coord_A.y = point_A.y / 64 ;
-    // if(g_map_dup[coord_A.x][coord_A.y] == 1)
-    //     printf("WALL %d coor %d %d\n", ray_id, coord_A.x, coord_A.y);
-    // else
-    //     printf("NO WALL %d coor %d %d\n", ray_id, coord_A.x, coord_A.y);
+    // printf("xx: %f %f\n", point_A.x, point_A.y);
+    coord_A.x = floor(point_A.x) / 64 ;
+    coord_A.y = floor(point_A.y) / 64 ;
+    if(g_map_dup[coord_A.x][coord_A.y] == 1)
+        printf("WALL %d coor %d %d\n", ray_id, coord_A.x, coord_A.y);
+    else
+        printf("NO WALL %d coor %d %d\n", ray_id, coord_A.x, coord_A.y);
 }
