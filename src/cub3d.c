@@ -149,10 +149,10 @@ void	draw_rays(t_vars *vars)
 	i = -1;	
 	while (++i < 120)
 	{
-		angle = vars->rays_lst[119] * M_PI; // Angle in degrees
+		angle = vars->rays_lst[i] * M_PI; // Angle in degrees
 		length = 220.0; // Length of the line
-		start_x = vars->player.x + (64 * vars->player.x) + 28; // Starting x-coordinate at the center of the window
-		start_y =  vars->player.y + (64 * vars->player.y) + 28; // Starting y-coordinate at the center of the window
+		start_x = vars->player.x + (64 * vars->player.x) + 32; // Starting x-coordinate at the center of the window
+		start_y =  vars->player.y + (64 * vars->player.y) + 32; // Starting y-coordinate at the center of the window
 		end_x = start_x + length * cos(angle * M_PI / 180.0); // Ending x-coordinate based on angle and length
 		end_y = start_y - length * sin(angle * M_PI / 180.0); // Ending y-coordinate based on angle and length
 		put_line(vars->mlx, vars->win, start_x, start_y, end_x, end_y, 0xFFFFFF); // Draw the line
