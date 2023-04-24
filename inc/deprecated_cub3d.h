@@ -21,27 +21,12 @@ typedef struct s_window {
 typedef struct s_map {
 	int32_t     height;
 	int32_t     width;
-	int			**map;
 }				t_map;
 
 typedef struct s_intersect {
 	double      x;
 	double		y;
 }				t_intersect;
-
-typedef struct s_ray {
-	int	      r;
-	int	      mx;
-	int			my;
-	int			mp;
-	int			dof;
-	double      rx;
-	double		ry;
-	double		ra;
-	double		xo;
-	double		yo;
-
-}				t_ray;
 
 
 typedef struct s_coord {
@@ -51,11 +36,11 @@ typedef struct s_coord {
 
 
 typedef struct s_player {
-	float			x;
+	float       x;
 	float       y;
-	float			dx;
-	float			dy;
-	float			angle;
+	int32_t     dx;
+	int32_t     dy;
+	int32_t     direction;
 
 }				t_player;
 
@@ -63,9 +48,10 @@ typedef struct s_vars {
 	mlx_t			*mlx;
 	void			*win;
 	mlx_image_t     *img;
-	t_map					map;
+	char			**map;
 	t_player        player;
 	t_window		window_info;
+	t_map		    t_map_info;
 	double			*rays_lst;
 }				t_vars;
 

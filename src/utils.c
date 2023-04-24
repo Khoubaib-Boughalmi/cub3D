@@ -28,7 +28,7 @@ void put_line(void *mlx_ptr, void *win_ptr, int x0, int y0, int x1, int y1, int 
     int err = dx - dy; // Initialize the error term
 
     while (x0 != x1 || y0 != y1) {
-        mlx_put_pixel(g_vars->img , x0, y0, 0x00FF00FF); // Draw the current pixel
+        mlx_put_pixel(g_vars->img , x0, y0, color); // Draw the current pixel
 
         int err2 = err * 2; // Double the error term
         if (err2 > -dy) {
