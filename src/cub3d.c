@@ -39,9 +39,10 @@ void draw_vertical_line(t_vars *vars, int r, int lineH, int line_width)
 {
     int x1 = r * 8 + 530;
     int x2 = r * 8 + 530;
-    int y1 = 0;
     int y2 = lineH;
     int color = 0xFFF0FFFF; // Color in MiniLibX is represented as an integer in RGB format (0xRRGGBB)
+	double ligne_offset = 160 - lineH/3;
+    int y1 = ligne_offset;
 
     // Draw vertical line with specified line width
     for (int i = 0; i < line_width; i++)
@@ -204,7 +205,14 @@ void draw_ray(t_vars *vars)
 			ry = h_y;
 			f_dist = h_dist;
 		}
+		
 		put_line(vars->mlx, vars->win, vars->player.x, vars->player.y, rx, ry, create_color(255,255,0,255), 64*8,64*8);
+		double fish_eye_new_angle = vars->player.angle - ra;
+		if(ra < 0)
+			ra += 2*PI;
+		if(ra > 2*PI)
+			ra -= 2*PI;
+		f_dist = f_dist * cos(fish_eye_new_angle);
 		float line_height = (64 * 320)/f_dist;
 		if(line_height > 320)
 			line_height = 320;

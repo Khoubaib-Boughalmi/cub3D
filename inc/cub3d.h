@@ -67,6 +67,7 @@ typedef struct s_vars {
 	t_player        player;
 	t_window		window_info;
 	double			*rays_lst;
+	
 }				t_vars;
 
 extern t_vars *g_vars;
