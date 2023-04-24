@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/24 15:39:54 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/04/24 17:58:36 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ int32_t create_color(int32_t r, int32_t g, int32_t b, int32_t a)
     return (r << 24 | g << 16 | b << 8 | a);
 }
 
+float distance_to_wall(float px, float py, float wx, float wy, float angle_rad)
+{
+	return (sqrt((wy - py)*(wy - py) + (wx - px)*(wx - px)));
+}
+
 void draw_ray(t_vars *vars)
 {
 	// t_ray	ray;
@@ -43,27 +48,42 @@ void draw_ray(t_vars *vars)
 	double		ra;
 	double		xo; //x offset
 	double		yo; //y offset
-
-	ra = vars->player.angle;
-	for (int i = 0; i < 60; i++)
+	double		h_dis;
+	double		h_x;
+	double		h_y;
+	double		v_dis;
+	double		v_x;
+	double		v_y;
+	
+	ra = vars->player.angle - DEG * 30;
+	if (ra < 0)
+		ra += 2 * PI;
+	if (ra > 2 * PI)
+		ra -= 2 * PI;
+	
+	for (int i = 0; i < 360 ; i++)
 	{
+		h_dis = 100000;		
+		h_x = vars->player.x;		
+		h_y = vars->player.y;		
+		/* horzontal check*/
 		dof = 0;
 		float aTan = -1/tan(ra);
-		if (ra > M_PI) //facing down
+		if (ra > PI) //facing down
 		{
 			ry = (((int)vars->player.y>>6)<<6)-0.0001;
 			rx = (vars->player.y - ry) * aTan + vars->player.x;
 			yo = -64;
 			xo = -yo * aTan;
 		}
-		if (ra < M_PI) //facing up
+		if (ra < PI) //facing up
 		{
 			ry = (((int)vars->player.y>>6)<<6) + 64;
 			rx = (vars->player.y - ry) * aTan + vars->player.x;
 			yo = 64;
 			xo = -yo * aTan;
 		}
-		 if(ra == 0 || ra == M_PI)
+		 if(ra == 0 || ra == PI)
 		{
 			rx = vars->player.x;
 			ry = vars->player.y;
@@ -74,9 +94,14 @@ void draw_ray(t_vars *vars)
 			mx = (int)(rx) / 64;
 			my = (int)(ry) / 64;
 			mp = my * vars->map.height + mx;
-			printf("mx: %d my: %d\n", mx, my);
-			if(mx > 0 && my > 0 && mx < 8 && my < 8 && g_map[my][mx] == 1)
+			printf("mx: %d my: %d\n", mx , my);
+			if(mx >= 0 && my >= 0 && mx < 8 && my < 8 && g_map[my][mx] == 1)
+			{
+				h_x = rx;
+				h_y = ry;
+				h_dis = distance_to_wall(vars->player.x, vars->player.y, h_x, h_y, ra);
 				dof = 8;
+			}
 			else
 			{
 				rx += xo;
@@ -84,8 +109,69 @@ void draw_ray(t_vars *vars)
 				dof++;
 			}
 		}
-		put_line(vars->mlx, vars->win, vars->player.x, vars->player.y, rx, ry, create_color(255,0,255,255));
-		ra += 0.01;
+		
+		/* vertical check*/
+		dof = 0;
+		v_dis = 100000;		
+		v_x = vars->player.x;		
+		v_y = vars->player.y;		
+		float nTan = -tan(ra);
+		if (ra > PI2 && ra < PI3) //facing left
+		{
+			rx = (((int)vars->player.x>>6)<<6)-0.0001;
+			ry = (vars->player.x - rx) * nTan + vars->player.y;
+			xo = -64;
+			yo = -xo * nTan;
+		}
+		if (ra < PI2 || ra > PI3) //facing right
+		{
+			rx = (((int)vars->player.x>>6)<<6) + 64;
+			ry = (vars->player.x - rx) * nTan + vars->player.y;
+			xo = 64;
+			yo = -xo * nTan;
+		}
+		if(ra == PI2 || ra == PI3) //up or down
+		{
+			rx = vars->player.x;
+			ry = vars->player.y;
+			dof = 8;
+		}
+		while (dof < 8)
+		{
+			mx = (int)(rx) / 64;
+			my = (int)(ry) / 64;
+			mp = my * vars->map.height + mx;
+			if(mx >= 0 && my >= 0 && mx < 8 && my < 8 && g_map[my][mx] == 1)
+			{
+				v_x = rx;
+				v_y = ry;
+				v_dis = distance_to_wall(vars->player.x, vars->player.y, v_x, v_y, ra);
+				dof = 8;
+			}
+			else
+			{
+				rx += xo;
+				ry += yo;
+				dof++;
+			}
+		}
+		if(v_dis < h_dis)
+		{
+			rx = v_x;
+			ry = v_y;
+		}
+		else
+		{
+			rx = h_x;
+			ry = h_y;
+		}
+		put_line(vars->mlx, vars->win, vars->player.x, vars->player.y, rx, ry, create_color(255,255,0,255), 64*8,64*8);
+
+		ra += DEG;
+		if (ra < 0)
+			ra += 2 * PI;
+		if (ra > 2 * PI)
+			ra -= 2 * PI;
 	}
 }
 
@@ -111,7 +197,7 @@ void	draw_partcle(t_vars *vars)
 				mlx_put_pixel(vars->img, x ,y , color);
 		}
 	}
-	put_line(vars->mlx, vars->win, vars->player.x, vars->player.y, vars->player.x + vars->player.dx * 10, vars->player.y + vars->player.dy * 10 , create_color(0,255,0,255));
+	put_line(vars->mlx, vars->win, vars->player.x, vars->player.y, vars->player.x + vars->player.dx * 10, vars->player.y + vars->player.dy * 10 , create_color(0,255,0,255), 64*8,64*8);
 }
 
 void	draw_tile(t_vars *vars, int y, int x)
@@ -155,8 +241,8 @@ void	draw_map(t_vars *vars)
 void	redraw(t_vars *vars)
 {
 	draw_map(vars);
-	draw_partcle(vars);
 	draw_ray(vars);
+	draw_partcle(vars);
 }
 
 int key_press_handler(mlx_key_data_t keydata, void *param)
@@ -167,8 +253,8 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_D))
 	{
 		vars->player.angle += 0.1;
-		if(vars->player.angle > 2*M_PI)
-			vars->player.angle -= 2 * M_PI;
+		if(vars->player.angle > 2*PI)
+			vars->player.angle -= 2 * PI;
 		vars->player.dx = 5 * cos(vars->player.angle);
 		vars->player.dy = 5 * sin(vars->player.angle);
 	}
@@ -176,7 +262,7 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 	{
 		vars->player.angle -= 0.1;
 		if(vars->player.angle < 0)
-			vars->player.angle += 2 * M_PI;
+			vars->player.angle += 2 * PI;
 		vars->player.dx = 5 * cos(vars->player.angle);
 		vars->player.dy = 5 * sin(vars->player.angle);
 	}
@@ -224,8 +310,7 @@ void	render_window(t_vars *vars)
 	vars->img = mlx_new_image(vars->mlx, width, height);
 	draw_map(vars);
 	draw_partcle(vars);
-	// draw_ray(vars);
-	// draw_rays(vars);
+	draw_ray(vars);
 	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler, vars);
 	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
 	mlx_loop(vars->mlx);
@@ -239,7 +324,7 @@ int	init_vars(void)
 		return (0);
 	g_vars->window_info.height = 520;
 	g_vars->window_info.width = 1024;
-	g_vars->player.angle = 45 * (M_PI/180);
+	g_vars->player.angle = 45 * (PI/180);
 	g_vars->player.x = 257;
 	g_vars->player.y = 257;
 	g_vars->player.dx = 5 * cos(g_vars->player.angle);
