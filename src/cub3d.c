@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/24 17:58:36 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/04/24 19:26:09 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void draw_ray(t_vars *vars)
 	if (ra > 2 * PI)
 		ra -= 2 * PI;
 	
-	for (int i = 0; i < 360 ; i++)
+	for (int i = 0; i < 60 ; i++)
 	{
 		h_dis = 100000;		
 		h_x = vars->player.x;		
@@ -94,7 +94,6 @@ void draw_ray(t_vars *vars)
 			mx = (int)(rx) / 64;
 			my = (int)(ry) / 64;
 			mp = my * vars->map.height + mx;
-			printf("mx: %d my: %d\n", mx , my);
 			if(mx >= 0 && my >= 0 && mx < 8 && my < 8 && g_map[my][mx] == 1)
 			{
 				h_x = rx;
@@ -250,7 +249,7 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 	t_vars	*vars;
 
 	vars = (t_vars *)param;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_D))
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
 	{
 		vars->player.angle += 0.1;
 		if(vars->player.angle > 2*PI)
@@ -258,7 +257,7 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 		vars->player.dx = 5 * cos(vars->player.angle);
 		vars->player.dy = 5 * sin(vars->player.angle);
 	}
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
 	{
 		vars->player.angle -= 0.1;
 		if(vars->player.angle < 0)
@@ -276,6 +275,10 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 			vars->player.x -= vars->player.dx;
 			vars->player.y -= vars->player.dy;
 	}
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
+			vars->player.x -= vars->player.dx;
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_D))
+			vars->player.x += vars->player.dx;
 	redraw(vars);
 	// if (mlx_is_key_down(vars->mlx, MLX_KEY_S))
 	// 	player_advance(vars->map, vars->player, -1);
