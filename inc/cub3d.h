@@ -71,6 +71,6 @@ typedef struct s_vars {
 
 extern t_vars *g_vars;
 
-#define M_PI 3.14159265358979323846
+// #define M_PI 3.14159265358979323846
 
 # endif

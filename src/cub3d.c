@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/21 23:42:34 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/04/24 15:39:54 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,25 +45,25 @@ void draw_ray(t_vars *vars)
 	double		yo; //y offset
 
 	ra = vars->player.angle;
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 60; i++)
 	{
 		dof = 0;
 		float aTan = -1/tan(ra);
 		if (ra > M_PI) //facing down
 		{
-			ry = (((int)vars->player.y>>6)<<6)-0.001;
+			ry = (((int)vars->player.y>>6)<<6)-0.0001;
 			rx = (vars->player.y - ry) * aTan + vars->player.x;
 			yo = -64;
 			xo = -yo * aTan;
 		}
-		else if (ra < M_PI) //facing up
+		if (ra < M_PI) //facing up
 		{
 			ry = (((int)vars->player.y>>6)<<6) + 64;
 			rx = (vars->player.y - ry) * aTan + vars->player.x;
 			yo = 64;
 			xo = -yo * aTan;
 		}
-		else if(ra == 0 || ra == M_PI)
+		 if(ra == 0 || ra == M_PI)
 		{
 			rx = vars->player.x;
 			ry = vars->player.y;
@@ -71,10 +71,11 @@ void draw_ray(t_vars *vars)
 		}
 		while (dof < 8)
 		{
-			mx = (int)(rx) >> 6;
-			my = (int)(ry) >> 6;
+			mx = (int)(rx) / 64;
+			my = (int)(ry) / 64;
 			mp = my * vars->map.height + mx;
-			if(mp < vars->map.width * vars->map.height && g_map[my][mx] == 1)
+			printf("mx: %d my: %d\n", mx, my);
+			if(mx > 0 && my > 0 && mx < 8 && my < 8 && g_map[my][mx] == 1)
 				dof = 8;
 			else
 			{
@@ -84,6 +85,7 @@ void draw_ray(t_vars *vars)
 			}
 		}
 		put_line(vars->mlx, vars->win, vars->player.x, vars->player.y, rx, ry, create_color(255,0,255,255));
+		ra += 0.01;
 	}
 }
 
@@ -165,18 +167,18 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_D))
 	{
 		vars->player.angle += 0.1;
-		vars->player.dx = 5 * cos(vars->player.angle);
-		vars->player.dy = 5 * sin(vars->player.angle);
 		if(vars->player.angle > 2*M_PI)
 			vars->player.angle -= 2 * M_PI;
+		vars->player.dx = 5 * cos(vars->player.angle);
+		vars->player.dy = 5 * sin(vars->player.angle);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
 	{
 		vars->player.angle -= 0.1;
+		if(vars->player.angle < 0)
+			vars->player.angle += 2 * M_PI;
 		vars->player.dx = 5 * cos(vars->player.angle);
 		vars->player.dy = 5 * sin(vars->player.angle);
-		if(vars->player.angle <= 0)
-			vars->player.angle += 2 * M_PI;
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_W))
 	{
@@ -222,7 +224,7 @@ void	render_window(t_vars *vars)
 	vars->img = mlx_new_image(vars->mlx, width, height);
 	draw_map(vars);
 	draw_partcle(vars);
-	draw_ray(vars);
+	// draw_ray(vars);
 	// draw_rays(vars);
 	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler, vars);
 	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
