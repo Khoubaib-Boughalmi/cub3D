@@ -35,6 +35,43 @@ float distance_to_wall(float px, float py, float wx, float wy, float angle_rad)
 	return (sqrt((wy - py)*(wy - py) + (wx - px)*(wx - px)));
 }
 
+void draw_vertical_line(t_vars *vars, int r, int lineH, int line_width)
+{
+    int x1 = r * 8 + 530;
+    int x2 = r * 8 + 530;
+    int y1 = 0;
+    int y2 = lineH;
+    int color = 0xFFF0FFFF; // Color in MiniLibX is represented as an integer in RGB format (0xRRGGBB)
+
+    // Draw vertical line with specified line width
+    for (int i = 0; i < line_width; i++)
+    {
+        int offset = i - line_width / 2; // Calculate offset to center the line
+        int x = x1 + offset;
+        int dy = y2 - y1;
+        int stepY = 1;
+        if (dy < 0)
+        {
+            stepY = -1;
+            dy = -dy;
+        }
+        for (int y = y1; y <= y2; y++)
+        {
+            mlx_put_pixel(vars->img, x, y, color);
+        }
+    }
+}
+
+void clean_window(t_vars *vars)
+{
+	for (int y = 512; y < 1024; y++)
+	{
+		for (int x = 0; x < 520; x++)
+		{
+			mlx_put_pixel(vars->img, y, x, 0x000000FF);
+		}
+	}
+}
 void draw_ray(t_vars *vars)
 {
 	// t_ray	ray;
@@ -48,13 +85,14 @@ void draw_ray(t_vars *vars)
 	double		ra;
 	double		xo; //x offset
 	double		yo; //y offset
-	double		h_dis;
+	double		h_dist;
 	double		h_x;
 	double		h_y;
-	double		v_dis;
+	double		v_dist;
 	double		v_x;
 	double		v_y;
-	
+	double		f_dist;
+
 	ra = vars->player.angle - DEG * 30;
 	if (ra < 0)
 		ra += 2 * PI;
@@ -63,7 +101,7 @@ void draw_ray(t_vars *vars)
 	
 	for (int i = 0; i < 60 ; i++)
 	{
-		h_dis = 100000;		
+		h_dist = 100000;		
 		h_x = vars->player.x;		
 		h_y = vars->player.y;		
 		/* horzontal check*/
@@ -98,7 +136,7 @@ void draw_ray(t_vars *vars)
 			{
 				h_x = rx;
 				h_y = ry;
-				h_dis = distance_to_wall(vars->player.x, vars->player.y, h_x, h_y, ra);
+				h_dist = distance_to_wall(vars->player.x, vars->player.y, h_x, h_y, ra);
 				dof = 8;
 			}
 			else
@@ -111,7 +149,7 @@ void draw_ray(t_vars *vars)
 		
 		/* vertical check*/
 		dof = 0;
-		v_dis = 100000;		
+		v_dist = 100000;		
 		v_x = vars->player.x;		
 		v_y = vars->player.y;		
 		float nTan = -tan(ra);
@@ -144,7 +182,7 @@ void draw_ray(t_vars *vars)
 			{
 				v_x = rx;
 				v_y = ry;
-				v_dis = distance_to_wall(vars->player.x, vars->player.y, v_x, v_y, ra);
+				v_dist = distance_to_wall(vars->player.x, vars->player.y, v_x, v_y, ra);
 				dof = 8;
 			}
 			else
@@ -154,18 +192,23 @@ void draw_ray(t_vars *vars)
 				dof++;
 			}
 		}
-		if(v_dis < h_dis)
+		if(v_dist < h_dist)
 		{
 			rx = v_x;
 			ry = v_y;
+			f_dist = v_dist;
 		}
 		else
 		{
 			rx = h_x;
 			ry = h_y;
+			f_dist = h_dist;
 		}
 		put_line(vars->mlx, vars->win, vars->player.x, vars->player.y, rx, ry, create_color(255,255,0,255), 64*8,64*8);
-
+		float line_height = (64 * 320)/f_dist;
+		if(line_height > 320)
+			line_height = 320;
+		draw_vertical_line(vars, i, line_height, 8);
 		ra += DEG;
 		if (ra < 0)
 			ra += 2 * PI;
@@ -239,9 +282,11 @@ void	draw_map(t_vars *vars)
 
 void	redraw(t_vars *vars)
 {
+	clean_window(vars);
 	draw_map(vars);
 	draw_ray(vars);
 	draw_partcle(vars);
+
 }
 
 int key_press_handler(mlx_key_data_t keydata, void *param)
@@ -311,6 +356,7 @@ void	render_window(t_vars *vars)
 	vars->mlx = mlx_init(width, height, "cub3D", 1);
 	mlx_set_window_limit(vars->mlx,  width - 200, height - 200, width, height);
 	vars->img = mlx_new_image(vars->mlx, width, height);
+	clean_window(vars);
 	draw_map(vars);
 	draw_partcle(vars);
 	draw_ray(vars);
