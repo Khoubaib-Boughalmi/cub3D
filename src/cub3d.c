@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/25 17:34:52 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/04/25 19:01:44 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ float distance_to_wall(float px, float py, float wx, float wy, float angle_rad)
 	return (sqrt((wy - py)*(wy - py) + (wx - px)*(wx - px)));
 }
 
-void draw_vertical_line(t_vars *vars, int r, int lineH, int line_width, int32_t color)
+void draw_wall(t_vars *vars, int r, int lineH, int line_width, int32_t color)
 {
-    int x1 = r * 8 + 530;
+    int x1 = r * 2 + 520;
 	double ligne_offset = 220 - lineH/2;
     int y1 = ligne_offset;
 
@@ -55,9 +55,17 @@ void clean_window(t_vars *vars)
 {
 	for (int y = 512; y < 1024; y++)
 	{
-		for (int x = 0; x < 512; x++)
+		for (int x = 0; x < 256; x++)
 		{
 			mlx_put_pixel(vars->img, y, x, 0x000000FF);
+		}
+	}
+
+	for (int y = 512; y < 1024; y++)
+	{
+		for (int x = 256; x < 512; x++)
+		{
+			mlx_put_pixel(vars->img, y, x, 0x000022FF);
 		}
 	}
 }
@@ -88,7 +96,7 @@ void draw_ray(t_vars *vars)
 	if (ra > 2 * PI)
 		ra -= 2 * PI;
 	
-	for (int i = 0; i < 60 ; i++)
+	for (int i = 0; i < 240 ; i++)
 	{
 		h_dist = 100000;		
 		h_x = vars->player.x;		
@@ -204,10 +212,10 @@ void draw_ray(t_vars *vars)
 		if(line_height > 320)
 			line_height = 320;
 		if(v_dist > h_dist)
-			draw_vertical_line(vars, i, line_height, 8, create_color(255, 150, 100, 255));
+			draw_wall(vars, i, line_height, 8, create_color(255, 0, 0, 255));
 		else
-			draw_vertical_line(vars, i, line_height, 8, create_color(50, 250, 50, 255));
-		ra += DEG;
+			draw_wall(vars, i, line_height, 8, create_color(100, 0, 0, 255));
+		ra = ra + DEG/4;
 		if (ra < 0)
 			ra += 2 * PI;
 		if (ra > 2 * PI)
@@ -246,7 +254,7 @@ void	draw_tile(t_vars *vars, int y, int x)
 	int	j;
 	uint32_t color_black = create_color(0, 0, 0, 255);
 	uint32_t color_white = create_color(255, 255, 255, 255);
-	uint32_t color_red = create_color(255, 0, 0, 255);
+	uint32_t color_grey = create_color(120, 120, 120, 255);
 	i = -1;
 	while (++i < 64)
 	{
@@ -255,7 +263,7 @@ void	draw_tile(t_vars *vars, int y, int x)
 		{
 			mlx_put_pixel(vars->img, (64 * x) + i, (64 * y) + j, color_black);
 			if(g_map[y][x])
-				mlx_put_pixel(vars->img, (64 * x) + i, (64 * y) + j, color_red);
+				mlx_put_pixel(vars->img, (64 * x) + i, (64 * y) + j, color_grey);
 			if(j == 63 || i == 63)
 				mlx_put_pixel(vars->img, (64 * x) + i, (64 * y) + j, color_white);
 		}
