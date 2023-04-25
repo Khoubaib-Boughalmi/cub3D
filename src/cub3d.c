@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/24 19:26:09 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/04/25 17:34:52 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,18 @@ float distance_to_wall(float px, float py, float wx, float wy, float angle_rad)
 	return (sqrt((wy - py)*(wy - py) + (wx - px)*(wx - px)));
 }
 
-void draw_vertical_line(t_vars *vars, int r, int lineH, int line_width)
+void draw_vertical_line(t_vars *vars, int r, int lineH, int line_width, int32_t color)
 {
     int x1 = r * 8 + 530;
-    int x2 = r * 8 + 530;
-    int y2 = lineH;
-    int color = 0xFFF0FFFF; // Color in MiniLibX is represented as an integer in RGB format (0xRRGGBB)
-	double ligne_offset = 160 - lineH/3;
+	double ligne_offset = 220 - lineH/2;
     int y1 = ligne_offset;
 
     // Draw vertical line with specified line width
-    for (int i = 0; i < line_width; i++)
+    for (int i = 0; i < 8; i++)
     {
-        int offset = i - line_width / 2; // Calculate offset to center the line
-        int x = x1 + offset;
-        int dy = y2 - y1;
-        int stepY = 1;
-        if (dy < 0)
+        for (int y = y1; y <= lineH + ligne_offset; y++)
         {
-            stepY = -1;
-            dy = -dy;
-        }
-        for (int y = y1; y <= y2; y++)
-        {
-            mlx_put_pixel(vars->img, x, y, color);
+            mlx_put_pixel(vars->img, x1 - i, y, color);
         }
     }
 }
@@ -67,7 +55,7 @@ void clean_window(t_vars *vars)
 {
 	for (int y = 512; y < 1024; y++)
 	{
-		for (int x = 0; x < 520; x++)
+		for (int x = 0; x < 512; x++)
 		{
 			mlx_put_pixel(vars->img, y, x, 0x000000FF);
 		}
@@ -205,18 +193,20 @@ void draw_ray(t_vars *vars)
 			ry = h_y;
 			f_dist = h_dist;
 		}
-		
 		put_line(vars->mlx, vars->win, vars->player.x, vars->player.y, rx, ry, create_color(255,255,0,255), 64*8,64*8);
 		double fish_eye_new_angle = vars->player.angle - ra;
-		if(ra < 0)
-			ra += 2*PI;
-		if(ra > 2*PI)
-			ra -= 2*PI;
+		if(fish_eye_new_angle < 0)
+			fish_eye_new_angle += 2*PI;
+		if(fish_eye_new_angle > 2*PI)
+			fish_eye_new_angle -= 2*PI;
 		f_dist = f_dist * cos(fish_eye_new_angle);
 		float line_height = (64 * 320)/f_dist;
 		if(line_height > 320)
 			line_height = 320;
-		draw_vertical_line(vars, i, line_height, 8);
+		if(v_dist > h_dist)
+			draw_vertical_line(vars, i, line_height, 8, create_color(255, 150, 100, 255));
+		else
+			draw_vertical_line(vars, i, line_height, 8, create_color(50, 250, 50, 255));
 		ra += DEG;
 		if (ra < 0)
 			ra += 2 * PI;
@@ -333,22 +323,6 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_D))
 			vars->player.x += vars->player.dx;
 	redraw(vars);
-	// if (mlx_is_key_down(vars->mlx, MLX_KEY_S))
-	// 	player_advance(vars->map, vars->player, -1);
-	// if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
-	// {
-	// 	draw_map(vars);
-	// 	draw_partcle(vars);
-	// 	vars->player.direction--;
-	// 	draw_rays(vars);
-	// }
-	// if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
-	// {
-	// 	draw_map(vars);
-	// 	draw_partcle(vars);
-	// 	vars->player.direction++;
-	// 	draw_rays(vars);
-	// }
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE)) //free shit
 		exit(0);
 	return (0);
@@ -379,7 +353,7 @@ int	init_vars(void)
 	g_vars = (t_vars *)malloc(sizeof(t_vars));
 	if(!g_vars)
 		return (0);
-	g_vars->window_info.height = 520;
+	g_vars->window_info.height = 512;
 	g_vars->window_info.width = 1024;
 	g_vars->player.angle = 45 * (PI/180);
 	g_vars->player.x = 257;
