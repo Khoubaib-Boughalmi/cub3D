@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/25 19:01:44 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/04/25 19:21:24 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,13 @@ float distance_to_wall(float px, float py, float wx, float wy, float angle_rad)
 
 void draw_wall(t_vars *vars, int r, int lineH, int line_width, int32_t color)
 {
-    int x1 = r * 2 + 520;
+    int x1 = r+ 520;
 	double ligne_offset = 220 - lineH/2;
-    int y1 = ligne_offset;
-
+    int y1 = 220 - lineH/2;
     // Draw vertical line with specified line width
     for (int i = 0; i < 8; i++)
     {
-        for (int y = y1; y <= lineH + ligne_offset; y++)
+        for (int y = y1; y <= lineH + (int)ligne_offset; y++)
         {
             mlx_put_pixel(vars->img, x1 - i, y, color);
         }
@@ -96,7 +95,7 @@ void draw_ray(t_vars *vars)
 	if (ra > 2 * PI)
 		ra -= 2 * PI;
 	
-	for (int i = 0; i < 240 ; i++)
+	for (int i = 0; i < 480 ; i++)
 	{
 		h_dist = 100000;		
 		h_x = vars->player.x;		
@@ -212,10 +211,10 @@ void draw_ray(t_vars *vars)
 		if(line_height > 320)
 			line_height = 320;
 		if(v_dist > h_dist)
-			draw_wall(vars, i, line_height, 8, create_color(255, 0, 0, 255));
+			draw_wall(vars, i, line_height, 8, create_color(255, 0, 50, 255));
 		else
 			draw_wall(vars, i, line_height, 8, create_color(100, 0, 0, 255));
-		ra = ra + DEG/4;
+		ra = ra + DEG / 8;
 		if (ra < 0)
 			ra += 2 * PI;
 		if (ra > 2 * PI)
