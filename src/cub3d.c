@@ -37,7 +37,7 @@ float distance_to_wall(float px, float py, float wx, float wy, float angle_rad)
 
 void draw_wall(t_vars *vars, int r, int lineH, int line_width, int32_t color)
 {
-    int x1 = r+ 520;
+    int x1 = r * 2 + 520;
 	double ligne_offset = 220 - lineH/2;
     int y1 = 220 - lineH/2;
     // Draw vertical line with specified line width
@@ -95,7 +95,7 @@ void draw_ray(t_vars *vars)
 	if (ra > 2 * PI)
 		ra -= 2 * PI;
 	
-	for (int i = 0; i < 480 ; i++)
+	for (int i = 0; i < 240 ; i++)
 	{
 		h_dist = 100000;		
 		h_x = vars->player.x;		
@@ -127,7 +127,6 @@ void draw_ray(t_vars *vars)
 		{
 			mx = (int)(rx) / 64;
 			my = (int)(ry) / 64;
-			mp = my * vars->map.height + mx;
 			if(mx >= 0 && my >= 0 && mx < 8 && my < 8 && g_map[my][mx] == 1)
 			{
 				h_x = rx;
@@ -173,7 +172,6 @@ void draw_ray(t_vars *vars)
 		{
 			mx = (int)(rx) / 64;
 			my = (int)(ry) / 64;
-			mp = my * vars->map.height + mx;
 			if(mx >= 0 && my >= 0 && mx < 8 && my < 8 && g_map[my][mx] == 1)
 			{
 				v_x = rx;
@@ -207,14 +205,14 @@ void draw_ray(t_vars *vars)
 		if(fish_eye_new_angle > 2*PI)
 			fish_eye_new_angle -= 2*PI;
 		f_dist = f_dist * cos(fish_eye_new_angle);
-		float line_height = (64 * 320)/f_dist;
-		if(line_height > 320)
-			line_height = 320;
+		float line_height = (64 * 420)/f_dist;
+		if(line_height > 420)
+			line_height = 420;
 		if(v_dist > h_dist)
-			draw_wall(vars, i, line_height, 8, create_color(255, 0, 50, 255));
+			draw_wall(vars, i, line_height, 8, create_color(255, 255, 255, 240 - i ));
 		else
-			draw_wall(vars, i, line_height, 8, create_color(100, 0, 0, 255));
-		ra = ra + DEG / 8;
+			draw_wall(vars, i, line_height, 8, create_color(255, 255, 255, i));
+		ra = ra + DEG / 4;
 		if (ra < 0)
 			ra += 2 * PI;
 		if (ra > 2 * PI)
