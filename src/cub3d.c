@@ -360,7 +360,7 @@ int	init_vars(void)
 		return (0);
 	g_vars->window_info.height = 512;
 	g_vars->window_info.width = 1024;
-	g_vars->player.angle = 45 * (PI/180);
+	g_vars->player.angle = 0 * (PI/180);
 	g_vars->player.x = 257;
 	g_vars->player.y = 257;
 	g_vars->player.dx = 5 * cos(g_vars->player.angle);
