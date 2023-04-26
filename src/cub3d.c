@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/26 19:34:02 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/04/26 19:36:30 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,7 +295,9 @@ void	redraw(t_vars *vars)
 int key_press_handler(mlx_key_data_t keydata, void *param)
 {
 	t_vars	*vars;
-
+	float angle;
+	float dxright;
+	float dyright;
 	vars = (t_vars *)param;
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
 	{
@@ -315,8 +317,31 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_W))
 	{
-		vars->player.x += vars->player.dx;
-		vars->player.y += vars->player.dy;
+		int x=(int)floor((vars->player.x+(vars->player.dx *2))/64);
+		int y=(int)floor((vars->player.y+(vars->player.dy *2))/64);
+		int factx=(int)floor((vars->player.x)/64);
+		int facty=(int)floor((vars->player.y)/64);
+		printf("%d .  %d \n",x,y);
+		if(g_map[y][x]!=1)
+		{
+			vars->player.x += vars->player.dx;
+			vars->player.y += vars->player.dy;
+		}
+		else
+		{
+			if(g_map[facty][x]!=1)
+			{
+				vars->player.x += vars->player.dx;
+				// vars->player.y += vars->player.dy;
+				
+			}		
+			if(g_map[y][factx]!=1)
+			{
+				// vars->player.x += vars->player.dx;
+				vars->player.y += vars->player.dy;
+				
+			}	
+		}
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_S))
 	{
@@ -324,9 +349,33 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 			vars->player.y -= vars->player.dy;
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
-			vars->player.x -= vars->player.dx;
+	{
+		angle = vars->player.angle-PI/2;
+		if(angle > 2*PI)
+			angle -= 2 * PI;
+		if(angle < 0)
+			angle += 2 * PI;
+		
+		dxright = 5 * cos(angle);
+		dyright = 5 * sin(angle);
+		vars->player.x +=dxright;
+		vars->player.y += dyright;
+	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_D))
-			vars->player.x += vars->player.dx;
+	{
+		angle = vars->player.angle+PI/2;
+		if(angle > 2*PI)
+			angle -= 2 * PI;
+		if(angle < 0)
+			angle += 2 * PI;
+		
+		dxright = 5 * cos(angle);
+		dyright = 5 * sin(angle);
+		vars->player.x +=dxright;
+		vars->player.y += dyright;
+	}
+	printf("angle %02f\n",vars->player.angle);
+	
 	redraw(vars);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE)) //free shit
 		exit(0);
@@ -360,6 +409,9 @@ int	init_vars(void)
 		return (0);
 	g_vars->window_info.height = 512;
 	g_vars->window_info.width = 1024;
+	g_vars->player.angle = -90 * (PI/180);
+	g_vars->player.x = 280;
+	g_vars->player.y = 280;
 	g_vars->player.angle = 90 * (PI/180);
 	g_vars->player.x = 257;
 	g_vars->player.y = 257;
