@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/25 19:21:24 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/04/26 19:34:02 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void clean_window(t_vars *vars)
 	{
 		for (int x = 256; x < 512; x++)
 		{
-			mlx_put_pixel(vars->img, y, x, create_color(255,0,10, x - 255));
+			mlx_put_pixel(vars->img, y, x, create_color(150,150,150, x - 255));
 		}
 	}
 }
@@ -123,7 +123,7 @@ void draw_ray(t_vars *vars)
 			ry = vars->player.y;
 			dof = 8;
 		}
-		while (dof < 8)
+		while (dof < 10)
 		{
 			mx = (int)(rx) / 64;
 			my = (int)(ry) / 64;
@@ -132,7 +132,7 @@ void draw_ray(t_vars *vars)
 				h_x = rx;
 				h_y = ry;
 				h_dist = distance_to_wall(vars->player.x, vars->player.y, h_x, h_y, ra);
-				dof = 8;
+				break;
 			}
 			else
 			{
@@ -168,7 +168,7 @@ void draw_ray(t_vars *vars)
 			ry = vars->player.y;
 			dof = 8;
 		}
-		while (dof < 8)
+		while (dof < 10)
 		{
 			mx = (int)(rx) / 64;
 			my = (int)(ry) / 64;
@@ -177,7 +177,7 @@ void draw_ray(t_vars *vars)
 				v_x = rx;
 				v_y = ry;
 				v_dist = distance_to_wall(vars->player.x, vars->player.y, v_x, v_y, ra);
-				dof = 8;
+				break;
 			}
 			else
 			{
@@ -315,8 +315,8 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_W))
 	{
-			vars->player.x += vars->player.dx;
-			vars->player.y += vars->player.dy;
+		vars->player.x += vars->player.dx;
+		vars->player.y += vars->player.dy;
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_S))
 	{
@@ -360,14 +360,13 @@ int	init_vars(void)
 		return (0);
 	g_vars->window_info.height = 512;
 	g_vars->window_info.width = 1024;
-	g_vars->player.angle = 0 * (PI/180);
+	g_vars->player.angle = 90 * (PI/180);
 	g_vars->player.x = 257;
 	g_vars->player.y = 257;
 	g_vars->player.dx = 5 * cos(g_vars->player.angle);
 	g_vars->player.dy = 5 * sin(g_vars->player.angle);
 	return (1);
 }
-
 
 int main(int argc, char **argv)
 {
