@@ -37,17 +37,17 @@ float distance_to_wall(float px, float py, float wx, float wy, float angle_rad)
 
 void draw_wall(t_vars *vars, int r, int lineH, int line_width, int32_t color)
 {
-    int x1 = r * 2 + 520;
+   int x1 = r * 2 + 513;
 	double ligne_offset = 220 - lineH/2;
-    int y1 = 220 - lineH/2;
-    // Draw vertical line with specified line width
-    for (int i = 0; i < 8; i++)
-    {
-        for (int y = y1; y <= lineH + (int)ligne_offset; y++)
-        {
-            mlx_put_pixel(vars->img, x1 - i, y, color);
-        }
-    }
+   int y1 = 220 - lineH/2;
+	// Draw vertical line with specified line width
+	for (int i = 0; i < 2; i++)
+	{
+		for (int y = y1; y <= lineH + (int)ligne_offset; y++)
+		{
+			mlx_put_pixel(vars->img, x1 - i, y, color);
+		}
+	}
 }
 
 void clean_window(t_vars *vars)
@@ -56,7 +56,7 @@ void clean_window(t_vars *vars)
 	{
 		for (int x = 0; x < 256; x++)
 		{
-			mlx_put_pixel(vars->img, y, x, 0x000000FF);
+			mlx_put_pixel(vars->img, y, x, create_color(50,150,255,255 - x));
 		}
 	}
 
@@ -64,7 +64,7 @@ void clean_window(t_vars *vars)
 	{
 		for (int x = 256; x < 512; x++)
 		{
-			mlx_put_pixel(vars->img, y, x, 0x000022FF);
+			mlx_put_pixel(vars->img, y, x, create_color(150,150,150, x - 255));
 		}
 	}
 }
@@ -95,7 +95,7 @@ void draw_ray(t_vars *vars)
 	if (ra > 2 * PI)
 		ra -= 2 * PI;
 	
-	for (int i = 0; i < 240 ; i++)
+	for (int i = 0; i < 256 ; i++)
 	{
 		h_dist = 100000;		
 		h_x = vars->player.x;		
@@ -206,12 +206,12 @@ void draw_ray(t_vars *vars)
 			fish_eye_new_angle -= 2*PI;
 		f_dist = f_dist * cos(fish_eye_new_angle);
 		float line_height = (64 * 420)/f_dist;
-		if(line_height > 420)
-			line_height = 420;
+		if(line_height > 440)
+			line_height = 440;
 		if(v_dist > h_dist)
-			draw_wall(vars, i, line_height, 8, create_color(255, 255, 255, 240 - i ));
+			draw_wall(vars, i, line_height, 8, create_color(150,150,150, 256 - i ));
 		else
-			draw_wall(vars, i, line_height, 8, create_color(255, 255, 255, i));
+			draw_wall(vars, i, line_height, 8, create_color(150,150,150, i));
 		ra = ra + DEG / 4;
 		if (ra < 0)
 			ra += 2 * PI;
