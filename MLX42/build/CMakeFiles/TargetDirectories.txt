@@ -1,3 +1,0 @@
-/Users/kboughal/Desktop/cub3D/MLX42/build/CMakeFiles/mlx42.dir
-/Users/kboughal/Desktop/cub3D/MLX42/build/CMakeFiles/edit_cache.dir
-/Users/kboughal/Desktop/cub3D/MLX42/build/CMakeFiles/rebuild_cache.dir

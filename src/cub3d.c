@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/26 19:36:30 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/04/27 16:40:10 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ float distance_to_wall(float px, float py, float wx, float wy, float angle_rad)
 	return (sqrt((wy - py)*(wy - py) + (wx - px)*(wx - px)));
 }
 
-void draw_wall(t_vars *vars, int r, int lineH, int line_width, int32_t color)
+void draw_wall(t_vars *vars, int r, int lineH, int32_t color)
 {
    int x1 = r * 2 + 513;
 	double ligne_offset = 220 - lineH/2;
@@ -64,7 +64,7 @@ void clean_window(t_vars *vars)
 	{
 		for (int x = 256; x < 512; x++)
 		{
-			mlx_put_pixel(vars->img, y, x, create_color(150,150,150, x - 255));
+			mlx_put_pixel(vars->img, y, x, create_color(255,0,50, x - 255));
 		}
 	}
 }
@@ -209,9 +209,9 @@ void draw_ray(t_vars *vars)
 		if(line_height > 440)
 			line_height = 440;
 		if(v_dist > h_dist)
-			draw_wall(vars, i, line_height, 8, create_color(150,150,150, 256 - i ));
+			draw_wall(vars, i, line_height, create_color(150,150,150, 256 - i ));
 		else
-			draw_wall(vars, i, line_height, 8, create_color(150,150,150, i));
+			draw_wall(vars, i, line_height, create_color(150,150,150, i));
 		ra = ra + DEG / 4;
 		if (ra < 0)
 			ra += 2 * PI;
@@ -382,6 +382,8 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 	return (0);
 }
 
+void mouse_handler(){}
+
 void	render_window(t_vars *vars)
 {
 	int	width;
@@ -392,12 +394,23 @@ void	render_window(t_vars *vars)
 	vars->mlx = mlx_init(width, height, "cub3D", 1);
 	mlx_set_window_limit(vars->mlx,  width - 200, height - 200, width, height);
 	vars->img = mlx_new_image(vars->mlx, width, height);
-	clean_window(vars);
-	draw_map(vars);
-	draw_partcle(vars);
-	draw_ray(vars);
+	// clean_window(vars);
+	// draw_map(vars);
+	// draw_partcle(vars);
+	// draw_ray(vars);
+	mlx_texture_t *wall_texture = mlx_load_png("./src/textures/wall_1.png");
+	for (size_t i = 0; i < wall_texture->height * wall_texture->width * 4; i++)
+	{
+		// if(i == wall_texture->width)
+		printf("%hhu\n", wall_texture->pixels[i]);		
+	}
+	
+	mlx_image_t *wall_img = mlx_texture_to_image(g_vars->mlx, wall_texture);
+	mlx_image_to_window(g_vars->mlx, wall_img, 100, 100);
 	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler, vars);
 	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
+	// mlx_delete_image(vars->mlx, wall_img);
+	// mlx_delete_texture(wall_texture);
 	mlx_loop(vars->mlx);
 	mlx_terminate(vars->mlx);
 }
