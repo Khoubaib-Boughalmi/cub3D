@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/28 16:51:55 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/04/28 20:45:53 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ float distance_to_wall(float px, float py, float wx, float wy, float angle_rad)
 
 void draw_wall(t_vars *vars, int r, int lineH, int32_t color)
 {
-   int x1 = r * 2 + 513;
+   int x1 = r * 4 + 4;
 	double ligne_offset = 220 - lineH/2;
    int y1 = 220 - lineH/2;
 	// Draw vertical line with specified line width
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		for (int y = y1; y <= lineH + (int)ligne_offset; y++)
 		{
@@ -52,7 +52,7 @@ void draw_wall(t_vars *vars, int r, int lineH, int32_t color)
 
 void clean_window(t_vars *vars)
 {
-	for (int y = 512; y < 1024; y++)
+	for (int y = 0; y < 1024; y++)
 	{
 		for (int x = 0; x < 256; x++)
 		{
@@ -60,11 +60,11 @@ void clean_window(t_vars *vars)
 		}
 	}
 
-	for (int y = 512; y < 1024; y++)
+	for (int y = 0; y < 1024; y++)
 	{
 		for (int x = 256; x < 512; x++)
 		{
-			mlx_put_pixel(vars->img, y, x, create_color(255,0,50, x - 255));
+			mlx_put_pixel(vars->img, y, x, create_color(10,200,50, x - 255));
 		}
 	}
 }
@@ -198,7 +198,7 @@ void draw_ray(t_vars *vars)
 			ry = h_y;
 			f_dist = h_dist;
 		}
-		put_line(vars->mlx, vars->win, vars->player.x, vars->player.y, rx, ry, create_color(255,255,0,255), 64*8,64*8);
+		put_line(vars->mlx, vars->win, (vars->player.x * 18) / 64, (vars->player.y * 18) / 64, (rx * 18)/ 64, (ry * 18)/ 64, create_color(255,255,0,255), 128,128);
 		double fish_eye_new_angle = vars->player.angle - ra;
 		if(fish_eye_new_angle < 0)
 			fish_eye_new_angle += 2*PI;
@@ -230,19 +230,19 @@ void	draw_partcle(t_vars *vars)
 	uint32_t	color;
 
 	i = -1;
-	radius = 10;
-	px = vars->player.x;
-	py = vars->player.y;
-	color = create_color(255, 255, 255, 255);
-	for (int x = 0; x < 640; x++)
+	radius = 3;
+	px = (((vars->player.x) * 18) / 64);
+	py = (((vars->player.y) * 18) / 64) - 18;
+	printf("posx %f %f\n", vars->player.x, vars->player.y);
+	for (int x = 0; x < 128 - 18 ; x++)
 	{
-		for (int y = 0; y < 640; y++)
+		for (int y = 0; y < 128 - 18 ; y++)
 		{
 			if ((x - px) * (x - px) + (y - py) * (y - py) < radius * radius)
-				mlx_put_pixel(vars->img, x ,y , color);
+				mlx_put_pixel(vars->img, x ,y , create_color(255, 255, 255, 255));
 		}
 	}
-	put_line(vars->mlx, vars->win, vars->player.x, vars->player.y, vars->player.x + vars->player.dx * 10, vars->player.y + vars->player.dy * 10 , create_color(0,255,0,255), 64*8,64*8);
+	put_line(vars->mlx, vars->win, (((vars->player.x) * 18) / 64), (((vars->player.y) * 18) / 64) - 18, ((vars->player.x) * 18) / 64 + vars->player.dx * 10, (vars->player.y * 18) / 64 + vars->player.dy * 10 , create_color(0,255,0,255), 128, 128);
 }
 
 void	draw_tile(t_vars *vars, int y, int x)
@@ -253,16 +253,16 @@ void	draw_tile(t_vars *vars, int y, int x)
 	uint32_t color_white = create_color(255, 255, 255, 255);
 	uint32_t color_grey = create_color(120, 120, 120, 255);
 	i = -1;
-	while (++i < 64)
+	while (++i < 16)
 	{
 		j = -1;
-		while (++j < 64)
+		while (++j < 16)
 		{
-			mlx_put_pixel(vars->img, (64 * x) + i, (64 * y) + j, color_black);
+			mlx_put_pixel(vars->img, (16 * x) + i, (16 * y) + j, color_black);
 			if(g_map[y][x])
-				mlx_put_pixel(vars->img, (64 * x) + i, (64 * y) + j, color_grey);
-			if(j == 63 || i == 63)
-				mlx_put_pixel(vars->img, (64 * x) + i, (64 * y) + j, color_white);
+				mlx_put_pixel(vars->img, (16 * x) + i, (16 * y) + j, color_grey);
+			if(j == 15 || i == 15)
+				mlx_put_pixel(vars->img, (16 * x) + i, (16 * y) + j, color_white);
 		}
 	}
 
@@ -286,8 +286,8 @@ void	draw_map(t_vars *vars)
 void	redraw(t_vars *vars)
 {
 	clean_window(vars);
-	draw_map(vars);
 	draw_ray(vars);
+	draw_map(vars);
 	draw_partcle(vars);
 
 }
@@ -408,10 +408,7 @@ void mouse_handler(double xpos, double ypos, void *param)
 		vars->player.dx = 5 * cos(vars->player.angle);
 		vars->player.dy = 5 * sin(vars->player.angle);
 	}
-	// if(xpos > 1024)
-	// 	vars->player.prev_xpos = 1024;
-	// else
-		vars->player.prev_xpos = xpos;
+	vars->player.prev_xpos = xpos;
 	redraw(vars);
 }
 
@@ -425,19 +422,10 @@ void	render_window(t_vars *vars)
 	vars->mlx = mlx_init(width, height, "cub3D", 1);
 	mlx_set_window_limit(vars->mlx,  width - 200, height - 200, width, height);
 	vars->img = mlx_new_image(vars->mlx, width, height);
-	// clean_window(vars);
-	// draw_map(vars);
-	// draw_partcle(vars);
-	// draw_ray(vars);
-	mlx_texture_t *wall_texture = mlx_load_png("./src/textures/wall_1.png");
-	for (size_t i = 0; i < wall_texture->height * wall_texture->width * 4; i++)
-	{
-		// if(i == wall_texture->width)
-		// printf("%hhu\n", wall_texture->pixels[i]);		
-	}
-	
-	mlx_image_t *wall_img = mlx_texture_to_image(g_vars->mlx, wall_texture);
-	mlx_image_to_window(g_vars->mlx, wall_img, 100, 100);
+	clean_window(vars);
+	draw_partcle(vars);
+	draw_ray(vars);
+	draw_map(vars);
 	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler, vars);
 	// mlx_mouse_hook(vars->mlx, (mlx_mousefunc)mouse_handler, vars);
 	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
@@ -456,8 +444,6 @@ int	init_vars(void)
 	g_vars->window_info.height = 512;
 	g_vars->window_info.width = 1024;
 	g_vars->player.angle = -90 * (PI/180);
-	g_vars->player.x = 280;
-	g_vars->player.y = 280;
 	g_vars->player.angle = 90 * (PI/180);
 	g_vars->player.prev_xpos = 0;
 	g_vars->player.x = 257;
