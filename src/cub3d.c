@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/27 16:40:10 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/04/28 16:51:55 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,7 +321,6 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 		int y=(int)floor((vars->player.y+(vars->player.dy *2))/64);
 		int factx=(int)floor((vars->player.x)/64);
 		int facty=(int)floor((vars->player.y)/64);
-		printf("%d .  %d \n",x,y);
 		if(g_map[y][x]!=1)
 		{
 			vars->player.x += vars->player.dx;
@@ -374,7 +373,6 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 		vars->player.x +=dxright;
 		vars->player.y += dyright;
 	}
-	printf("angle %02f\n",vars->player.angle);
 	
 	redraw(vars);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE)) //free shit
@@ -382,7 +380,40 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 	return (0);
 }
 
-void mouse_handler(){}
+void mouse_handler(double xpos, double ypos, void *param)
+{
+	t_vars	*vars;
+	vars = (t_vars *)param;
+	if(xpos > vars->player.prev_xpos)
+	{
+		if (xpos < 512)
+			xpos = 512;
+		else if(xpos > 1024)
+			xpos = 1024;
+		vars->player.angle += (3/xpos * 5);
+		if(vars->player.angle > 2*PI)
+			vars->player.angle -= 2 * PI;
+		vars->player.dx = 5 * cos(vars->player.angle);
+		vars->player.dy = 5 * sin(vars->player.angle);
+	}
+	if (xpos < vars->player.prev_xpos)
+	{
+		if (xpos < 512)
+			xpos = 512;
+		else if(xpos > 1024)
+			xpos = 1024;
+		vars->player.angle -= (3/xpos * 5);
+		if(vars->player.angle < 0)
+			vars->player.angle += 2 * PI;
+		vars->player.dx = 5 * cos(vars->player.angle);
+		vars->player.dy = 5 * sin(vars->player.angle);
+	}
+	// if(xpos > 1024)
+	// 	vars->player.prev_xpos = 1024;
+	// else
+		vars->player.prev_xpos = xpos;
+	redraw(vars);
+}
 
 void	render_window(t_vars *vars)
 {
@@ -402,13 +433,15 @@ void	render_window(t_vars *vars)
 	for (size_t i = 0; i < wall_texture->height * wall_texture->width * 4; i++)
 	{
 		// if(i == wall_texture->width)
-		printf("%hhu\n", wall_texture->pixels[i]);		
+		// printf("%hhu\n", wall_texture->pixels[i]);		
 	}
 	
 	mlx_image_t *wall_img = mlx_texture_to_image(g_vars->mlx, wall_texture);
 	mlx_image_to_window(g_vars->mlx, wall_img, 100, 100);
 	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler, vars);
+	// mlx_mouse_hook(vars->mlx, (mlx_mousefunc)mouse_handler, vars);
 	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
+	mlx_cursor_hook(vars->mlx, (mlx_cursorfunc)mouse_handler, vars);
 	// mlx_delete_image(vars->mlx, wall_img);
 	// mlx_delete_texture(wall_texture);
 	mlx_loop(vars->mlx);
@@ -426,6 +459,7 @@ int	init_vars(void)
 	g_vars->player.x = 280;
 	g_vars->player.y = 280;
 	g_vars->player.angle = 90 * (PI/180);
+	g_vars->player.prev_xpos = 0;
 	g_vars->player.x = 257;
 	g_vars->player.y = 257;
 	g_vars->player.dx = 5 * cos(g_vars->player.angle);

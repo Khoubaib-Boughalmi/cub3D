@@ -56,6 +56,7 @@ typedef struct s_player {
 	float			dx;
 	float			dy;
 	float			angle;
+	double			prev_xpos;
 
 }				t_player;
 
