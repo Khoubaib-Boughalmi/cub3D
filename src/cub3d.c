@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/29 17:15:30 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/04/29 20:57:26 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ float distance_to_wall(float px, float py, float wx, float wy, float angle_rad)
 	return (sqrt((wy - py) * (wy - py) + (wx - px) * (wx - px)));
 }
 
-void draw_wall(t_vars *vars, int r, int lineH, int32_t color)
+void draw_wall(t_vars *vars, int r, double lineH, int32_t color)
 {
-	int x1 = r * 4 + 4;
-	double ligne_offset = 220 - lineH / 2;
-	int y1 = 220 - lineH / 2;
+	int x1 = r * 2 + 2;
+	int ligne_offset = 512 - lineH / 2;
+	int y1 = 512 - lineH / 2;
 	// Draw vertical line with specified line width
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		for (int y = y1; y <= lineH + (int)ligne_offset; y++)
 		{
@@ -53,17 +53,17 @@ void clean_window(t_vars *vars)
 {
 	for (int y = 0; y < 1024; y++)
 	{
-		for (int x = 0; x < 256; x++)
+		for (int x = 0; x < 512; x++)
 		{
-			mlx_put_pixel(vars->img, y, x, create_color(50, 150, 255, 255 - x));
+			mlx_put_pixel(vars->img, y, x, create_color(50, 150, 255, 255));
 		}
 	}
 
 	for (int y = 0; y < 1024; y++)
 	{
-		for (int x = 256; x < 512; x++)
+		for (int x = 512; x < 1024; x++)
 		{
-			mlx_put_pixel(vars->img, y, x, create_color(125, 125, 125, x - 255));
+			mlx_put_pixel(vars->img, y, x, create_color(125, 255, 125, 255));
 		}
 	}
 }
@@ -130,7 +130,7 @@ void draw_ray(t_vars *vars)
 	if (ra > 2 * PI)
 		ra -= 2 * PI;
 
-	for (int i = 0; i < 256; i++)
+	for (int i = 0; i < 512; i++)
 	{
 		h_dist = 100000;
 		h_x = vars->player.x;
@@ -240,14 +240,14 @@ void draw_ray(t_vars *vars)
 		if (fish_eye_new_angle > 2 * PI)
 			fish_eye_new_angle -= 2 * PI;
 		f_dist = f_dist * cos(fish_eye_new_angle);
-		float line_height = (64 * 420) / f_dist;
-		if (line_height > 440)
-			line_height = 440;
+		double line_height = (64 * 800) / f_dist;
+		if (line_height > 1020)
+			line_height = 1020;
 		if (v_dist > h_dist)
-			draw_wall(vars, i, line_height, create_color(150, 150, 150, 256 - i));
+			draw_wall(vars, i, line_height, create_color(150, 150, 150, 256 - (i / 2 + 1)));
 		else
-			draw_wall(vars, i, line_height, create_color(150, 150, 150, i));
-		ra = ra + DEG / 4;
+			draw_wall(vars, i, line_height, create_color(150, 150, 150, i / 2 + 1));
+		ra = ra + DEG / 8;
 		if (ra < 0)
 			ra += 2 * PI;
 		if (ra > 2 * PI)
@@ -425,7 +425,7 @@ void render_window(t_vars *vars)
 	vars->img = mlx_new_image(vars->mlx, width, height);
 	redraw(vars);
 	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler, vars);
-	mlx_cursor_hook(vars->mlx, (mlx_cursorfunc)mouse_handler, vars);
+	// mlx_cursor_hook(vars->mlx, (mlx_cursorfunc)mouse_handler, vars);
 	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
 	mlx_loop(vars->mlx);
 	mlx_terminate(vars->mlx);
@@ -436,7 +436,7 @@ int init_vars(void)
 	g_vars = (t_vars *)malloc(sizeof(t_vars));
 	if (!g_vars)
 		return (0);
-	g_vars->window_info.height = 512;
+	g_vars->window_info.height = 1024;
 	g_vars->window_info.width = 1024;
 	g_vars->player.angle = 45 * (PI / 180);
 	g_vars->player.prev_xpos = 0;
