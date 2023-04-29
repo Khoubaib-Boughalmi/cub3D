@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/28 20:45:53 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/04/29 16:24:37 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ float distance_to_wall(float px, float py, float wx, float wy, float angle_rad)
 
 void draw_wall(t_vars *vars, int r, int lineH, int32_t color)
 {
-	int x1 = r * 16 + 16;
+	int x1 = r * 4 + 4;
 	double ligne_offset = 220 - lineH / 2;
 	int y1 = 220 - lineH / 2;
 	// Draw vertical line with specified line width
-	for (int i = 0; i < 16; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		for (int y = y1; y <= lineH + (int)ligne_offset; y++)
 		{
@@ -130,7 +130,7 @@ void draw_ray(t_vars *vars)
 	if (ra > 2 * PI)
 		ra -= 2 * PI;
 
-	for (int i = 0; i < 60; i++)
+	for (int i = 0; i < 256; i++)
 	{
 		h_dist = 100000;
 		h_x = vars->player.x;
@@ -233,7 +233,7 @@ void draw_ray(t_vars *vars)
 			ry = h_y;
 			f_dist = h_dist;
 		}
-		put_line(vars->mlx, vars->win, (vars->player.x * 16) / 64, (vars->player.y * 16) / 64, (rx * 16) / 64, (ry * 16) / 64, create_color(255, 255, 0, 255), 128, 128);
+		// put_line(vars->mlx, vars->win, (vars->player.x * 16) / 64, (vars->player.y * 16) / 64, (rx * 16) / 64, (ry * 16) / 64, create_color(255, 255, 0, 255), 128, 128);
 		double fish_eye_new_angle = vars->player.angle - ra;
 		if (fish_eye_new_angle < 0)
 			fish_eye_new_angle += 2 * PI;
@@ -247,13 +247,12 @@ void draw_ray(t_vars *vars)
 			draw_wall(vars, i, line_height, create_color(150, 150, 150, 256 - i));
 		else
 			draw_wall(vars, i, line_height, create_color(150, 150, 150, i));
-		ra = ra + DEG;
+		ra = ra + DEG / 4;
 		if (ra < 0)
 			ra += 2 * PI;
 		if (ra > 2 * PI)
 			ra -= 2 * PI;
 	}
-	// draw_map(vars);
 }
 
 void draw_partcle(t_vars *vars)
@@ -269,7 +268,6 @@ void draw_partcle(t_vars *vars)
 	radius = 3;
 	px = (((vars->player.x) * 16) / 64);
 	py = (((vars->player.y) * 16) / 64);
-	printf("posx %f %f\n", vars->player.x, vars->player.y);
 	for (int x = 0; x < 128; x++)
 	{
 		for (int y = 0; y < 128; y++)
@@ -278,15 +276,15 @@ void draw_partcle(t_vars *vars)
 				mlx_put_pixel(vars->img, x, y, create_color(255, 255, 255, 255));
 		}
 	}
-	put_line(vars->mlx, vars->win, (((vars->player.x) * 16) / 64), (((vars->player.y) * 16) / 64), ((vars->player.x) * 16) / 64 + vars->player.dx * 10, (vars->player.y * 16) / 64 + vars->player.dy * 10, create_color(0, 255, 0, 255), 128, 128);
+	put_line(vars->mlx, vars->win, px, py, px + vars->player.dx * 4, py + vars->player.dy * 4, create_color(0, 255, 0, 255), 128, 128);
 }
 
 void redraw(t_vars *vars)
 {
 	clean_window(vars);
-	draw_map(vars);
-	draw_partcle(vars);
 	draw_ray(vars);
+	draw_partcle(vars);
+	draw_map(vars);
 }
 
 int key_press_handler(mlx_key_data_t keydata, void *param)
@@ -296,6 +294,7 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 	float dxright;
 	float dyright;
 	vars = (t_vars *)param;
+	
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
 	{
 		vars->player.angle += 0.1;
@@ -313,7 +312,7 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 		vars->player.dy = 5 * sin(vars->player.angle);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_W))
-	{
+	{	
 		int x = (int)floor((vars->player.x + (vars->player.dx * 2)) / 64);
 		int y = (int)floor((vars->player.y + (vars->player.dy * 2)) / 64);
 		int factx = (int)floor((vars->player.x) / 64);
@@ -326,21 +325,29 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 		else
 		{
 			if (g_map[facty][x] != 1)
-			{
 				vars->player.x += vars->player.dx;
-				// vars->player.y += vars->player.dy;
-			}
 			if (g_map[y][factx] != 1)
-			{
-				// vars->player.x += vars->player.dx;
 				vars->player.y += vars->player.dy;
-			}
 		}
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_S))
 	{
-		vars->player.x -= vars->player.dx;
-		vars->player.y -= vars->player.dy;
+		int x = (int)floor((vars->player.x - (vars->player.dx * 2)) / 64);
+		int y = (int)floor((vars->player.y - (vars->player.dy * 2)) / 64);
+		int factx = (int)floor((vars->player.x) / 64);
+		int facty = (int)floor((vars->player.y) / 64);
+		if (g_map[y][x] != 1)
+		{
+			vars->player.x -= vars->player.dx;
+			vars->player.y -= vars->player.dy;
+		}
+		else
+		{
+			if (g_map[facty][x] != 1)
+				vars->player.x -= vars->player.dx;
+			if (g_map[y][factx] != 1)
+				vars->player.y -= vars->player.dy;
+		}
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
 	{
@@ -416,16 +423,10 @@ void render_window(t_vars *vars)
 	vars->mlx = mlx_init(width, height, "cub3D", 1);
 	mlx_set_window_limit(vars->mlx, width - 200, height - 200, width, height);
 	vars->img = mlx_new_image(vars->mlx, width, height);
-	clean_window(vars);
-	draw_partcle(vars);
-	draw_map(vars);
-	draw_ray(vars);
+	redraw(vars);
 	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler, vars);
-	// mlx_mouse_hook(vars->mlx, (mlx_mousefunc)mouse_handler, vars);
-	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
 	mlx_cursor_hook(vars->mlx, (mlx_cursorfunc)mouse_handler, vars);
-	// mlx_delete_image(vars->mlx, wall_img);
-	// mlx_delete_texture(wall_texture);
+	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
 	mlx_loop(vars->mlx);
 	mlx_terminate(vars->mlx);
 }
@@ -437,11 +438,10 @@ int init_vars(void)
 		return (0);
 	g_vars->window_info.height = 512;
 	g_vars->window_info.width = 1024;
-	g_vars->player.angle = -90 * (PI / 180);
-	g_vars->player.angle = 90 * (PI / 180);
+	g_vars->player.angle = 45 * (PI / 180);
 	g_vars->player.prev_xpos = 0;
-	g_vars->player.x = 64;
-	g_vars->player.y = 64;
+	g_vars->player.x = 64*2;
+	g_vars->player.y = 64*2;
 	g_vars->player.dx = 5 * cos(g_vars->player.angle);
 	g_vars->player.dy = 5 * sin(g_vars->player.angle);
 	return (1);
