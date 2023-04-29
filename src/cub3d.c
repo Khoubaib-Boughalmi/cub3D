@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/29 16:24:37 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/04/29 17:15:30 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void clean_window(t_vars *vars)
 	{
 		for (int x = 256; x < 512; x++)
 		{
-			mlx_put_pixel(vars->img, y, x, create_color(10, 200, 50, x - 255));
+			mlx_put_pixel(vars->img, y, x, create_color(125, 125, 125, x - 255));
 		}
 	}
 }
@@ -233,7 +233,7 @@ void draw_ray(t_vars *vars)
 			ry = h_y;
 			f_dist = h_dist;
 		}
-		// put_line(vars->mlx, vars->win, (vars->player.x * 16) / 64, (vars->player.y * 16) / 64, (rx * 16) / 64, (ry * 16) / 64, create_color(255, 255, 0, 255), 128, 128);
+		put_line(vars->mlx, vars->win, (vars->player.x * 16) / 64, (vars->player.y * 16) / 64, (rx * 16) / 64, (ry * 16) / 64, create_color(255, 255, 0, 255), 128, 128);
 		double fish_eye_new_angle = vars->player.angle - ra;
 		if (fish_eye_new_angle < 0)
 			fish_eye_new_angle += 2 * PI;
