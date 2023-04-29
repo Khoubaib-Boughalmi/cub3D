@@ -68,6 +68,46 @@ void clean_window(t_vars *vars)
 		}
 	}
 }
+
+
+void	draw_tile(t_vars *vars, int y, int x)
+{
+	int	i;
+	int	j;
+	uint32_t color_black = create_color(0, 0, 0, 255);
+	uint32_t color_white = create_color(255, 255, 255, 255);
+	uint32_t color_grey = create_color(160, 60, 60, 255);
+	i = -1;
+	while (++i < 16)
+	{
+		j = -1;
+		while (++j < 16)
+		{
+			mlx_put_pixel(vars->img, (16 * x) + i, (16 * y) + j, color_black);
+			if(g_map[y][x])
+				mlx_put_pixel(vars->img, (16 * x) + i, (16 * y) + j, color_grey);
+			if(j == 15 || i == 15)
+				mlx_put_pixel(vars->img, (16 * x) + i, (16 * y) + j, color_white);
+		}
+	}
+
+}
+void	draw_map(t_vars *vars)
+{
+	int	x;
+	int	y;
+
+	y = -1;
+	while (++y < 8)
+	{
+		x = -1;
+		while (++x < 8)
+			draw_tile(vars, y, x);
+	}
+
+}
+
+
 void draw_ray(t_vars *vars)
 {
 	// t_ray	ray;
@@ -198,7 +238,8 @@ void draw_ray(t_vars *vars)
 			ry = h_y;
 			f_dist = h_dist;
 		}
-		put_line(vars->mlx, vars->win, (vars->player.x * 18) / 64, (vars->player.y * 18) / 64, (rx * 18)/ 64, (ry * 18)/ 64, create_color(255,255,0,255), 128,128);
+		draw_map(vars);
+		put_line(vars->mlx, vars->win, (vars->player.x * 16) / 64, (vars->player.y * 16) / 64, (rx* 16) / 64, (ry* 16) / 64, create_color(255,255,0,255), 128,128);
 		double fish_eye_new_angle = vars->player.angle - ra;
 		if(fish_eye_new_angle < 0)
 			fish_eye_new_angle += 2*PI;
@@ -231,65 +272,26 @@ void	draw_partcle(t_vars *vars)
 
 	i = -1;
 	radius = 3;
-	px = (((vars->player.x) * 18) / 64);
-	py = (((vars->player.y) * 18) / 64) - 18;
+	px = (((vars->player.x) * 16) / 64);
+	py = (((vars->player.y) * 16) / 64);
 	printf("posx %f %f\n", vars->player.x, vars->player.y);
-	for (int x = 0; x < 128 - 18 ; x++)
+	for (int x = 0; x < 128 ; x++)
 	{
-		for (int y = 0; y < 128 - 18 ; y++)
+		for (int y = 0; y < 128 ; y++)
 		{
 			if ((x - px) * (x - px) + (y - py) * (y - py) < radius * radius)
 				mlx_put_pixel(vars->img, x ,y , create_color(255, 255, 255, 255));
 		}
 	}
-	put_line(vars->mlx, vars->win, (((vars->player.x) * 18) / 64), (((vars->player.y) * 18) / 64) - 18, ((vars->player.x) * 18) / 64 + vars->player.dx * 10, (vars->player.y * 18) / 64 + vars->player.dy * 10 , create_color(0,255,0,255), 128, 128);
+	put_line(vars->mlx, vars->win, (((vars->player.x) * 16) / 64), (((vars->player.y) * 16) / 64), ((vars->player.x) * 16) / 64 + vars->player.dx * 10, (vars->player.y * 16) / 64 + vars->player.dy * 10 , create_color(0,255,0,255), 128, 128);
 }
 
-void	draw_tile(t_vars *vars, int y, int x)
-{
-	int	i;
-	int	j;
-	uint32_t color_black = create_color(0, 0, 0, 255);
-	uint32_t color_white = create_color(255, 255, 255, 255);
-	uint32_t color_grey = create_color(120, 120, 120, 255);
-	i = -1;
-	while (++i < 16)
-	{
-		j = -1;
-		while (++j < 16)
-		{
-			mlx_put_pixel(vars->img, (16 * x) + i, (16 * y) + j, color_black);
-			if(g_map[y][x])
-				mlx_put_pixel(vars->img, (16 * x) + i, (16 * y) + j, color_grey);
-			if(j == 15 || i == 15)
-				mlx_put_pixel(vars->img, (16 * x) + i, (16 * y) + j, color_white);
-		}
-	}
-
-}
-
-void	draw_map(t_vars *vars)
-{
-	int	x;
-	int	y;
-
-	y = -1;
-	while (++y < 8)
-	{
-		x = -1;
-		while (++x < 8)
-			draw_tile(vars, y, x);
-	}
-
-}
 
 void	redraw(t_vars *vars)
 {
 	clean_window(vars);
 	draw_ray(vars);
-	draw_map(vars);
 	draw_partcle(vars);
-
 }
 
 int key_press_handler(mlx_key_data_t keydata, void *param)
@@ -373,10 +375,9 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 		vars->player.x +=dxright;
 		vars->player.y += dyright;
 	}
-	
-	redraw(vars);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE)) //free shit
 		exit(0);
+	redraw(vars);
 	return (0);
 }
 
@@ -424,8 +425,8 @@ void	render_window(t_vars *vars)
 	vars->img = mlx_new_image(vars->mlx, width, height);
 	clean_window(vars);
 	draw_partcle(vars);
-	draw_ray(vars);
 	draw_map(vars);
+	draw_ray(vars);
 	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler, vars);
 	// mlx_mouse_hook(vars->mlx, (mlx_mousefunc)mouse_handler, vars);
 	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
@@ -446,8 +447,8 @@ int	init_vars(void)
 	g_vars->player.angle = -90 * (PI/180);
 	g_vars->player.angle = 90 * (PI/180);
 	g_vars->player.prev_xpos = 0;
-	g_vars->player.x = 257;
-	g_vars->player.y = 257;
+	g_vars->player.x = 64;
+	g_vars->player.y = 64;
 	g_vars->player.dx = 5 * cos(g_vars->player.angle);
 	g_vars->player.dy = 5 * sin(g_vars->player.angle);
 	return (1);
