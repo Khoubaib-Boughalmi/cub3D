@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/29 20:57:26 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/04/30 14:52:16 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -359,8 +359,22 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 
 		dxright = 5 * cos(angle);
 		dyright = 5 * sin(angle);
-		vars->player.x += dxright;
-		vars->player.y += dyright;
+		int x = (int)floor((vars->player.x + (dxright * 2)) / 64);
+		int y = (int)floor((vars->player.y + (dyright * 2)) / 64);
+		int factx = (int)floor((vars->player.x) / 64);
+		int facty = (int)floor((vars->player.y) / 64);
+		if (g_map[y][x] != 1)
+		{
+			vars->player.x += dxright;
+			vars->player.y += dyright;
+		}
+		else
+		{
+			if (g_map[facty][x] != 1)
+				vars->player.x += dxright;
+			if (g_map[y][factx] != 1)
+				vars->player.y += dyright;
+		}
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_D))
 	{
@@ -372,8 +386,22 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 
 		dxright = 5 * cos(angle);
 		dyright = 5 * sin(angle);
-		vars->player.x += dxright;
-		vars->player.y += dyright;
+		int x = (int)floor((vars->player.x + (dxright * 2)) / 64);
+		int y = (int)floor((vars->player.y + (dyright * 2)) / 64);
+		int factx = (int)floor((vars->player.x) / 64);
+		int facty = (int)floor((vars->player.y) / 64);
+		if (g_map[y][x] != 1)
+		{
+			vars->player.x += dxright;
+			vars->player.y += dyright;
+		}
+		else
+		{
+			if (g_map[facty][x] != 1)
+				vars->player.x += dxright;
+			if (g_map[y][factx] != 1)
+				vars->player.y += dyright;
+		}
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE)) // free shit
 		exit(0);
