@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
+/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/30 14:52:16 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/04/30 17:26:08 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_vars *g_vars;
 int g_map[8][8] = {
 	 {1, 1, 1, 1, 1, 1, 1, 1},
 	 {1, 0, 0, 0, 0, 0, 0, 1},
-	 {1, 0, 0, 1, 1, 0, 0, 1},
+	 {1, 0, 0, 1, 0, 1, 0, 1},
 	 {1, 0, 0, 0, 0, 0, 0, 1},
 	 {1, 0, 1, 0, 0, 1, 0, 1},
 	 {1, 0, 0, 0, 0, 0, 0, 1},
@@ -34,17 +34,60 @@ float distance_to_wall(float px, float py, float wx, float wy, float angle_rad)
 	return (sqrt((wy - py) * (wy - py) + (wx - px) * (wx - px)));
 }
 
-void draw_wall(t_vars *vars, int r, double lineH, int32_t color)
+// void draw_wall(t_vars *vars, int r, double lineH, int32_t color)
+void draw_wall(t_vars *vars, double r,double rx,double ry, double lineH,int hororver)
 {
+	mlx_texture_t *imgtxet;
+	int32_t color;
+	double porcentsage;
+   if(hororver==1 )
+	porcentsage=ry/64;
+   if(hororver==0 )
+	porcentsage=rx/64;
 	int x1 = r * 2 + 2;
+	int k=lineH;
+	if (lineH > 1020)
+			lineH = 1020;
 	int ligne_offset = 512 - lineH / 2;
 	int y1 = 512 - lineH / 2;
-	// Draw vertical line with specified line width
+	float y2 =  (float)(k / 2 - 512)/k*64;
+	if(y2<0)
+		y2=0;
+
+	porcentsage-=(int)porcentsage;
+	imgtxet=vars->wall_texture;
+   if(hororver==0 )
+   {
+
+	if(vars->player.y>ry)
+	imgtxet=vars->wall_texture3;
+	// imgtxet=vars->wall_texture2;
+	if(vars->player.angle<PI)
+	   porcentsage=1-porcentsage;
+   }
+   if(hororver==1 )
+   {
+	if(vars->player.x>rx)
+	imgtxet=vars->wall_texture2;
+	// imgtxet=vars->wall_texture2;
+	if (vars->player.angle>PI/2 && vars->player.angle<3*PI/2)
+	   porcentsage=1-porcentsage;
+   }
+   int theline=(int)(porcentsage*64)*4;
+	float  g=(float)64/k;
+	float  rl=0;
+	int in=0;
+
 	for (int i = 0; i < 2; i++)
 	{
+		in=0;
+		rl=y2;
 		for (int y = y1; y <= lineH + (int)ligne_offset; y++)
 		{
+			in=64*4*(int)floor(rl);
+			color =create_color(imgtxet->pixels[(theline)+in],imgtxet->pixels[(theline)+in+1], imgtxet->pixels[(theline)+in+2],imgtxet->pixels[(theline)+in+3]);
 			mlx_put_pixel(vars->img, x1 - i, y, color);
+			rl+=g;
 		}
 	}
 }
@@ -241,12 +284,19 @@ void draw_ray(t_vars *vars)
 			fish_eye_new_angle -= 2 * PI;
 		f_dist = f_dist * cos(fish_eye_new_angle);
 		double line_height = (64 * 800) / f_dist;
-		if (line_height > 1020)
-			line_height = 1020;
-		if (v_dist > h_dist)
-			draw_wall(vars, i, line_height, create_color(150, 150, 150, 256 - (i / 2 + 1)));
+		// if (line_height > 1020)
+		// 	line_height = 1020;
+		// if (v_dist > h_dist)
+		// 	draw_wall(vars, i, line_height, create_color(150, 150, 150, 256 - (i / 2 + 1)));
+		// else
+		// 	draw_wall(vars, i, line_height, create_color(150, 150, 150, i / 2 + 1));
+		if(v_dist > h_dist)
+		{
+			draw_wall(vars, i, rx,ry , line_height, 0);
+			
+		}
 		else
-			draw_wall(vars, i, line_height, create_color(150, 150, 150, i / 2 + 1));
+			draw_wall(vars, i, rx,ry ,line_height,1);
 		ra = ra + DEG / 8;
 		if (ra < 0)
 			ra += 2 * PI;
@@ -449,6 +499,11 @@ void render_window(t_vars *vars)
 	width = vars->window_info.width;
 	height = vars->window_info.height;
 	vars->mlx = mlx_init(width, height, "cub3D", 1);
+	g_vars->wall_texture  = mlx_load_png("./src/textures/wall_1.png");
+	// g_vars->wall_img = mlx_texture_to_image(g_vars->mlx, g_vars->wall_texture);
+	g_vars->wall_texture2  = mlx_load_png("./src/textures/wydad.png");
+	g_vars->wall_texture3  = mlx_load_png("./src/textures/yui.png");
+	// g_vars->wall_img2 = mlx_texture_to_image(g_vars->mlx, g_vars->wall_texture);
 	mlx_set_window_limit(vars->mlx, width - 200, height - 200, width, height);
 	vars->img = mlx_new_image(vars->mlx, width, height);
 	redraw(vars);
