@@ -49,6 +49,10 @@ typedef struct s_coord {
 	int			y;
 }				t_coord;
 
+typedef struct s_keyboard {
+	int			cursor;
+}				t_keyboard;
+
 
 typedef struct s_player {
 	float			x;
@@ -68,6 +72,14 @@ typedef struct s_vars {
 	t_player        player;
 	t_window		window_info;
 	double			*rays_lst;
+		mlx_image_t *wall_img;
+	mlx_texture_t *wall_texture;
+		mlx_image_t *weapon_img;
+	mlx_texture_t *weapon_texture;
+		mlx_image_t *wall_img2;
+	mlx_texture_t *wall_texture2;
+	mlx_texture_t *wall_texture3;
+	t_keyboard		keyboard;
 }				t_vars;
 
 extern t_vars *g_vars;
