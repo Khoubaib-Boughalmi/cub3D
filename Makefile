@@ -43,20 +43,19 @@ ifeq ($(shell uname -s), $(LINUX))
 %.o: %.c $(INCLUDES)  $(LIBFT)
 	$(CC) $(CFLAGS) -g -I$(INC) -I$(INC_MLX) -I./libft -c $(filter %.c, $<) -o $@
 
-$(NAME): $(OBJS) $(INCLUDES) $(mlx_lib)
+$(NAME): $(OBJS) $(INCLUDES)
 	$(CC) $(FLAGS) -g -o $@ $(OBJS) ./libft/libft.a $(DEPENDENCIES_LINUX)
 else ifeq ($(shell uname -s), $(MAC))
 
-$(NAME): $(OBJS) $(INCLUDES) $(mlx_lib) $(LIBFT)
+$(NAME): $(OBJS) $(INCLUDES) $(LIBFT)
 	$(CC) $(CFLAGS) ./libft/libft.a -g -o $(@) $(OBJS) $(DEPENDENCIES_MAC) -lglfw -L"/Users/${USER}/.brew/opt/glfw/lib/"
 
-%.o: %.c $(INCLUDES) $(mlx_lib)
+%.o: %.c $(INCLUDES)
 	$(CC) $(CFLAGS) -g -I$(INC) -I$(INC_MLX) -c $(filter %.c, $<) -o $@
 
 endif
 
 clean:
-	rm -rf $(MLX42)/build
 	rm -rf $(OBJS)
 	make -C ./libft clean
 

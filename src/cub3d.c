@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/01 18:29:07 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/01 19:13:41 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,19 @@
 
 t_vars *g_vars;
 
-int g_map[8][8] = {
-	 {1, 1, 1, 1, 1, 1, 1, 1},
-	 {1, 0, 0, 0, 0, 0, 0, 1},
-	 {1, 0, 0, 1, 0, 1, 0, 1},
-	 {1, 0, 0, 0, 0, 0, 0, 1},
-	 {1, 0, 1, 0, 0, 1, 0, 1},
-	 {1, 0, 0, 0, 0, 0, 0, 1},
-	 {1, 0, 0, 1, 0, 1, 0, 1},
-	 {1, 1, 1, 1, 1, 1, 1, 1}};
+int g_map[12][11] = {
+	 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+	 {1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1},
+	 {1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1},
+	 {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+	 {1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1},
+	 {1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1},
+	 {1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1},
+	 {1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1},
+	 {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+	 {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1},
+	 {1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1},
+	 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
 
 int32_t create_color(int32_t r, int32_t g, int32_t b, int32_t a)
 {
@@ -82,7 +86,7 @@ void draw_wall(t_vars *vars, double r,double rx,double ry, double lineH,int horo
 	{
 		in=0;
 		rl=y2;
-		for (int y = y1; y <= lineH + (int)ligne_offset; y++)
+		for (int y = y1; y < lineH + (int)ligne_offset - 1; y++)
 		{
 			in=64*4*(int)floor(rl);
 			color =create_color(imgtxet->pixels[(theline)+in],imgtxet->pixels[(theline)+in+1], imgtxet->pixels[(theline)+in+2],imgtxet->pixels[(theline)+in+3]);
@@ -138,10 +142,10 @@ void draw_map(t_vars *vars)
 	int y;
 
 	y = -1;
-	while (++y < 8)
+	while (++y < vars->map.height)
 	{
 		x = -1;
-		while (++x < 8)
+		while (++x < vars->map.width)
 			draw_tile(vars, y, x);
 	}
 }
@@ -201,13 +205,13 @@ void draw_ray(t_vars *vars)
 		{
 			rx = vars->player.x;
 			ry = vars->player.y;
-			dof = 8;
+			dof = 100;
 		}
-		while (dof < 10)
+		while (dof < 100)
 		{
 			mx = (int)(rx) / 64;
 			my = (int)(ry) / 64;
-			if (mx >= 0 && my >= 0 && mx < 8 && my < 8 && g_map[my][mx] == 1)
+			if (mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && g_map[my][mx] == 1)
 			{
 				h_x = rx;
 				h_y = ry;
@@ -246,13 +250,13 @@ void draw_ray(t_vars *vars)
 		{
 			rx = vars->player.x;
 			ry = vars->player.y;
-			dof = 8;
+			dof = 100;
 		}
-		while (dof < 10)
+		while (dof < 100)
 		{
 			mx = (int)(rx) / 64;
 			my = (int)(ry) / 64;
-			if (mx >= 0 && my >= 0 && mx < 8 && my < 8 && g_map[my][mx] == 1)
+			if (mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && g_map[my][mx] == 1)
 			{
 				v_x = rx;
 				v_y = ry;
@@ -278,7 +282,7 @@ void draw_ray(t_vars *vars)
 			ry = h_y;
 			f_dist = h_dist;
 		}
-		put_line(vars->mlx, vars->win, (vars->player.x * 16) / 64, (vars->player.y * 16) / 64, (rx * 16) / 64, (ry * 16) / 64, create_color(255, 255, 0, 255), 128, 128);
+		put_line(vars->mlx, vars->win, (vars->player.x * 16) / 64, (vars->player.y * 16) / 64, (rx * 16) / 64, (ry * 16) / 64, create_color(255, 255, 0, 255), vars->img->width, vars->img->height);
 		double fish_eye_new_angle = vars->player.angle - ra;
 		if (fish_eye_new_angle < 0)
 			fish_eye_new_angle += 2 * PI;
@@ -320,9 +324,9 @@ void draw_partcle(t_vars *vars)
 	radius = 3;
 	px = (((vars->player.x) * 16) / 64);
 	py = (((vars->player.y) * 16) / 64);
-	for (int x = 0; x < 128; x++)
+	for (int x = 0; x < 16 * vars->map.width; x++)
 	{
-		for (int y = 0; y < 128; y++)
+		for (int y = 0; y < 16 * vars->map.height; y++)
 		{
 			if ((x - px) * (x - px) + (y - py) * (y - py) < radius * radius)
 				mlx_put_pixel(vars->img, x, y, create_color(255, 255, 255, 255));
@@ -476,6 +480,15 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE)) // free shit
 		exit(0);
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_F)) // free shit
+	{
+
+		mlx_set_cursor_mode(vars->mlx, vars->keyboard.cursor ? MLX_MOUSE_NORMAL : MLX_MOUSE_DISABLED);
+		if(vars->keyboard.cursor)
+			vars->keyboard.cursor=0;
+		else
+			vars->keyboard.cursor=1;
+	}
 	// redraw(vars);
 	return (0);
 }
@@ -549,7 +562,7 @@ void render_window(t_vars *vars)
 	mlx_set_window_limit(vars->mlx, width - 200, height - 200, width, height);
 	vars->img = mlx_new_image(vars->mlx, width, height);
 	redraw(vars);
-	mlx_set_cursor_mode(vars->mlx, MLX_MOUSE_DISABLED);
+	mlx_set_cursor_mode(vars->mlx, vars->keyboard.cursor ? MLX_MOUSE_NORMAL : MLX_MOUSE_DISABLED);
 
 	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler, vars);
 	
@@ -568,12 +581,15 @@ int init_vars(void)
 		return (0);
 	g_vars->window_info.height = 1024;
 	g_vars->window_info.width = 1024;
+	g_vars->map.width = 11;
+	g_vars->map.height = 12;
 	g_vars->player.angle = 45 * (PI / 180);
 	g_vars->player.prev_xpos = 0;
 	g_vars->player.x = 64*2;
 	g_vars->player.y = 64*2;
 	g_vars->player.dx = 5 * cos(g_vars->player.angle);
 	g_vars->player.dy = 5 * sin(g_vars->player.angle);
+	g_vars->keyboard.cursor = 0;
 	return (1);
 }
 
