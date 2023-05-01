@@ -6,11 +6,11 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/01 19:13:41 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/01 20:29:37 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/wall.h"
+#include "../inc/cub3d.h"
 
 t_vars *g_vars;
 
@@ -39,277 +39,7 @@ float distance_to_wall(float px, float py, float wx, float wy, float angle_rad)
 }
 
 // void draw_wall(t_vars *vars, int r, double lineH, int32_t color)
-void draw_wall(t_vars *vars, double r,double rx,double ry, double lineH,int hororver)
-{
-	mlx_texture_t *imgtxet;
-	int32_t color;
-	double porcentsage;
-   if(hororver==1 )
-	porcentsage=ry/64;
-   if(hororver==0 )
-	porcentsage=rx/64;
-	int x1 = r * 2 + 2;
-	int k=lineH;
-	if (lineH > 1020)
-			lineH = 1020;
-	int ligne_offset = 512 - lineH / 2;
-	int y1 = 512 - lineH / 2;
-	float y2 =  (float)(k / 2 - 512)/k*64;
-	if(y2<0)
-		y2=0;
 
-	porcentsage-=(int)porcentsage;
-	imgtxet=vars->wall_texture;
-   if(hororver==0 )
-   {
-
-	if(vars->player.y>ry)
-	imgtxet=vars->wall_texture3;
-	// imgtxet=vars->wall_texture2;
-	if(vars->player.angle<PI)
-	   porcentsage=1-porcentsage;
-   }
-   if(hororver==1 )
-   {
-	if(vars->player.x>rx)
-	imgtxet=vars->wall_texture2;
-	// imgtxet=vars->wall_texture2;
-	if (vars->player.angle>PI/2 && vars->player.angle<3*PI/2)
-	   porcentsage=1-porcentsage;
-   }
-   int theline=(int)(porcentsage*64)*4;
-	float  g=(float)64/k;
-	float  rl=0;
-	int in=0;
-
-	for (int i = 0; i < 2; i++)
-	{
-		in=0;
-		rl=y2;
-		for (int y = y1; y < lineH + (int)ligne_offset - 1; y++)
-		{
-			in=64*4*(int)floor(rl);
-			color =create_color(imgtxet->pixels[(theline)+in],imgtxet->pixels[(theline)+in+1], imgtxet->pixels[(theline)+in+2],imgtxet->pixels[(theline)+in+3]);
-			mlx_put_pixel(vars->img, x1 - i, y, color);
-			rl+=g;
-		}
-	}
-}
-
-void clean_window(t_vars *vars)
-{
-	for (int y = 0; y < 1024; y++)
-	{
-		for (int x = 0; x < 512; x++)
-		{
-			mlx_put_pixel(vars->img, y, x, create_color(50, 150, 255, 255));
-		}
-	}
-
-	for (int y = 0; y < 1024; y++)
-	{
-		for (int x = 512; x < 1024; x++)
-		{
-			mlx_put_pixel(vars->img, y, x, create_color(125, 255, 125, 255));
-		}
-	}
-}
-
-void draw_tile(t_vars *vars, int y, int x)
-{
-	int i;
-	int j;
-	uint32_t color_black = create_color(0, 0, 0, 255);
-	uint32_t color_white = create_color(255, 255, 255, 255);
-	uint32_t color_grey = create_color(160, 60, 60, 255);
-	i = -1;
-	while (++i < 16)
-	{
-		j = -1;
-		while (++j < 16)
-		{
-			// mlx_put_pixel(vars->img, (16 * x) + i, (16 * y) + j, color_black);
-			if (g_map[y][x])
-				mlx_put_pixel(vars->img, (16 * x) + i, (16 * y) + j, color_grey);
-			if (j == 15 || i == 15)
-				mlx_put_pixel(vars->img, (16 * x) + i, (16 * y) + j, color_white);
-		}
-	}
-}
-void draw_map(t_vars *vars)
-{
-	int x;
-	int y;
-
-	y = -1;
-	while (++y < vars->map.height)
-	{
-		x = -1;
-		while (++x < vars->map.width)
-			draw_tile(vars, y, x);
-	}
-}
-
-
-
-void draw_ray(t_vars *vars)
-{
-	// t_ray	ray;
-	int r;
-	int mx;
-	int my;
-	int mp;
-	int dof;
-	double rx;
-	double ry;
-	double ra;
-	double xo; // x offset
-	double yo; // y offset
-	double h_dist;
-	double h_x;
-	double h_y;
-	double v_dist;
-	double v_x;
-	double v_y;
-	double f_dist;
-
-	ra = vars->player.angle - DEG * 30;
-	if (ra < 0)
-		ra += 2 * PI;
-	if (ra > 2 * PI)
-		ra -= 2 * PI;
-
-	for (int i = 0; i < 512; i++)
-	{
-		h_dist = 100000;
-		h_x = vars->player.x;
-		h_y = vars->player.y;
-		/* horzontal check*/
-		dof = 0;
-		float aTan = -1 / tan(ra);
-		if (ra > PI) // facing down
-		{
-			ry = (((int)vars->player.y >> 6) << 6) - 0.0001;
-			rx = (vars->player.y - ry) * aTan + vars->player.x;
-			yo = -64;
-			xo = -yo * aTan;
-		}
-		if (ra < PI) // facing up
-		{
-			ry = (((int)vars->player.y >> 6) << 6) + 64;
-			rx = (vars->player.y - ry) * aTan + vars->player.x;
-			yo = 64;
-			xo = -yo * aTan;
-		}
-		if (ra == 0 || ra == PI)
-		{
-			rx = vars->player.x;
-			ry = vars->player.y;
-			dof = 100;
-		}
-		while (dof < 100)
-		{
-			mx = (int)(rx) / 64;
-			my = (int)(ry) / 64;
-			if (mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && g_map[my][mx] == 1)
-			{
-				h_x = rx;
-				h_y = ry;
-				h_dist = distance_to_wall(vars->player.x, vars->player.y, h_x, h_y, ra);
-				break;
-			}
-			else
-			{
-				rx += xo;
-				ry += yo;
-				dof++;
-			}
-		}
-
-		/* vertical check*/
-		dof = 0;
-		v_dist = 100000;
-		v_x = vars->player.x;
-		v_y = vars->player.y;
-		float nTan = -tan(ra);
-		if (ra > PI2 && ra < PI3) // facing left
-		{
-			rx = (((int)vars->player.x >> 6) << 6) - 0.0001;
-			ry = (vars->player.x - rx) * nTan + vars->player.y;
-			xo = -64;
-			yo = -xo * nTan;
-		}
-		if (ra < PI2 || ra > PI3) // facing right
-		{
-			rx = (((int)vars->player.x >> 6) << 6) + 64;
-			ry = (vars->player.x - rx) * nTan + vars->player.y;
-			xo = 64;
-			yo = -xo * nTan;
-		}
-		if (ra == PI2 || ra == PI3) // up or down
-		{
-			rx = vars->player.x;
-			ry = vars->player.y;
-			dof = 100;
-		}
-		while (dof < 100)
-		{
-			mx = (int)(rx) / 64;
-			my = (int)(ry) / 64;
-			if (mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && g_map[my][mx] == 1)
-			{
-				v_x = rx;
-				v_y = ry;
-				v_dist = distance_to_wall(vars->player.x, vars->player.y, v_x, v_y, ra);
-				break;
-			}
-			else
-			{
-				rx += xo;
-				ry += yo;
-				dof++;
-			}
-		}
-		if (v_dist < h_dist)
-		{
-			rx = v_x;
-			ry = v_y;
-			f_dist = v_dist;
-		}
-		else
-		{
-			rx = h_x;
-			ry = h_y;
-			f_dist = h_dist;
-		}
-		put_line(vars->mlx, vars->win, (vars->player.x * 16) / 64, (vars->player.y * 16) / 64, (rx * 16) / 64, (ry * 16) / 64, create_color(255, 255, 0, 255), vars->img->width, vars->img->height);
-		double fish_eye_new_angle = vars->player.angle - ra;
-		if (fish_eye_new_angle < 0)
-			fish_eye_new_angle += 2 * PI;
-		if (fish_eye_new_angle > 2 * PI)
-			fish_eye_new_angle -= 2 * PI;
-		f_dist = f_dist * cos(fish_eye_new_angle);
-		double line_height = (64 * 800) / f_dist;
-		// if (line_height > 1020)
-		// 	line_height = 1020;
-		// if (v_dist > h_dist)
-		// 	draw_wall(vars, i, line_height, create_color(150, 150, 150, 256 - (i / 2 + 1)));
-		// else
-		// 	draw_wall(vars, i, line_height, create_color(150, 150, 150, i / 2 + 1));
-		if(v_dist > h_dist)
-		{
-			draw_wall(vars, i, rx,ry , line_height, 0);
-			
-		}
-		else
-			draw_wall(vars, i, rx,ry ,line_height,1);
-		ra = ra + DEG / 8;
-		if (ra < 0)
-			ra += 2 * PI;
-		if (ra > 2 * PI)
-			ra -= 2 * PI;
-	}
-}
 
 void draw_partcle(t_vars *vars)
 {
@@ -333,29 +63,6 @@ void draw_partcle(t_vars *vars)
 		}
 	}
 	put_line(vars->mlx, vars->win, px, py, px + vars->player.dx * 4, py + vars->player.dy * 4, create_color(0, 255, 0, 255), 128, 128);
-}
-
-void redraw(t_vars *vars)
-{
-	// static int frame =1;
-	static int frame =1;
-	char *str=ft_strjoin("./src/textures/lol/",ft_itoa(frame));
-	str=ft_strjoin(str,".png");
-	// printf("%s\n",str);
-	mlx_delete_image(g_vars->mlx,g_vars->weapon_img);
-	g_vars->weapon_texture  = mlx_load_png(str);
-	g_vars->weapon_img = mlx_texture_to_image(g_vars->mlx, g_vars->weapon_texture);
-	clean_window(vars);
-	draw_ray(vars);
-	draw_partcle(vars);
-	draw_map(vars);
-	mlx_image_to_window(vars->mlx,vars->weapon_img,50,257);
-	mlx_delete_texture(g_vars->weapon_texture);
-	
-	frame++;
-	if(frame ==59)
-		frame =1;
-	free(str);
 }
 
 int key_press_handler(mlx_key_data_t keydata, void *param)
@@ -476,7 +183,6 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 				vars->player.y += dyright;
 		}
 	}
-	printf("%f  %f  %d   %d\n",vars->player.x,vars->player.y,x,y);
 
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE)) // free shit
 		exit(0);
@@ -544,35 +250,6 @@ void loop_func(void *data)
 	
 }
 
-void render_window(t_vars *vars)
-{
-	int width;
-	int height;
-
-	width = vars->window_info.width;
-	height = vars->window_info.height;
-	vars->mlx = mlx_init(width, height, "cub3D", 1);
-	g_vars->wall_texture  = mlx_load_png("./src/textures/wall_1.png");
-	// g_vars->wall_img = mlx_texture_to_image(g_vars->mlx, g_vars->wall_texture);
-	g_vars->weapon_texture  = mlx_load_png("./src/textures/StechkinEx1.png");
-	g_vars->weapon_img = mlx_texture_to_image(g_vars->mlx, g_vars->weapon_texture);
-	g_vars->wall_texture2  = mlx_load_png("./src/textures/wydad.png");
-	g_vars->wall_texture3  = mlx_load_png("./src/textures/njma.png");
-	// g_vars->wall_img2 = mlx_texture_to_image(g_vars->mlx, g_vars->wall_texture);
-	mlx_set_window_limit(vars->mlx, width - 200, height - 200, width, height);
-	vars->img = mlx_new_image(vars->mlx, width, height);
-	redraw(vars);
-	mlx_set_cursor_mode(vars->mlx, vars->keyboard.cursor ? MLX_MOUSE_NORMAL : MLX_MOUSE_DISABLED);
-
-	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler, vars);
-	
-	mlx_cursor_hook(vars->mlx, (mlx_cursorfunc)mouse_handler, vars);
-	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
-	mlx_loop_hook(vars->mlx,&loop_func,vars);
-	mlx_loop(vars->mlx);
-	
-	mlx_terminate(vars->mlx);
-}
 
 int init_vars(void)
 {

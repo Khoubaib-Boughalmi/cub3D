@@ -1,56 +1,61 @@
 #include "../inc/cub3d.h"
-#include "../inc/utils.h"
 
 
-int g_map_dup[10][10] = {
-	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 1, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 1, 1, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 1, 0, 0, 0, 1, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 1, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-};
-
-//find slope of the ray
-//calculate point_A.y
-//calculate point_A.x
-//find X_A
-//keep adding X_A to find the horizental intersection with the wall
-
-void    find_first_intersection(t_vars *vars, int ray_id)
+void draw_wall(t_vars *vars, double r,double rx,double ry, double lineH,int hororver)
 {
-    double      slop;
-    t_intersect point_A;
-    t_coord     coord_A;
+	mlx_texture_t *imgtxet;
+	int32_t color;
+	double porcentsage;
+   if(hororver==1 )
+	porcentsage=ry/64;
+   if(hororver==0 )
+	porcentsage=rx/64;
+	int x1 = r * 2 + 2;
+	int k=lineH;
+	if (lineH > 1020)
+			lineH = 1020;
+	int ligne_offset = 512 - lineH / 2;
+	int y1 = 512 - lineH / 2;
+	float y2 =  (float)(k / 2 - 512)/k*64;
+	if(y2<0)
+		y2=0;
 
-    slop = (vars->rays_lst[ray_id] * M_PI) * (M_PI / 180) ;
-    // A.y = rounded_down(Py/64) * (64) - 1;
-    //  A.y = rounded_down(Py/64) * (64) + 64;
-    // printf("slop[]: %f\n", vars->rays_lst[119] * M_PI);
-    if(tan(slop) > 0)
-    {
-        point_A.y = floor((vars->player.y * 64 + 32)/64) * (64) - 1;
-        // printf("slop up\n");
-    }
-    else
-    {
-        point_A.y = floor((vars->player.y * 64 + 32)/64) * (64) + 64;
-        // printf("slop down\n");
-    }
-    // >>> 96+(224-math.floor(224/64)*64 - 1)*math.tan(60)
-    // A.x = Px + (Py-A.y)/tan(ALPHA);
-    // printf("angle %f\n", vars->rays_lst[ray_id] * M_PI);
-    point_A.x = (vars->player.x * 64 + 32) + (point_A.y - floor(point_A.y/64)*64 - 1)*slop + 32;
-    // >>> 96+(191-math.floor(191/64)*64 -1)*math.tan(60)
-    // printf("xx: %f %f\n", point_A.x, point_A.y);
-    coord_A.x = floor(point_A.x) / 64 ;
-    coord_A.y = floor(point_A.y) / 64 ;
-    if(g_map_dup[coord_A.x][coord_A.y] == 1)
-        printf("WALL %d coor %d %d\n", ray_id, coord_A.x, coord_A.y);
-    else
-        printf("NO WALL %d coor %d %d\n", ray_id, coord_A.x, coord_A.y);
+	porcentsage-=(int)porcentsage;
+	imgtxet=vars->wall_texture;
+   if(hororver==0 )
+   {
+
+	if(vars->player.y>ry)
+		imgtxet=vars->wall_texture3;
+	else
+		imgtxet=vars->wall_texture4;	
+	// imgtxet=vars->wall_texture2;
+	if(vars->player.angle<PI)
+	   porcentsage=1-porcentsage;
+   }
+   if(hororver==1 )
+   {
+	if(vars->player.x>rx)
+		imgtxet=vars->wall_texture2;
+	// imgtxet=vars->wall_texture2;
+	if (vars->player.angle>PI/2 && vars->player.angle<3*PI/2)
+	   porcentsage=1-porcentsage;
+   }
+   int theline=(int)(porcentsage*64)*4;
+	float  g=(float)64/k;
+	float  rl=0;
+	int in=0;
+
+	for (int i = 0; i < 2; i++)
+	{
+		in=0;
+		rl=y2;
+		for (int y = y1; y < lineH + (int)ligne_offset - 1; y++)
+		{
+			in=64*4*(int)floor(rl);
+			color =create_color(imgtxet->pixels[(theline)+in],imgtxet->pixels[(theline)+in+1], imgtxet->pixels[(theline)+in+2],imgtxet->pixels[(theline)+in+3]);
+			mlx_put_pixel(vars->img, x1 - i - 1, y, color);
+			rl+=g;
+		}
+	}
 }
