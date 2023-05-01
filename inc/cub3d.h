@@ -64,6 +64,7 @@ typedef struct s_player {
 
 }				t_player;
 
+extern int g_map[12][11];
 typedef struct s_vars {
 	mlx_t			*mlx;
 	void			*win;
@@ -79,6 +80,7 @@ typedef struct s_vars {
 		mlx_image_t *wall_img2;
 	mlx_texture_t *wall_texture2;
 	mlx_texture_t *wall_texture3;
+	mlx_texture_t *wall_texture4;
 	t_keyboard		keyboard;
 }				t_vars;
 
@@ -88,5 +90,20 @@ extern t_vars *g_vars;
 #define PI2 PI/2
 #define PI3 3*PI2
 #define DEG 0.0174533
-
+void draw_ray(t_vars *vars);
+double ft_abs(double nb);
+void put_line(void *mlx_ptr, void *win_ptr, int x0, int y0, int x1, int y1, int color, int height, int width);
+void draw_wall(t_vars *vars, double r,double rx,double ry, double lineH,int hororver);
+float distance_to_wall(float px, float py, float wx, float wy, float angle_rad);
+int32_t create_color(int32_t r, int32_t g, int32_t b, int32_t a);
+void clean_window(t_vars *vars);
+void draw_tile(t_vars *vars, int y, int x);
+void draw_map(t_vars *vars);
+void draw_partcle(t_vars *vars);
+void redraw(t_vars *vars);
+int key_press_handler(mlx_key_data_t keydata, void *param);
+void mouse_handler(double xpos, double ypos, void *param);
+void loop_func(void *data);
+void render_window(t_vars *vars);
+int init_vars(void);
 # endif

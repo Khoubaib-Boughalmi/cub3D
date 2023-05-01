@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 19:58:50 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/24 15:52:13 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/01 20:18:47 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ double ft_abs(double nb)
 		return (-nb);
 	return (nb);
 }
+
 
 // void put_line(void *mlx_ptr, void *win_ptr, int x0, int y0, int x1, int y1, int color)
 // {

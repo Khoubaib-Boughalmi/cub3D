@@ -7,6 +7,8 @@ INCLUDES = $(INC)/cub3d.h
 
 SRCS = $(SRC)/cub3d.c \
 		$(SRC)/wall.c \
+		$(SRC)/rays.c \
+		$(SRC)/window.c \
 		$(SRC)/utils.c
 
 OBJS = $(SRCS:.c=.o)
