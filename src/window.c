@@ -21,7 +21,7 @@ void clean_window(t_vars *vars)
 	{
 		for (int x = 0; x < 512; x++)
 		{
-			mlx_put_pixel(vars->img, y, x, create_color(255, 164, 66, 255 - (y) / 6));
+			mlx_put_pixel(vars->img, y, x, create_color(125, 125, 125, 255 - (y / 4)));
 		}
 	}
 
@@ -29,7 +29,7 @@ void clean_window(t_vars *vars)
 	{
 		for (int x = 512; x < 1024; x++)
 		{
-			mlx_put_pixel(vars->img, y, x, create_color(50, 255, 125, 255 - (y) / 4));
+			mlx_put_pixel(vars->img, y, x, create_color(125, 125, 125, 255 - (y / 4)) );
 		}
 	}
 }
@@ -56,6 +56,12 @@ void draw_tile(t_vars *vars, int y, int x)
 	}
 }
 
+void    draw_aim(t_vars *vars)
+{
+    put_line(vars->mlx, vars->win, 500, 500, 500, 525, create_color(0, 255, 0, 255), vars->img->width, vars->img->height);
+    put_line(vars->mlx, vars->win, 525, 500, 500, 500, create_color(0, 255, 0, 255), vars->img->width, vars->img->height);
+}
+
 void redraw(t_vars *vars)
 {
 	// static int frame =1;
@@ -77,6 +83,7 @@ void redraw(t_vars *vars)
 	if(frame ==59)
 		frame =1;
 	free(str);
+    draw_aim(vars);
 }
 
 void render_window(t_vars *vars)
