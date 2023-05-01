@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/04/30 17:26:08 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/01 18:29:07 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,8 @@ void draw_map(t_vars *vars)
 			draw_tile(vars, y, x);
 	}
 }
+
+
 
 void draw_ray(t_vars *vars)
 {
@@ -331,10 +333,25 @@ void draw_partcle(t_vars *vars)
 
 void redraw(t_vars *vars)
 {
+	// static int frame =1;
+	static int frame =1;
+	char *str=ft_strjoin("./src/textures/lol/",ft_itoa(frame));
+	str=ft_strjoin(str,".png");
+	// printf("%s\n",str);
+	mlx_delete_image(g_vars->mlx,g_vars->weapon_img);
+	g_vars->weapon_texture  = mlx_load_png(str);
+	g_vars->weapon_img = mlx_texture_to_image(g_vars->mlx, g_vars->weapon_texture);
 	clean_window(vars);
 	draw_ray(vars);
 	draw_partcle(vars);
 	draw_map(vars);
+	mlx_image_to_window(vars->mlx,vars->weapon_img,50,257);
+	mlx_delete_texture(g_vars->weapon_texture);
+	
+	frame++;
+	if(frame ==59)
+		frame =1;
+	free(str);
 }
 
 int key_press_handler(mlx_key_data_t keydata, void *param)
@@ -344,6 +361,8 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 	float dxright;
 	float dyright;
 	vars = (t_vars *)param;
+	int x=0;
+	int y=0;
 	
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
 	{
@@ -363,8 +382,8 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_W))
 	{	
-		int x = (int)floor((vars->player.x + (vars->player.dx * 2)) / 64);
-		int y = (int)floor((vars->player.y + (vars->player.dy * 2)) / 64);
+		x = (int)floor((vars->player.x + (vars->player.dx * 2)) / 64);
+		y = (int)floor((vars->player.y + (vars->player.dy * 2)) / 64);
 		int factx = (int)floor((vars->player.x) / 64);
 		int facty = (int)floor((vars->player.y) / 64);
 		if (g_map[y][x] != 1)
@@ -382,8 +401,8 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_S))
 	{
-		int x = (int)floor((vars->player.x - (vars->player.dx * 2)) / 64);
-		int y = (int)floor((vars->player.y - (vars->player.dy * 2)) / 64);
+		x = (int)floor((vars->player.x - (vars->player.dx * 2)) / 64);
+		y = (int)floor((vars->player.y - (vars->player.dy * 2)) / 64);
 		int factx = (int)floor((vars->player.x) / 64);
 		int facty = (int)floor((vars->player.y) / 64);
 		if (g_map[y][x] != 1)
@@ -409,8 +428,8 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 
 		dxright = 5 * cos(angle);
 		dyright = 5 * sin(angle);
-		int x = (int)floor((vars->player.x + (dxright * 2)) / 64);
-		int y = (int)floor((vars->player.y + (dyright * 2)) / 64);
+		x = (int)floor((vars->player.x + (dxright )) / 64);
+		y = (int)floor((vars->player.y + (dyright )) / 64);
 		int factx = (int)floor((vars->player.x) / 64);
 		int facty = (int)floor((vars->player.y) / 64);
 		if (g_map[y][x] != 1)
@@ -436,8 +455,8 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 
 		dxright = 5 * cos(angle);
 		dyright = 5 * sin(angle);
-		int x = (int)floor((vars->player.x + (dxright * 2)) / 64);
-		int y = (int)floor((vars->player.y + (dyright * 2)) / 64);
+		x = (int)floor((vars->player.x + (dxright * 2)) / 64);
+		y = (int)floor((vars->player.y + (dyright * 2)) / 64);
 		int factx = (int)floor((vars->player.x) / 64);
 		int facty = (int)floor((vars->player.y) / 64);
 		if (g_map[y][x] != 1)
@@ -453,9 +472,11 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 				vars->player.y += dyright;
 		}
 	}
+	printf("%f  %f  %d   %d\n",vars->player.x,vars->player.y,x,y);
+
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE)) // free shit
 		exit(0);
-	redraw(vars);
+	// redraw(vars);
 	return (0);
 }
 
@@ -463,13 +484,15 @@ void mouse_handler(double xpos, double ypos, void *param)
 {
 	t_vars *vars;
 	vars = (t_vars *)param;
+	// static int frame =0;
+	// printf("%f .  %f . \n",xpos, ypos);
 	if (xpos > vars->player.prev_xpos)
 	{
-		if (xpos < 512)
-			xpos = 512;
-		else if (xpos > 1024)
-			xpos = 1024;
-		vars->player.angle += (3 / xpos * 5);
+		// if (xpos < 512)
+		// 	xpos = 512;
+		// else if (xpos > 1024)
+		// 	xpos = 1024;
+		vars->player.angle += 0.04;
 		if (vars->player.angle > 2 * PI)
 			vars->player.angle -= 2 * PI;
 		vars->player.dx = 5 * cos(vars->player.angle);
@@ -477,18 +500,35 @@ void mouse_handler(double xpos, double ypos, void *param)
 	}
 	if (xpos < vars->player.prev_xpos)
 	{
-		if (xpos < 512)
-			xpos = 512;
-		else if (xpos > 1024)
-			xpos = 1024;
-		vars->player.angle -= (3 / xpos * 5);
+		// if (xpos < 512)
+		// 	xpos = 512;
+		// else if (xpos > 1024)
+		// 	xpos = 1024;
+		vars->player.angle -= 0.04;
 		if (vars->player.angle < 0)
 			vars->player.angle += 2 * PI;
 		vars->player.dx = 5 * cos(vars->player.angle);
 		vars->player.dy = 5 * sin(vars->player.angle);
 	}
 	vars->player.prev_xpos = xpos;
-	redraw(vars);
+	// if(frame % 10 ==0)
+	// 	redraw(vars);
+	// if(frame >10000)
+	// 	frame=0;
+	// frame++;
+}
+
+void loop_func(void *data)
+{
+	t_vars *vars =(t_vars*)data;
+	static int frame =0;
+	// printf("%d\n",frame);
+	if(frame % 5 ==0)
+		redraw(vars);
+	if(frame >10000)
+		frame=0;
+	frame++;
+	
 }
 
 void render_window(t_vars *vars)
@@ -501,16 +541,23 @@ void render_window(t_vars *vars)
 	vars->mlx = mlx_init(width, height, "cub3D", 1);
 	g_vars->wall_texture  = mlx_load_png("./src/textures/wall_1.png");
 	// g_vars->wall_img = mlx_texture_to_image(g_vars->mlx, g_vars->wall_texture);
+	g_vars->weapon_texture  = mlx_load_png("./src/textures/StechkinEx1.png");
+	g_vars->weapon_img = mlx_texture_to_image(g_vars->mlx, g_vars->weapon_texture);
 	g_vars->wall_texture2  = mlx_load_png("./src/textures/wydad.png");
-	g_vars->wall_texture3  = mlx_load_png("./src/textures/yui.png");
+	g_vars->wall_texture3  = mlx_load_png("./src/textures/njma.png");
 	// g_vars->wall_img2 = mlx_texture_to_image(g_vars->mlx, g_vars->wall_texture);
 	mlx_set_window_limit(vars->mlx, width - 200, height - 200, width, height);
 	vars->img = mlx_new_image(vars->mlx, width, height);
 	redraw(vars);
+	mlx_set_cursor_mode(vars->mlx, MLX_MOUSE_DISABLED);
+
 	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler, vars);
-	// mlx_cursor_hook(vars->mlx, (mlx_cursorfunc)mouse_handler, vars);
+	
+	mlx_cursor_hook(vars->mlx, (mlx_cursorfunc)mouse_handler, vars);
 	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
+	mlx_loop_hook(vars->mlx,&loop_func,vars);
 	mlx_loop(vars->mlx);
+	
 	mlx_terminate(vars->mlx);
 }
 
