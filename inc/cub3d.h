@@ -61,6 +61,7 @@ typedef struct s_player {
 	float			dy;
 	float			angle;
 	double			prev_xpos;
+	int shoot;
 
 }				t_player;
 
@@ -81,6 +82,7 @@ typedef struct s_vars {
 	mlx_texture_t *wall_texture2;
 	mlx_texture_t *wall_texture3;
 	mlx_texture_t *wall_texture4;
+	mlx_texture_t *door_texture;
 	t_keyboard		keyboard;
 }				t_vars;
 

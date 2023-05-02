@@ -1,7 +1,7 @@
 CMakeFiles/mlx42.dir/src/utils/mlx_list.c.o: \
-  /Users/kboughal/Desktop/cub3D/MLX42/src/utils/mlx_list.c \
-  /Users/kboughal/Desktop/cub3D/MLX42/include/MLX42/MLX42_Int.h \
-  /Users/kboughal/Desktop/cub3D/MLX42/include/MLX42/MLX42.h \
+  /Users/aechaoub/Desktop/cub3D/MLX42/src/utils/mlx_list.c \
+  /Users/aechaoub/Desktop/cub3D/MLX42/include/MLX42/MLX42_Int.h \
+  /Users/aechaoub/Desktop/cub3D/MLX42/include/MLX42/MLX42.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include/stdint.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include/stdint.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include/sys/_types/_int8_t.h \
@@ -30,8 +30,8 @@ CMakeFiles/mlx42.dir/src/utils/mlx_list.c.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include/_types/_intmax_t.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include/_types/_uintmax_t.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include/stdbool.h \
-  /Users/kboughal/Desktop/cub3D/MLX42/include/MLX42/MLX42_Input.h \
-  /Users/kboughal/Desktop/cub3D/MLX42/include/lodepng/lodepng.h \
+  /Users/aechaoub/Desktop/cub3D/MLX42/include/MLX42/MLX42_Input.h \
+  /Users/aechaoub/Desktop/cub3D/MLX42/include/lodepng/lodepng.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include/string.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include/_types.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include/Availability.h \
@@ -43,9 +43,9 @@ CMakeFiles/mlx42.dir/src/utils/mlx_list.c.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include/secure/_strings.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include/secure/_common.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include/secure/_string.h \
-  /Users/kboughal/Desktop/cub3D/MLX42/include/glad/glad.h \
-  /Users/kboughal/Desktop/cub3D/MLX42/include/KHR/khrplatform.h \
-  /Users/kboughal/.brew/include/GLFW/glfw3.h \
+  /Users/aechaoub/Desktop/cub3D/MLX42/include/glad/glad.h \
+  /Users/aechaoub/Desktop/cub3D/MLX42/include/KHR/khrplatform.h \
+  /Users/aechaoub/.brew/include/GLFW/glfw3.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/11.0.0/include/__stddef_max_align_t.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/include/stdlib.h \

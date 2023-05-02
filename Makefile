@@ -21,6 +21,7 @@ DEPENDENCIES_LINUX = $(mlx_lib) -ldl -lglfw -pthread -lm
 DEPENDENCIES_MAC = MLX42/build/libmlx42.a -framework Cocoa -framework OpenGL -framework IOKit
 MLX42 = ./MLX42
 INC_MLX := $(MLX42)/include
+glfw=$(shell brew  --prefix glfw)
 
 #Variables to make an executable in differents OS
 LINUX = Linux
@@ -50,7 +51,7 @@ $(NAME): $(OBJS) $(INCLUDES)
 else ifeq ($(shell uname -s), $(MAC))
 
 $(NAME): $(OBJS) $(INCLUDES) $(LIBFT)
-	$(CC) $(CFLAGS) ./libft/libft.a -g -o $(@) $(OBJS) $(DEPENDENCIES_MAC) -lglfw -L"/Users/${USER}/.brew/opt/glfw/lib/"
+	$(CC) $(CFLAGS) ./libft/libft.a -g -o $(@) $(OBJS) $(DEPENDENCIES_MAC) -lglfw -L"$(glfw)/lib"
 
 %.o: %.c $(INCLUDES)
 	$(CC) $(CFLAGS) -g -I$(INC) -I$(INC_MLX) -c $(filter %.c, $<) -o $@

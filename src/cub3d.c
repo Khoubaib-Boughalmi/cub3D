@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
+/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/01 20:29:37 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/02 15:48:54 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ t_vars *g_vars;
 int g_map[12][11] = {
 	 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 	 {1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1},
-	 {1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1},
+	 {1, 0, 0, 1, 0, 1, 0, 1, 500, 1, 1},
 	 {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 	 {1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1},
 	 {1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1},
 	 {1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1},
 	 {1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1},
-	 {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 	 {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1},
 	 {1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1},
 	 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
@@ -75,6 +75,27 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 	int x=0;
 	int y=0;
 	
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_SPACE))
+	{
+		int factx = (int)floor((vars->player.x) / 64);
+		int facty = (int)floor((vars->player.y) / 64);
+		x=factx;
+		y=facty;
+		int i=1;
+		while(x==factx && y ==facty)
+		{
+			x = (int)floor((vars->player.x + (vars->player.dx * i)) / 64);
+			y = (int)floor((vars->player.y + (vars->player.dy * i)) / 64);
+			i++;
+		}
+		
+		printf("%d  %d  %d   %d  map %d\n",factx,facty,x,y,g_map[y][x]);
+		if(g_map[y][x]==500)
+			g_map[y][x]=-10;
+		else if(g_map[y][x]==-10)
+			g_map[y][x]=500;
+	}
+	
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
 	{
 		vars->player.angle += 0.1;
@@ -82,6 +103,11 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 			vars->player.angle -= 2 * PI;
 		vars->player.dx = 5 * cos(vars->player.angle);
 		vars->player.dy = 5 * sin(vars->player.angle);
+	}
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_T))
+	{
+		
+		vars->player.shoot=8;
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
 	{
@@ -91,22 +117,27 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 		vars->player.dx = 5 * cos(vars->player.angle);
 		vars->player.dy = 5 * sin(vars->player.angle);
 	}
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_W))
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_W)) /// . ila l amam
 	{	
-		x = (int)floor((vars->player.x + (vars->player.dx * 2)) / 64);
-		y = (int)floor((vars->player.y + (vars->player.dy * 2)) / 64);
+		x = (int)floor((vars->player.x + (vars->player.dx * 5)) / 64);
+		y = (int)floor((vars->player.y + (vars->player.dy * 5)) / 64);
 		int factx = (int)floor((vars->player.x) / 64);
 		int facty = (int)floor((vars->player.y) / 64);
-		if (g_map[y][x] != 1)
+		if (g_map[y][x] <= 0)
 		{
+			printf("ddd\n");	
+			if(!(x != factx && y!=facty && g_map[y][factx] >0 && g_map[facty][x] >0))
+			{
 			vars->player.x += vars->player.dx;
 			vars->player.y += vars->player.dy;
+			}
 		}
 		else
 		{
-			if (g_map[facty][x] != 1)
+			printf("%d . %d .  %d .  %d . \n",factx,facty,x,y);
+			if (g_map[facty][x] <= 0)
 				vars->player.x += vars->player.dx;
-			if (g_map[y][factx] != 1)
+			else if (g_map[y][factx] <= 0)
 				vars->player.y += vars->player.dy;
 		}
 	}
@@ -211,7 +242,7 @@ void mouse_handler(double xpos, double ypos, void *param)
 		// 	xpos = 512;
 		// else if (xpos > 1024)
 		// 	xpos = 1024;
-		vars->player.angle += 0.04;
+		vars->player.angle += 0.07;
 		if (vars->player.angle > 2 * PI)
 			vars->player.angle -= 2 * PI;
 		vars->player.dx = 5 * cos(vars->player.angle);
@@ -223,7 +254,7 @@ void mouse_handler(double xpos, double ypos, void *param)
 		// 	xpos = 512;
 		// else if (xpos > 1024)
 		// 	xpos = 1024;
-		vars->player.angle -= 0.04;
+		vars->player.angle -= 0.07;
 		if (vars->player.angle < 0)
 			vars->player.angle += 2 * PI;
 		vars->player.dx = 5 * cos(vars->player.angle);
@@ -256,6 +287,7 @@ int init_vars(void)
 	g_vars = (t_vars *)malloc(sizeof(t_vars));
 	if (!g_vars)
 		return (0);
+	g_vars->player.shoot = 0;
 	g_vars->window_info.height = 1024;
 	g_vars->window_info.width = 1024;
 	g_vars->map.width = 11;
