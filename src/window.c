@@ -77,8 +77,20 @@ void redraw(t_vars *vars)
 	draw_ray(vars);
 	draw_partcle(vars);
 	draw_map(vars);
+	if(vars->player.reload)
+	{
 
-	if(vars->player.shoot)
+		str=ft_strjoin("./src/textures/kortas/StechkinR",ft_itoa(43-g_vars->player.reload));
+		str=ft_strjoin(str,".png");
+		g_vars->weapon_texture  = mlx_load_png(str);
+		g_vars->weapon_img = mlx_texture_to_image(g_vars->mlx, g_vars->weapon_texture);
+		mlx_image_to_window(vars->mlx,vars->weapon_img,50,257);
+		mlx_delete_texture(g_vars->weapon_texture);
+		free(str);
+		g_vars->player.reload--;
+		vars->player.shoot = 0;
+	}
+	else if(vars->player.shoot)
 	{
 		str=ft_strjoin("./src/textures/kortas/StechkinF0",ft_itoa(9-g_vars->player.shoot));
 		str=ft_strjoin(str,".png");
@@ -96,7 +108,12 @@ void redraw(t_vars *vars)
 	mlx_image_to_window(vars->mlx,vars->weapon_img,50,257);
 	mlx_delete_texture(g_vars->weapon_texture);
 	}
+	// str=ft_strjoin(": ",ft_itoa(vars->player.bullet));
+	// mlx_image_to_window(vars->mlx,vars->ammo_img,800,20);
+	// mlx_delete_image(vars->mlx,vars->player.print_move);
+	// vars->player.print_move=mlx_put_string(vars->mlx,str,880,52);
 	
+	// free(str);
 	frame++;
 	if(frame ==9)
 		frame =1;
@@ -104,17 +121,27 @@ void redraw(t_vars *vars)
 }
 
 
+void	show_gun_magazine(t_vars *vars)
+{
+		char *str=ft_strjoin(": ",ft_itoa(vars->player.bullet));
+		mlx_image_to_window(vars->mlx,vars->ammo_img,800,20);
+		mlx_delete_image(vars->mlx,vars->player.print_move);
+		vars->player.print_move=mlx_put_string(vars->mlx,str,880,52);
+		free(str);
+}
+
 
 void mouse_click(mouse_key_t button, action_t action, modifier_key_t mods, void *param)
 {
 	t_vars *vars;
 	vars = (t_vars *)param;
 	printf("%d\n",button);
-	if(button==0 && action == 1)
+	if(button==0 && action == 1 && vars->player.bullet && !vars->player.reload)
 	{
+		vars->player.bullet--;
 		vars->player.shoot=8;
+		show_gun_magazine(vars);
 	}
-
 
 
 }
@@ -135,10 +162,14 @@ void render_window(t_vars *vars)
 	g_vars->wall_texture3  = mlx_load_png("./src/textures/wall_3.png");
 	g_vars->wall_texture4  = mlx_load_png("./src/textures/wall_4.png");
 	g_vars->door_texture  = mlx_load_png("./src/textures/door.png");
+
+	g_vars->ammo_texture  = mlx_load_png("./src/textures/ammunition.png");
+	g_vars->ammo_img = mlx_texture_to_image(g_vars->mlx, g_vars->ammo_texture);
 	// g_vars->wall_img2 = mlx_texture_to_image(g_vars->mlx, g_vars->wall_texture);
 	mlx_set_window_limit(vars->mlx, width - 200, height - 200, width, height);
 	vars->img = mlx_new_image(vars->mlx, width, height);
 	redraw(vars);
+	show_gun_magazine(vars);
 	mlx_set_cursor_mode(vars->mlx, vars->keyboard.cursor ? MLX_MOUSE_NORMAL : MLX_MOUSE_DISABLED);
 
 	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler, vars);

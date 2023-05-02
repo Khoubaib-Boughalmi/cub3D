@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/02 15:48:54 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/02 17:19:04 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,17 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 	{
 		
 		vars->player.shoot=8;
+	}
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_R))
+	{
+		if(!vars->player.reload)
+		{
+			vars->player.reload=42;
+			vars->player.bullet=8;
+	show_gun_magazine(vars);
+			
+
+		}
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
 	{
@@ -288,6 +299,7 @@ int init_vars(void)
 	if (!g_vars)
 		return (0);
 	g_vars->player.shoot = 0;
+	g_vars->player.bullet = 8;
 	g_vars->window_info.height = 1024;
 	g_vars->window_info.width = 1024;
 	g_vars->map.width = 11;

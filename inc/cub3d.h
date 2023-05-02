@@ -62,6 +62,9 @@ typedef struct s_player {
 	float			angle;
 	double			prev_xpos;
 	int shoot;
+	int reload;
+	int bullet;
+	mlx_image_t * print_move;
 
 }				t_player;
 
@@ -83,6 +86,8 @@ typedef struct s_vars {
 	mlx_texture_t *wall_texture3;
 	mlx_texture_t *wall_texture4;
 	mlx_texture_t *door_texture;
+	mlx_texture_t *ammo_texture;
+	mlx_image_t *ammo_img;
 	t_keyboard		keyboard;
 }				t_vars;
 
@@ -92,6 +97,8 @@ extern t_vars *g_vars;
 #define PI2 PI/2
 #define PI3 3*PI2
 #define DEG 0.0174533
+void	show_gun_magazine(t_vars *vars);
+
 void draw_ray(t_vars *vars);
 double ft_abs(double nb);
 void put_line(void *mlx_ptr, void *win_ptr, int x0, int y0, int x1, int y1, int color, int height, int width);
