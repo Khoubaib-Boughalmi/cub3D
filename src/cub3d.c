@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
+/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/03 14:49:16 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/03 15:56:40 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_R))
 	{
-		if(!vars->player.reload)
+		if(!vars->player.reload && vars->player.bullet!=8)
 		{
 			vars->player.reload=42;
 			vars->player.bullet=8;
@@ -148,14 +148,16 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 		vars->player.dy = 5 * sin(vars->player.angle);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_W)) /// . ila l amam
-	{	
+	{
+			printf("w\n");	
 		x = (int)floor((vars->player.x + (vars->player.dx * 5)) / 64);
 		y = (int)floor((vars->player.y + (vars->player.dy * 5)) / 64);
+		int xcheck = (int)floor((vars->player.x + (vars->player.dx )) / 64);
+		int ycheck = (int)floor((vars->player.y + (vars->player.dy )) / 64);
 		int factx = (int)floor((vars->player.x) / 64);
 		int facty = (int)floor((vars->player.y) / 64);
-		if (g_map[y][x] <= 0)
+		if (g_map[y][x] <= 0 && g_map[ycheck][xcheck] <= 0)
 		{
-			// printf("ddd\n");	
 			if(!(x != factx && y!=facty && g_map[y][factx] >0 && g_map[facty][x] >0))
 			{
 			vars->player.x += vars->player.dx;
@@ -164,10 +166,10 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 		}
 		else
 		{
-			// printf("%d . %d .  %d .  %d . \n",factx,facty,x,y);
-			if (g_map[facty][x] <= 0)
+			printf("%d . %d .  %d .  %d . \n",factx,facty,x,y);
+			if (g_map[facty][x] <= 0 && g_map[facty][xcheck] <= 0)
 				vars->player.x += vars->player.dx;
-			else if (g_map[y][factx] <= 0)
+			else if (g_map[y][factx] <= 0 && g_map[ycheck][factx] <= 0 )
 				vars->player.y += vars->player.dy;
 		}
 	}

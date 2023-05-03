@@ -145,6 +145,12 @@ void mouse_click(mouse_key_t button, action_t action, modifier_key_t mods, void 
 		vars->player.shoot=8;
 		show_gun_magazine(vars);
 	}
+	else if(button==0 && action == 1 && !vars->player.bullet && !vars->player.reload)
+	{
+		vars->player.bullet=8;
+		vars->player.reload=42;
+		show_gun_magazine(vars);
+	}
 
 
 }
@@ -157,6 +163,11 @@ void render_window(t_vars *vars)
 	width = vars->window_info.width;
 	height = vars->window_info.height;
 	vars->mlx = mlx_init(width, height, "cub3D", 1);
+	if (!vars->mlx)
+	{
+		ft_putstr_fd((char *)mlx_strerror(mlx_errno), 2);
+		exit(1);
+	}
 	g_vars->wall_texture  = mlx_load_png("./src/textures/wall_1.png");
 	// g_vars->wall_img = mlx_texture_to_image(g_vars->mlx, g_vars->wall_texture);
 	g_vars->weapon_texture  = mlx_load_png("./src/textures/StechkinEx1.png");

@@ -32,7 +32,7 @@ void draw_wall(t_vars *vars, double r,double rx,double ry, double lineH,int horo
    {
 
 	if(vars->player.y>ry)
-	imgtxet=vars->wall_texture2;
+	imgtxet=vars->wall_texture4;
 	// imgtxet=vars->wall_texture2;
 	if(vars->player.angle<PI)
 	   porcentsage=1-porcentsage;
