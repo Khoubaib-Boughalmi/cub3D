@@ -73,10 +73,13 @@ void redraw(t_vars *vars)
 	char *str;
 	// printf("%s\n",str);
 	mlx_delete_image(g_vars->mlx,g_vars->weapon_img);
-	clean_window(vars);
+	clean_window(vars);		
 	draw_ray(vars);
-	draw_partcle(vars);
-	draw_map(vars);
+	if(vars->keyboard.show_map)
+	{	
+		draw_partcle(vars);
+		draw_map(vars);
+	}
 	if(vars->player.reload)
 	{
 
@@ -123,11 +126,11 @@ void redraw(t_vars *vars)
 
 void	show_gun_magazine(t_vars *vars)
 {
-		char *str=ft_strjoin(": ",ft_itoa(vars->player.bullet));
-		mlx_image_to_window(vars->mlx,vars->ammo_img,800,20);
-		mlx_delete_image(vars->mlx,vars->player.print_move);
-		vars->player.print_move=mlx_put_string(vars->mlx,str,880,52);
-		free(str);
+	char *str=ft_strjoin(": ",ft_itoa(vars->player.bullet));
+	mlx_image_to_window(vars->mlx,vars->ammo_img,800,20);
+	mlx_delete_image(vars->mlx,vars->player.print_move);
+	vars->player.print_move=mlx_put_string(vars->mlx,str,880,52);
+	free(str);
 }
 
 
@@ -135,7 +138,7 @@ void mouse_click(mouse_key_t button, action_t action, modifier_key_t mods, void 
 {
 	t_vars *vars;
 	vars = (t_vars *)param;
-	printf("%d\n",button);
+	// printf("%d\n",button);
 	if(button==0 && action == 1 && vars->player.bullet && !vars->player.reload)
 	{
 		vars->player.bullet--;

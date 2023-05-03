@@ -51,6 +51,7 @@ typedef struct s_coord {
 
 typedef struct s_keyboard {
 	int			cursor;
+	int			show_map;
 }				t_keyboard;
 
 
@@ -68,7 +69,7 @@ typedef struct s_player {
 
 }				t_player;
 
-extern int g_map[12][11];
+extern int g_map[31][11];
 typedef struct s_vars {
 	mlx_t			*mlx;
 	void			*win;

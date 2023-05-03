@@ -131,7 +131,8 @@ void draw_ray(t_vars *vars)
 			ry = h_y;
 			f_dist = h_dist;
 		}
-		put_line(vars->mlx, vars->win, (vars->player.x * 16) / 64, (vars->player.y * 16) / 64, (rx * 16) / 64, (ry * 16) / 64, create_color(255, 255, 0, 255), vars->img->width, vars->img->height);
+		if(vars->keyboard.show_map)
+			put_line(vars->mlx, vars->win, (vars->player.x * 16) / 64, (vars->player.y * 16) / 64, (rx * 16) / 64, (ry * 16) / 64, create_color(255, 255, 0, 255), vars->img->width, vars->img->height);
 		double fish_eye_new_angle = vars->player.angle - ra;
 		if (fish_eye_new_angle < 0)
 			fish_eye_new_angle += 2 * PI;
