@@ -3,7 +3,6 @@
 
 void draw_wall(t_vars *vars, double r,double rx,double ry, double lineH,int hororver)
 {
-	// printf("%d  \n",g_map[(int)floor(ry/64)][(int)floor(rx/64)]);
 	mlx_texture_t *imgtxet;
 	int32_t color;
 	double porcentsage;

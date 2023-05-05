@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/03 15:56:40 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/05 15:43:58 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 			i++;
 		}
 		
-		// printf("%d  %d  %d   %d  map %d\n",factx,facty,x,y,g_map[y][x]);
 		if(g_map[y][x]==500)
 			g_map[y][x]=-10;
 		else if(g_map[y][x]==-10)
@@ -149,7 +148,6 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_W)) /// . ila l amam
 	{
-			printf("w\n");	
 		x = (int)floor((vars->player.x + (vars->player.dx * 5)) / 64);
 		y = (int)floor((vars->player.y + (vars->player.dy * 5)) / 64);
 		int xcheck = (int)floor((vars->player.x + (vars->player.dx )) / 64);
@@ -166,7 +164,6 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 		}
 		else
 		{
-			printf("%d . %d .  %d .  %d . \n",factx,facty,x,y);
 			if (g_map[facty][x] <= 0 && g_map[facty][xcheck] <= 0)
 				vars->player.x += vars->player.dx;
 			else if (g_map[y][factx] <= 0 && g_map[ycheck][factx] <= 0 )
@@ -273,8 +270,7 @@ void mouse_handler(double xpos, double ypos, void *param)
 {
 	t_vars *vars;
 	vars = (t_vars *)param;
-	// static int frame =0;
-	// printf("%f .  %f . \n",xpos, ypos);
+	
 	if (xpos > vars->player.prev_xpos)
 	{
 		// if (xpos < 512)
@@ -311,7 +307,6 @@ void loop_func(void *data)
 {
 	t_vars *vars =(t_vars*)data;
 	static int frame =0;
-	// printf("%d\n",frame);
 	if(frame % 5 ==0)
 		redraw(vars);
 	if(frame >10000)

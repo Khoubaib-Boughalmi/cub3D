@@ -68,10 +68,8 @@ void    draw_aim(t_vars *vars)
 
 void redraw(t_vars *vars)
 {
-	// static int frame =1;
 	static int frame =1;
 	char *str;
-	// printf("%s\n",str);
 	mlx_delete_image(g_vars->mlx,g_vars->weapon_img);
 	clean_window(vars);		
 	draw_ray(vars);
@@ -138,7 +136,7 @@ void mouse_click(mouse_key_t button, action_t action, modifier_key_t mods, void 
 {
 	t_vars *vars;
 	vars = (t_vars *)param;
-	// printf("%d\n",button);
+
 	if(button==0 && action == 1 && vars->player.bullet && !vars->player.reload)
 	{
 		vars->player.bullet--;
