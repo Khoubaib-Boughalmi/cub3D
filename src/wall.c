@@ -1,6 +1,12 @@
 #include "../inc/cub3d.h"
 
 
+
+
+
+
+
+
 void draw_wall(t_vars *vars, double r,double rx,double ry, double lineH,int hororver)
 {
 	// printf("%d  \n",g_map[(int)floor(ry/64)][(int)floor(rx/64)]);
@@ -61,5 +67,38 @@ void draw_wall(t_vars *vars, double r,double rx,double ry, double lineH,int horo
 			mlx_put_pixel(vars->img, x1 - i, y, color);
 			rl+=g;
 		}
+	}
+}
+
+
+
+void draw_wall_5(t_vars *vars, double r,double rx,double ry, double lineH)
+{
+	mlx_texture_t *imgtxet;
+	int32_t color;
+	int x1 = r * 2 + 2;
+	int k=lineH;
+	if (lineH > 1020)
+			lineH = 1020;
+	int ligne_offset = 512 - lineH / 2;
+	int y1 = 512 - lineH / 2;
+
+	imgtxet=vars->wall_texture;
+	int time=r -(lineH/10);
+	if(time<0)
+		time =0;
+		printf("time = %d\n",time);
+	while(time <r +(lineH/10) && time <512)
+	{
+		x1 = time* 2 + 2;
+		for (int i = 0; i < 2; i++)
+		{
+			for (int y = y1; y <= lineH + (int)ligne_offset; y++)
+			{
+				color =create_color(255,255,255,255);
+				mlx_put_pixel(vars->img, x1 - i, y, color);
+			}
+		}
+		time++;
 	}
 }

@@ -66,6 +66,71 @@ void    draw_aim(t_vars *vars)
     put_line(vars->mlx, vars->win, 506, 512, 519, 512, create_color(0, 255, 0, 255), vars->img->width, vars->img->height);
 }
 
+
+
+void draw_wal7(t_vars *vars, int r, int lineH, int32_t color)
+{
+   int x1 = r * 2 + 513;
+	double ligne_offset = 220 - lineH/2;
+   int y1 = 220 - lineH/2;
+	// Draw vertical line with specified line width
+	for (int i = 0; i < 2; i++)
+	{
+		for (int y = y1; y <= lineH + (int)ligne_offset; y++)
+		{
+			mlx_put_pixel(vars->img, x1 - i, y, color);
+		}
+	}
+}
+
+void draw_one_sprite(t_vars *vars)
+{
+	double sprite_ax=64*3;
+	double sprite_ay=64*3;
+	float dx = sprite_ax- vars->player.x  ;
+	float dy = sprite_ay -vars->player.y ;
+	// vars->player.angle=PI;
+	// double sprite_ax = 300;
+	// double sprite_ay = 300;
+	// float dx = sprite_ax - vars->player.x;
+	// float dy = sprite_ay - vars->player.y;
+	float angle = atan2(dy, dx);
+	if (angle < 0)
+			angle += 2 * PI;
+		if (angle >= 2 * PI)
+			angle -= 2 * PI;
+	float player_a=vars->player.angle;
+	// float angle_diff = angle - vars->player.angle;
+	// if(angle>PI || player_a>PI)
+	// {
+	// 	if(angle>PI)
+	// 		angle -= 2 * PI;
+	// 	if(player_a>PI)
+	// 		player_a -= 2 * PI;
+	// }
+	// float angle_diff = angle - player_a;
+	float angle_diff = angle - vars->player.angle;
+	float porce_angle =angle_diff*180/PI;
+	if(angle_diff*180/PI<=50 &&angle_diff*180/PI>=-50 )
+	{
+		porce_angle=(porce_angle+30)/60*512;
+		// draw_wal7(vars,(int)porce_angle,200,create_color(0, 255, 0, 255));
+		float v_dist = distance_to_wall(vars->player.x, vars->player.y, 64*3, 64*3, porce_angle);
+		double line_height = (64 * 600) / v_dist;
+
+		draw_wall_5(vars,(int)porce_angle,64*3,64*3,line_height);
+		printf("int view %f\n",porce_angle);
+	}
+
+	// if (angle_diff <= 60*PI/180) {  // Assume a field of view of 90 degrees
+    // printf("Player is in sprite's view\n");
+	// } else {
+	// 	printf("Player is not in sprite's view\n");
+	// }
+	printf("%f .  %f . %f .  |  . %f %f\n",angle*180/PI,vars->player.angle*180/PI,angle_diff*180/PI,dx,dy);
+	
+}
+
 void redraw(t_vars *vars)
 {
 	// static int frame =1;
@@ -75,11 +140,13 @@ void redraw(t_vars *vars)
 	mlx_delete_image(g_vars->mlx,g_vars->weapon_img);
 	clean_window(vars);		
 	draw_ray(vars);
+	draw_one_sprite(vars);
 	if(vars->keyboard.show_map)
 	{	
 		draw_partcle(vars);
 		draw_map(vars);
 	}
+	
 	if(vars->player.reload)
 	{
 
@@ -183,7 +250,6 @@ void render_window(t_vars *vars)
 	mlx_set_window_limit(vars->mlx, width - 200, height - 200, width, height);
 	vars->img = mlx_new_image(vars->mlx, width, height);
 	redraw(vars);
-	show_gun_magazine(vars);
 	mlx_set_cursor_mode(vars->mlx, vars->keyboard.cursor ? MLX_MOUSE_NORMAL : MLX_MOUSE_DISABLED);
 
 	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler, vars);
@@ -192,6 +258,7 @@ void render_window(t_vars *vars)
 	mlx_mouse_hook(vars->mlx, (mlx_mousefunc)mouse_click, vars);
 	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
 	mlx_loop_hook(vars->mlx,&loop_func,vars);
+	show_gun_magazine(vars);
 	mlx_loop(vars->mlx);
 	
 	mlx_terminate(vars->mlx);

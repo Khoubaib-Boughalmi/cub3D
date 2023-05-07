@@ -1,7 +1,7 @@
 
 #include "../inc/cub3d.h"
 
-void draw_ray(t_vars *vars)
+void ssdraw_ray(t_vars *vars)
 {
 	// t_ray	ray;
 	int r;
@@ -21,7 +21,10 @@ void draw_ray(t_vars *vars)
 	double v_x;
 	double v_y;
 	double f_dist;
-
+	float c_dist_h;
+	float c_dist_v;
+	float c_x;
+	float c_y;
 	ra = vars->player.angle - DEG * 30;
 	if (ra < 0)
 		ra += 2 * PI;
@@ -56,12 +59,11 @@ void draw_ray(t_vars *vars)
 			ry = vars->player.y;
 			dof = 100;
 		}
+		
 		while (dof < 100)
 		{
 			mx = (int)(rx) / 64;
 			my = (int)(ry) / 64;
-			// if(mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && g_map[my][mx] ==-50)
-			// 	printf("there is in a\n");
 			if (mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && g_map[my][mx] >= 1)
 			{
 				h_x = rx;
@@ -71,8 +73,13 @@ void draw_ray(t_vars *vars)
 			}
 			else
 			{
-				// if(mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && g_map[my][mx] ==-50)
-				// 	printf("there is in a\n");
+				if (mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && g_map[my][mx]==-50)
+				{
+					c_x = rx;
+					c_y = ry;
+					c_dist_h = distance_to_wall(vars->player.x, vars->player.y, c_x, c_y, ra) / 2;
+					printf("there is elem %f .  %d\n\n" ,f_dist,i);
+				}
 				rx += xo;
 				ry += yo;
 				dof++;
@@ -109,9 +116,6 @@ void draw_ray(t_vars *vars)
 		{
 			mx = (int)(rx) / 64;
 			my = (int)(ry) / 64;
-
-			// if(mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && g_map[my][mx] ==-50)
-			// 		printf("there is in b\n");
 			if (mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && g_map[my][mx] >= 1)
 			{
 				v_x = rx;
@@ -121,6 +125,13 @@ void draw_ray(t_vars *vars)
 			}
 			else
 			{
+				if (mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && g_map[my][mx]==-50)
+				{
+					c_x = rx;
+					c_y = ry;
+					c_dist_v = distance_to_wall(vars->player.x, vars->player.y, c_x, c_y, ra) / 2;
+					printf("there is elem %f .  %d\n\n" ,f_dist,i);
+				}
 				rx += xo;
 				ry += yo;
 				dof++;
@@ -138,10 +149,6 @@ void draw_ray(t_vars *vars)
 			ry = h_y;
 			f_dist = h_dist;
 		}
-		// if(i==0)
-		// 	printf("in 1 rx = %f ry =%f \n",rx,ry);
-		// if(i==511)
-		// 	printf("in 511 rx = %f ry =%f \n",rx,ry);
 		if(vars->keyboard.show_map)
 			put_line(vars->mlx, vars->win, (vars->player.x * 16) / 64, (vars->player.y * 16) / 64, (rx * 16) / 64, (ry * 16) / 64, create_color(255, 255, 0, 255), vars->img->width, vars->img->height);
 		double fish_eye_new_angle = vars->player.angle - ra;
@@ -151,6 +158,7 @@ void draw_ray(t_vars *vars)
 			fish_eye_new_angle -= 2 * PI;
 		f_dist = f_dist * cos(fish_eye_new_angle);
 		double line_height = (64 * 800) / f_dist;
+		double sprite_height = (64 * 300) / c_dist;
 		// if (line_height > 1020)
 		// 	line_height = 1020;
 		// if (v_dist > h_dist)
@@ -158,9 +166,17 @@ void draw_ray(t_vars *vars)
 		// else
 		// 	draw_wall(vars, i, line_height, create_color(150, 150, 150, i / 2 + 1));
 		if(v_dist > h_dist)
+		{
 			draw_wall(vars, i, rx,ry , line_height, 0);
+			draw_wall(vars, i, c_x,c_y , sprite_height, 0);
+			
+		}
 		else
+		{
 			draw_wall(vars, i, rx,ry ,line_height,1);
+			// draw_wall(vars, i, c_x,c_y , sprite_height, 0);
+
+		}
 		ra = ra + DEG / 8;
 		if (ra < 0)
 			ra += 2 * PI;

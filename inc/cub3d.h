@@ -99,6 +99,7 @@ extern t_vars *g_vars;
 #define PI3 3*PI2
 #define DEG 0.0174533
 void	show_gun_magazine(t_vars *vars);
+void draw_wall_5(t_vars *vars, double r,double rx,double ry, double lineH);
 
 void draw_ray(t_vars *vars);
 double ft_abs(double nb);
