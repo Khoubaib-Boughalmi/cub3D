@@ -138,6 +138,7 @@ void draw_ray(t_vars *vars)
 			ry = h_y;
 			f_dist = h_dist;
 		}
+		g_ray_ds[i]=f_dist;
 		// if(i==0)
 		// 	printf("in 1 rx = %f ry =%f \n",rx,ry);
 		// if(i==511)

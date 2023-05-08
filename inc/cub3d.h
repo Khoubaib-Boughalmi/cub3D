@@ -69,7 +69,9 @@ typedef struct s_player {
 
 }				t_player;
 
-extern int g_map[14][31];
+extern int g_map[31][11];
+ int g_ray_ds[512];
+
 typedef struct s_vars {
 	mlx_t			*mlx;
 	void			*win;
@@ -87,6 +89,7 @@ typedef struct s_vars {
 	mlx_texture_t *wall_texture3;
 	mlx_texture_t *wall_texture4;
 	mlx_texture_t *door_texture;
+	mlx_texture_t *enemy_texture;
 	mlx_texture_t *ammo_texture;
 	mlx_image_t *ammo_img;
 	t_keyboard		keyboard;

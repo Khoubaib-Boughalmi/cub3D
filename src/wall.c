@@ -71,33 +71,69 @@ void draw_wall(t_vars *vars, double r,double rx,double ry, double lineH,int horo
 
 
 
-void draw_wall_5(t_vars *vars, double r,double rx,double ry, double lineH)
+void draw_wall_5(t_vars *vars, double r,double distance,double ry, double lineH)
 {
 	mlx_texture_t *imgtxet;
+	int32_t trans=create_color(0,0,0,0);;
 	int32_t color;
 	int x1 = r * 2 + 2;
 	int k=lineH;
 	if (lineH > 1020)
 			lineH = 1020;
-	int ligne_offset = 512 - lineH / 2;
-	int y1 = 512 - lineH / 2;
+	int ligne_offset = 512 - lineH / 2.5;
+	int y1 = 512 - lineH / 2.5;
+	float por_h = 100/lineH;
+	float tot_h=0;
+	float por_v = 62/(4*lineH/10);
+	float tot_v=0;
 
-	imgtxet=vars->wall_texture;
+
+	imgtxet=vars->enemy_texture;
 	int time=r -(lineH/10);
 	if(time<0)
+	{
+				tot_v+=abs(time*2)*por_v;
+
 		time =0;
-		printf("time = %d\n",time);
+
+	}
+	// printf("time = %f\n",por_v);
+	int lol=0;
+	int suu=0;
 	while(time <r +(lineH/10) && time <512)
 	{
-		x1 = time* 2 + 2;
-		for (int i = 0; i < 2; i++)
+		// printf("%d\n",g_ray_ds[time]);
+		// printf("aa %d\n",suu);
+		if(distance<g_ray_ds[time])
 		{
-			for (int y = y1; y <= lineH + (int)ligne_offset; y++)
+
+		x1 = time* 2 + 2;
+			for (int i = 0; i < 2; i++)
 			{
-				color =create_color(255,255,255,255);
-				mlx_put_pixel(vars->img, x1 - i, y, color);
+				tot_h=0;
+				suu=(int)tot_v;
+				suu*=4;
+				lol=(int)(tot_h*62*4)+suu;
+				for (int y = y1; y <= lineH + (int)ligne_offset; y++)
+				{
+					// color =create_color(255,255,255,255);
+					if(lol<imgtxet->height*imgtxet->width *4)
+						color =create_color(imgtxet->pixels[lol],imgtxet->pixels[lol+1], imgtxet->pixels[lol+2],imgtxet->pixels[lol+3]);
+				if(color !=trans)
+					mlx_put_pixel(vars->img, x1 - i, y, color);
+					
+
+				// mlx_put_pixel(vars->img, x1 - i, y, color);
+					// lol+=imgtxet->width *4;
+					tot_h+=por_h;
+					lol = (int)tot_h*62*4+suu;
+				}
+				tot_v+=por_v;
 			}
 		}
+		else
+				tot_v+=2*por_v;
+		// suu+=4;
 		time++;
 	}
 }

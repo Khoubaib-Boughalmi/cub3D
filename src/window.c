@@ -95,10 +95,19 @@ void draw_one_sprite(t_vars *vars)
 	// float dx = sprite_ax - vars->player.x;
 	// float dy = sprite_ay - vars->player.y;
 	float angle = atan2(dy, dx);
-	if (angle < 0)
-			angle += 2 * PI;
-		if (angle >= 2 * PI)
+	float player_angle = vars->player.angle;
+	// if (angle < 0)
+	// 		angle += 2 * PI;
+	// if (angle >= 2 * PI)
+	// 		angle -= 2 * PI;
+	// if (player_angle < 0)
+	// 		player_angle += 2 * PI;
+	// if (player_angle >= 2 * PI)
+	// 		player_angle -= 2 * PI;
+	if(angle > player_angle+PI)
 			angle -= 2 * PI;
+	if(angle < player_angle-PI)
+			angle += 2 * PI;
 	float player_a=vars->player.angle;
 	// float angle_diff = angle - vars->player.angle;
 	// if(angle>PI || player_a>PI)
@@ -118,8 +127,8 @@ void draw_one_sprite(t_vars *vars)
 		float v_dist = distance_to_wall(vars->player.x, vars->player.y, 64*3, 64*3, porce_angle);
 		double line_height = (64 * 600) / v_dist;
 
-		draw_wall_5(vars,(int)porce_angle,64*3,64*3,line_height);
-		printf("int view %f\n",porce_angle);
+		draw_wall_5(vars,(int)porce_angle,v_dist,64*3,line_height);
+		// printf("int view %f\n",porce_angle);
 	}
 
 	// if (angle_diff <= 60*PI/180) {  // Assume a field of view of 90 degrees
@@ -127,7 +136,7 @@ void draw_one_sprite(t_vars *vars)
 	// } else {
 	// 	printf("Player is not in sprite's view\n");
 	// }
-	printf("%f .  %f . %f .  |  . %f %f\n",angle*180/PI,vars->player.angle*180/PI,angle_diff*180/PI,dx,dy);
+	// printf("%f .  %f . %f .  |  . %f %f\n",angle*180/PI,vars->player.angle*180/PI,angle_diff*180/PI,dx,dy);
 	
 }
 
@@ -241,7 +250,8 @@ void render_window(t_vars *vars)
 	g_vars->wall_texture3  = mlx_load_png("./src/textures/wall_3.png");
 	g_vars->wall_texture4  = mlx_load_png("./src/textures/wall_4.png");
 	g_vars->door_texture  = mlx_load_png("./src/textures/door.png");
-
+	g_vars->enemy_texture  = mlx_load_png("./src/textures/enemy1.png");
+	printf("%d %d %d %d \n",g_vars->enemy_texture->pixels[0],g_vars->enemy_texture->pixels[1],g_vars->enemy_texture->pixels[2],g_vars->enemy_texture->pixels[3]);
 	g_vars->ammo_texture  = mlx_load_png("./src/textures/ammunition.png");
 	g_vars->ammo_img = mlx_texture_to_image(g_vars->mlx, g_vars->ammo_texture);
 	// g_vars->wall_img2 = mlx_texture_to_image(g_vars->mlx, g_vars->wall_texture);
