@@ -70,6 +70,7 @@ void    draw_aim(t_vars *vars)
 
 void draw_wal7(t_vars *vars, int r, int lineH, int32_t color)
 {
+	static int frame =0;
    int x1 = r * 2 + 513;
 	double ligne_offset = 220 - lineH/2;
    int y1 = 220 - lineH/2;
@@ -85,6 +86,9 @@ void draw_wal7(t_vars *vars, int r, int lineH, int32_t color)
 
 void draw_one_sprite(t_vars *vars)
 {
+
+	static int frame =0;
+
 	double sprite_ax;
 	double sprite_ay;
 	float dx;
@@ -94,10 +98,12 @@ void draw_one_sprite(t_vars *vars)
 	float porce_angle;
 	float v_dist;
 	double line_height;
-	for (int i =10; i<25 ;i++)
+	for (int i =0; i<vars->numerof_sprite ;i++)
 	{
-		sprite_ax=64*3;
-		sprite_ay=64*i;
+		// printf("(%s)\n",vars->sprites[i].path);
+		sprite_ax=vars->sprites[i].x;
+		sprite_ay=vars->sprites[i].y;
+		// sprite_ay=64*i+10;
 		dx = sprite_ax- vars->player.x  ;
 		dy = sprite_ay -vars->player.y ;
 		angle = atan2(dy, dx);
@@ -112,11 +118,14 @@ void draw_one_sprite(t_vars *vars)
 			porce_angle=(porce_angle+30)/60*512;
 			v_dist = distance_to_wall(vars->player.x, vars->player.y, sprite_ax, sprite_ay, porce_angle);
 			
-			printf("%f\n",v_dist);
+			// printf("%f\n",v_dist);
 			line_height = (64 * 600) / v_dist;
-			draw_wall_5(vars,(int)porce_angle,v_dist,64*3,line_height);
+			draw_wall_5(vars,(int)porce_angle,v_dist,64*3,line_height,frame,vars->sprites[i].path);
 		}
 	}
+		frame++;
+	if(frame ==8)
+		frame =0;
 }
 
 void redraw(t_vars *vars)
@@ -139,6 +148,8 @@ void redraw(t_vars *vars)
 		str=ft_strjoin("./src/textures/kortas/StechkinR",ft_itoa(43-g_vars->player.reload));
 		str=ft_strjoin(str,".png");
 		g_vars->weapon_texture  = mlx_load_png(str);
+		// printf("%s\n",str);
+		// printf("%d\n",g_vars->weapon_texture);
 		g_vars->weapon_img = mlx_texture_to_image(g_vars->mlx, g_vars->weapon_texture);
 		mlx_image_to_window(vars->mlx,vars->weapon_img,50,257);
 		mlx_delete_texture(g_vars->weapon_texture);
@@ -221,14 +232,26 @@ void render_window(t_vars *vars)
 		ft_putstr_fd((char *)mlx_strerror(mlx_errno), 2);
 		exit(1);
 	}
-	g_vars->wall_texture  = mlx_load_png("./src/textures/wall_1.png");
+	g_vars->player.reload=0;
+	g_vars->numerof_sprite=5;
+	g_vars->sprites=malloc(sizeof(t_sprite)*g_vars->numerof_sprite);
+	for (int i=0; i<g_vars->numerof_sprite ; i++)
+	{
+		g_vars->sprites[i].x=64*i+200;
+		g_vars->sprites[i].y=64*i+640;
+		if(i%2==0)
+			g_vars->sprites[i].path=ft_strdup("./src/textures/sprites/");
+		else
+			g_vars->sprites[i].path=ft_strdup("./src/textures/sprites/g");
+	}
 	// g_vars->wall_img = mlx_texture_to_image(g_vars->mlx, g_vars->wall_texture);
 	g_vars->weapon_texture  = mlx_load_png("./src/textures/StechkinEx1.png");
 	g_vars->weapon_img = mlx_texture_to_image(g_vars->mlx, g_vars->weapon_texture);
-	g_vars->wall_texture2  = mlx_load_png("./src/textures/wall_2.png");
-	g_vars->wall_texture3  = mlx_load_png("./src/textures/wall_3.png");
-	g_vars->wall_texture4  = mlx_load_png("./src/textures/wall_4.png");
-	g_vars->door_texture  = mlx_load_png("./src/textures/door.png");
+	g_vars->wall_texture  =  mlx_load_png("./src/textures/huge_1.png");
+	g_vars->wall_texture2  = mlx_load_png("./src/textures/huge_2.png");
+	g_vars->wall_texture3  = mlx_load_png("./src/textures/huge_2.png");
+	g_vars->wall_texture4  = mlx_load_png("./src/textures/huge_1.png");
+	g_vars->door_texture  = mlx_load_png("./src/textures/diore.png");
 	g_vars->enemy_texture  = mlx_load_png("./src/textures/enemy1.png");
 	printf("%d %d %d %d \n",g_vars->enemy_texture->pixels[0],g_vars->enemy_texture->pixels[1],g_vars->enemy_texture->pixels[2],g_vars->enemy_texture->pixels[3]);
 	g_vars->ammo_texture  = mlx_load_png("./src/textures/ammunition.png");

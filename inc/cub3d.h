@@ -66,8 +66,14 @@ typedef struct s_player {
 	int reload;
 	int bullet;
 	mlx_image_t * print_move;
-
 }				t_player;
+
+
+typedef struct s_sprite {
+	float			x;
+	float       y;
+	char *path;
+}				t_sprite;
 
 extern int g_map[31][11];
  int g_ray_ds[513];
@@ -82,9 +88,9 @@ typedef struct s_vars {
 	double			*rays_lst;
 		mlx_image_t *wall_img;
 	mlx_texture_t *wall_texture;
-		mlx_image_t *weapon_img;
+	mlx_image_t *weapon_img;
 	mlx_texture_t *weapon_texture;
-		mlx_image_t *wall_img2;
+	mlx_image_t *wall_img2;
 	mlx_texture_t *wall_texture2;
 	mlx_texture_t *wall_texture3;
 	mlx_texture_t *wall_texture4;
@@ -93,6 +99,9 @@ typedef struct s_vars {
 	mlx_texture_t *ammo_texture;
 	mlx_image_t *ammo_img;
 	t_keyboard		keyboard;
+
+	int numerof_sprite;
+	t_sprite *sprites;
 }				t_vars;
 
 extern t_vars *g_vars;
@@ -102,7 +111,7 @@ extern t_vars *g_vars;
 #define PI3 3*PI2
 #define DEG 0.0174533
 void	show_gun_magazine(t_vars *vars);
-void draw_wall_5(t_vars *vars, double r,double rx,double ry, double lineH);
+void draw_wall_5(t_vars *vars, double r,double distance,double ry, double lineH,int frame,char *sprite_path);
 
 void draw_ray(t_vars *vars);
 double ft_abs(double nb);
