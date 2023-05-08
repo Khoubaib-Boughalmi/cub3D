@@ -85,59 +85,38 @@ void draw_wal7(t_vars *vars, int r, int lineH, int32_t color)
 
 void draw_one_sprite(t_vars *vars)
 {
-	double sprite_ax=64*3;
-	double sprite_ay=64*3;
-	float dx = sprite_ax- vars->player.x  ;
-	float dy = sprite_ay -vars->player.y ;
-	// vars->player.angle=PI;
-	// double sprite_ax = 300;
-	// double sprite_ay = 300;
-	// float dx = sprite_ax - vars->player.x;
-	// float dy = sprite_ay - vars->player.y;
-	float angle = atan2(dy, dx);
-	float player_angle = vars->player.angle;
-	// if (angle < 0)
-	// 		angle += 2 * PI;
-	// if (angle >= 2 * PI)
-	// 		angle -= 2 * PI;
-	// if (player_angle < 0)
-	// 		player_angle += 2 * PI;
-	// if (player_angle >= 2 * PI)
-	// 		player_angle -= 2 * PI;
-	if(angle > player_angle+PI)
-			angle -= 2 * PI;
-	if(angle < player_angle-PI)
-			angle += 2 * PI;
-	float player_a=vars->player.angle;
-	// float angle_diff = angle - vars->player.angle;
-	// if(angle>PI || player_a>PI)
-	// {
-	// 	if(angle>PI)
-	// 		angle -= 2 * PI;
-	// 	if(player_a>PI)
-	// 		player_a -= 2 * PI;
-	// }
-	// float angle_diff = angle - player_a;
-	float angle_diff = angle - vars->player.angle;
-	float porce_angle =angle_diff*180/PI;
-	if(angle_diff*180/PI<=50 &&angle_diff*180/PI>=-50 )
+	double sprite_ax;
+	double sprite_ay;
+	float dx;
+	float dy;
+	float angle;
+	float angle_diff ;
+	float porce_angle;
+	float v_dist;
+	double line_height;
+	for (int i =10; i<25 ;i++)
 	{
-		porce_angle=(porce_angle+30)/60*512;
-		// draw_wal7(vars,(int)porce_angle,200,create_color(0, 255, 0, 255));
-		float v_dist = distance_to_wall(vars->player.x, vars->player.y, 64*3, 64*3, porce_angle);
-		double line_height = (64 * 600) / v_dist;
-
-		draw_wall_5(vars,(int)porce_angle,v_dist,64*3,line_height);
-		// printf("int view %f\n",porce_angle);
+		sprite_ax=64*3;
+		sprite_ay=64*i;
+		dx = sprite_ax- vars->player.x  ;
+		dy = sprite_ay -vars->player.y ;
+		angle = atan2(dy, dx);
+		if(angle >  vars->player.angle+PI)
+				angle -= 2 * PI;
+		if(angle <  vars->player.angle-PI)
+				angle += 2 * PI;
+		angle_diff = angle - vars->player.angle;
+		porce_angle =angle_diff*180/PI;
+		if(angle_diff*180/PI<=50 &&angle_diff*180/PI>=-50 )
+		{
+			porce_angle=(porce_angle+30)/60*512;
+			v_dist = distance_to_wall(vars->player.x, vars->player.y, sprite_ax, sprite_ay, porce_angle);
+			
+			printf("%f\n",v_dist);
+			line_height = (64 * 600) / v_dist;
+			draw_wall_5(vars,(int)porce_angle,v_dist,64*3,line_height);
+		}
 	}
-
-	// if (angle_diff <= 60*PI/180) {  // Assume a field of view of 90 degrees
-    // printf("Player is in sprite's view\n");
-	// } else {
-	// 	printf("Player is not in sprite's view\n");
-	// }
-	// printf("%f .  %f . %f .  |  . %f %f\n",angle*180/PI,vars->player.angle*180/PI,angle_diff*180/PI,dx,dy);
-	
 }
 
 void redraw(t_vars *vars)

@@ -25,7 +25,6 @@ void draw_wall(t_vars *vars, double r,double rx,double ry, double lineH,int horo
 	float y2 =  (float)(k / 2 - 512)/k*64;
 	if(y2<0)
 		y2=0;
-
 	porcentsage-=(int)porcentsage;
 	imgtxet=vars->wall_texture;
 	if(g_map[(int)floor(ry/64)][(int)floor(rx/64)]==500)
@@ -69,7 +68,7 @@ void draw_wall(t_vars *vars, double r,double rx,double ry, double lineH,int horo
 	}
 }
 
-
+int ff=0;
 
 void draw_wall_5(t_vars *vars, double r,double distance,double ry, double lineH)
 {
@@ -80,8 +79,8 @@ void draw_wall_5(t_vars *vars, double r,double distance,double ry, double lineH)
 	int k=lineH;
 	if (lineH > 1020)
 			lineH = 1020;
-	int ligne_offset = 512 - lineH / 2.5;
-	int y1 = 512 - lineH / 2.5;
+	int ligne_offset = 512 - lineH / 2.9;
+	int y1 = 512 - lineH / 2.9;
 	float por_h = 100/lineH;
 	float tot_h=0;
 	float por_v = 62/(4*lineH/10);
@@ -106,7 +105,7 @@ void draw_wall_5(t_vars *vars, double r,double distance,double ry, double lineH)
 		// printf("aa %d\n",suu);
 		if(distance<g_ray_ds[time])
 		{
-
+			g_ray_ds[time ]=distance;
 		x1 = time* 2 + 2;
 			for (int i = 0; i < 2; i++)
 			{
@@ -114,12 +113,13 @@ void draw_wall_5(t_vars *vars, double r,double distance,double ry, double lineH)
 				suu=(int)tot_v;
 				suu*=4;
 				lol=(int)(tot_h*62*4)+suu;
-				for (int y = y1; y <= lineH + (int)ligne_offset; y++)
+				for (int y = y1; y <= lineH + (int)ligne_offset &&  y <1024; y++)
 				{
 					// color =create_color(255,255,255,255);
 					if(lol<imgtxet->height*imgtxet->width *4)
 						color =create_color(imgtxet->pixels[lol],imgtxet->pixels[lol+1], imgtxet->pixels[lol+2],imgtxet->pixels[lol+3]);
-				if(color !=trans)
+				// printf("%d\n",y);
+				if(color !=trans )
 					mlx_put_pixel(vars->img, x1 - i, y, color);
 					
 

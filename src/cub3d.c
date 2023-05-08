@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/07 21:09:19 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/08 14:15:17 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,10 +345,10 @@ int init_vars(void)
 	g_vars->window_info.width = 1024;
 	g_vars->map.width = 11;
 	g_vars->map.height = 31;
-	g_vars->player.angle = 45 * (PI / 180);
+	g_vars->player.angle = 0 * (PI / 180);
 	g_vars->player.prev_xpos = 0;
-	g_vars->player.x = 64*2;
-	g_vars->player.y = 64*2;
+	g_vars->player.x = 64*3;
+	g_vars->player.y = 64*10;
 	g_vars->player.dx = 5 * cos(g_vars->player.angle);
 	g_vars->player.dy = 5 * sin(g_vars->player.angle);
 	g_vars->keyboard.cursor = 0;

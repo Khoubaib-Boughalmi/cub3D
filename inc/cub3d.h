@@ -70,7 +70,7 @@ typedef struct s_player {
 }				t_player;
 
 extern int g_map[31][11];
- int g_ray_ds[512];
+ int g_ray_ds[513];
 
 typedef struct s_vars {
 	mlx_t			*mlx;
