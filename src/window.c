@@ -251,7 +251,7 @@ void render_window(t_vars *vars)
 	g_vars->wall_texture2  = mlx_load_png("./src/textures/huge_2.png");
 	g_vars->wall_texture3  = mlx_load_png("./src/textures/huge_2.png");
 	g_vars->wall_texture4  = mlx_load_png("./src/textures/huge_1.png");
-	g_vars->door_texture  = mlx_load_png("./src/textures/diore.png");
+	g_vars->door_texture  = mlx_load_png("./src/textures/doorx.png");
 	g_vars->enemy_texture  = mlx_load_png("./src/textures/enemy1.png");
 	printf("%d %d %d %d \n",g_vars->enemy_texture->pixels[0],g_vars->enemy_texture->pixels[1],g_vars->enemy_texture->pixels[2],g_vars->enemy_texture->pixels[3]);
 	g_vars->ammo_texture  = mlx_load_png("./src/textures/ammunition.png");
