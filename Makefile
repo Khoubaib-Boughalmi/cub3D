@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -fsanitize=address -g
+CFLAGS = -fsanitize=address -g #-Werror -Wextra -Wextra
 INC = inc
 SRC = src
 INCLUDES = $(INC)/cub3d.h
@@ -9,7 +9,8 @@ SRCS = $(SRC)/cub3d.c \
 		$(SRC)/wall.c \
 		$(SRC)/rays.c \
 		$(SRC)/window.c \
-		$(SRC)/utils.c
+		$(SRC)/utils.c \
+		map_utils/tst.c  map_utils/get_next_line.c  map_utils/get_next_line_utils.c  
 
 OBJS = $(SRCS:.c=.o)
 NAME = cub3d

@@ -62,7 +62,7 @@ void draw_ray(t_vars *vars)
 			my = (int)(ry) / 64;
 			// if(mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && g_map[my][mx] ==-50)
 			// 	printf("there is in a\n");
-			if (mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && g_map[my][mx] >= 1)
+			if (mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && vars->map.map[my][mx] >= 1)
 			{
 				h_x = rx;
 				h_y = ry;
@@ -71,7 +71,7 @@ void draw_ray(t_vars *vars)
 			}
 			else
 			{
-				// if(mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && g_map[my][mx] ==-50)
+				// if(mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && vars->map.map[my][mx] ==-50)
 				// 	printf("there is in a\n");
 				rx += xo;
 				ry += yo;
@@ -110,9 +110,9 @@ void draw_ray(t_vars *vars)
 			mx = (int)(rx) / 64;
 			my = (int)(ry) / 64;
 
-			// if(mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && g_map[my][mx] ==-50)
+			// if(mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && vars->map.map[my][mx] ==-50)
 			// 		printf("there is in b\n");
-			if (mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && g_map[my][mx] >= 1)
+			if (mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && vars->map.map[my][mx] >= 1)
 			{
 				v_x = rx;
 				v_y = ry;

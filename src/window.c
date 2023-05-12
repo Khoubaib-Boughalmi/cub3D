@@ -50,9 +50,9 @@ void draw_tile(t_vars *vars, int y, int x)
 		while (++j < 16)
 		{
 			// mlx_put_pixel(vars->img, (16 * x) + i, (16 * y) + j, color_black);
-			if (g_map[y][x]==500)
+			if (vars->map.map[y][x]==500)
 				mlx_put_pixel(vars->img, (16 * x) + i, (16 * y) + j, color_blue);
-			else if (g_map[y][x]>0)
+			else if (vars->map.map[y][x]>0)
 				mlx_put_pixel(vars->img, (16 * x) + i, (16 * y) + j, color_grey);
 			if ((j == 15 || i == 15))
 				mlx_put_pixel(vars->img, (16 * x) + i, (16 * y) + j, color_white);

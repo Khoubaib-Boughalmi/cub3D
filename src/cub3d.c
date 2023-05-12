@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/11 19:35:37 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/12 18:02:52 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,38 +30,38 @@ t_vars *g_vars;
 // {1 ,1 ,1 ,1 ,0 ,1 ,1 ,1 ,0 ,1 ,1 ,1 ,0 ,1 ,0 ,1 ,0 ,1 ,0 ,1 ,1 ,1 ,1 ,0 ,1 ,0 ,0 ,0 ,1 ,0 ,0 ,0 ,0 },
 // {1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0 ,0 ,0 ,0 }};
 
-int g_map[31][11] = {
-	 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-	 {1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1},
-	 {1, 0, 0, 0, 0, 0, 0, 1, 500, 1, 1},
-	 {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	 {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
-	 {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
-	 {1, 0, 0, 1, 0, 1, 0, 0, 0, 500, 1},
-	 {1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1},
-	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	 {0, 1, 0, 0, 0, 0, -57, 0, 0, 0, 1},
-	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	 {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1},
-	 {1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1},
-	 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
+// int g_map[31][11] = {
+// 	 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+// 	 {1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1},
+// 	 {1, 0, 0, 0, 0, 0, 0, 1, 500, 1, 1},
+// 	 {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+// 	 {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+// 	 {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+// 	 {1, 0, 0, 1, 0, 1, 0, 0, 0, 500, 1},
+// 	 {1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1},
+// 	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+// 	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+// 	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+// 	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+// 	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+// 	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+// 	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+// 	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+// 	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+// 	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+// 	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+// 	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+// 	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+// 	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+// 	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+// 	 {0, 1, 0, 0, 0, 0, -57, 0, 0, 0, 1},
+// 	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+// 	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+// 	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+// 	 {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+// 	 {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1},
+// 	 {1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1},
+// 	 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
 
 int32_t create_color(int32_t r, int32_t g, int32_t b, int32_t a)
 {
@@ -124,10 +124,10 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 			i++;
 		}
 		
-		if(g_map[y][x]==500)
-			g_map[y][x]=-10;
-		else if(g_map[y][x]==-10)
-			g_map[y][x]=500;
+		if(vars->map.map[y][x]==500)
+			vars->map.map[y][x]=-10;
+		else if(vars->map.map[y][x]==-10) 
+			vars->map.map[y][x]=500;
 	}
 	
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
@@ -167,9 +167,9 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 		int ycheck = (int)floor((vars->player.y + (vars->player.dy )) / 64);
 		int factx = (int)floor((vars->player.x) / 64);
 		int facty = (int)floor((vars->player.y) / 64);
-		if (g_map[y][x] <= 0 && g_map[ycheck][xcheck] <= 0)
+		if (vars->map.map[y][x] <= 0 && vars->map.map[ycheck][xcheck] <= 0)
 		{
-			if(!(x != factx && y!=facty && g_map[y][factx] >0 && g_map[facty][x] >0))
+			if(!(x != factx && y!=facty && vars->map.map[y][factx] >0 && vars->map.map[facty][x] >0))
 			{
 			vars->player.x += vars->player.dx*speed;
 			vars->player.y += vars->player.dy*speed;
@@ -177,9 +177,9 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 		}
 		else
 		{
-			if (g_map[facty][x] <= 0 && g_map[facty][xcheck] <= 0)
+			if (vars->map.map[facty][x] <= 0 && vars->map.map[facty][xcheck] <= 0)
 				vars->player.x += vars->player.dx;
-			else if (g_map[y][factx] <= 0 && g_map[ycheck][factx] <= 0 )
+			else if (vars->map.map[y][factx] <= 0 && vars->map.map[ycheck][factx] <= 0 )
 				vars->player.y += vars->player.dy;
 		}
 	}
@@ -189,16 +189,16 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 		y = (int)floor((vars->player.y - (vars->player.dy * 2)) / 64);
 		int factx = (int)floor((vars->player.x) / 64);
 		int facty = (int)floor((vars->player.y) / 64);
-		if (g_map[y][x] != 1)
+		if (vars->map.map[y][x] != 1)
 		{
 			vars->player.x -= vars->player.dx;
 			vars->player.y -= vars->player.dy;
 		}
 		else
 		{
-			if (g_map[facty][x] != 1)
+			if (vars->map.map[facty][x] != 1)
 				vars->player.x -= vars->player.dx;
-			if (g_map[y][factx] != 1)
+			if (vars->map.map[y][factx] != 1)
 				vars->player.y -= vars->player.dy;
 		}
 	}
@@ -216,16 +216,16 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 		y = (int)floor((vars->player.y + (dyright )) / 64);
 		int factx = (int)floor((vars->player.x) / 64);
 		int facty = (int)floor((vars->player.y) / 64);
-		if (g_map[y][x] != 1)
+		if (vars->map.map[y][x] != 1)
 		{
 			vars->player.x += dxright;
 			vars->player.y += dyright;
 		}
 		else
 		{
-			if (g_map[facty][x] != 1)
+			if (vars->map.map[facty][x] != 1)
 				vars->player.x += dxright;
-			if (g_map[y][factx] != 1)
+			if (vars->map.map[y][factx] != 1)
 				vars->player.y += dyright;
 		}
 	}
@@ -243,16 +243,16 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 		y = (int)floor((vars->player.y + (dyright * 2)) / 64);
 		int factx = (int)floor((vars->player.x) / 64);
 		int facty = (int)floor((vars->player.y) / 64);
-		if (g_map[y][x] != 1)
+		if (vars->map.map[y][x] != 1)
 		{
 			vars->player.x += dxright;
 			vars->player.y += dyright;
 		}
 		else
 		{
-			if (g_map[facty][x] != 1)
+			if (vars->map.map[facty][x] != 1)
 				vars->player.x += dxright;
-			if (g_map[y][factx] != 1)
+			if (vars->map.map[y][factx] != 1)
 				vars->player.y += dyright;
 		}
 	}
@@ -329,8 +329,7 @@ void loop_func(void *data)
 	
 }
 
-
-int init_vars(void)
+int init_vars(t_map_info *data)
 {
 	g_vars = (t_vars *)malloc(sizeof(t_vars));
 	if (!g_vars)
@@ -340,12 +339,13 @@ int init_vars(void)
 	g_vars->player.bullet = 8;
 	g_vars->window_info.height = 1024;
 	g_vars->window_info.width = 1024;
-	g_vars->map.width = 11;
-	g_vars->map.height = 31;
-	g_vars->player.angle = 0 * (PI / 180);
+	g_vars->map.map=data->map;
+	g_vars->map.width = data->x_map_size;
+	g_vars->map.height = data->y_map_size;
+	g_vars->player.angle = data->angle_player * (PI / 180);
 	g_vars->player.prev_xpos = 0;
-	g_vars->player.x = 64*3;
-	g_vars->player.y = 64*10;
+	g_vars->player.x = data->x_player;
+	g_vars->player.y = data->y_player;
 	g_vars->player.dx = 5 * cos(g_vars->player.angle);
 	g_vars->player.dy = 5 * sin(g_vars->player.angle);
 	g_vars->keyboard.cursor = 0;
@@ -354,9 +354,18 @@ int init_vars(void)
 
 int main(int argc, char **argv)
 {
-	(void)argc;
-	(void)argv;
-	if (!init_vars())
+	// (void)argc;
+	// (void)argv;
+	if(argc!=2)
+	{
+		printf("map required\n");
+		exit (1);
+	}
+
+	t_map_info data;
+    cool(argv,&data);
+	
+	if (!init_vars(&data))
 		return (0);
 	render_window(g_vars);
 	return (0);

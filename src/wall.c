@@ -27,7 +27,7 @@ void draw_wall(t_vars *vars, double r,double rx,double ry, double lineH,int horo
 		y2=0;
 	porcentsage-=(int)porcentsage;
 	imgtxet=vars->wall_texture;
-	if(g_map[(int)floor(ry/64)][(int)floor(rx/64)]==500)
+	if(vars->map.map[(int)floor(ry/64)][(int)floor(rx/64)]==500)
 	{
 	imgtxet=vars->door_texture;
 		

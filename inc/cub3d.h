@@ -24,6 +24,16 @@ typedef struct s_map {
 	int			**map;
 }				t_map;
 
+
+
+typedef struct s_map_info {
+    int **map;
+    double x_player;
+    double y_player;
+    double angle_player;
+    int x_map_size;
+    int y_map_size;
+}				t_map_info;
 typedef struct s_intersect {
 	double      x;
 	double		y;
@@ -75,7 +85,7 @@ typedef struct s_sprite {
 	char *path;
 }				t_sprite;
 
-extern int g_map[31][11];
+// extern int g_map[31][11];
  int g_ray_ds[513];
 
 typedef struct s_vars {
@@ -110,6 +120,11 @@ extern t_vars *g_vars;
 #define PI2 PI/2
 #define PI3 3*PI2
 #define DEG 0.0174533
+
+
+int cool(char **av,t_map_info *data);
+
+
 void	show_gun_magazine(t_vars *vars);
 void draw_wall_5(t_vars *vars, double r,double distance,double ry, double lineH,int frame,char *sprite_path);
 
@@ -128,5 +143,5 @@ int key_press_handler(mlx_key_data_t keydata, void *param);
 void mouse_handler(double xpos, double ypos, void *param);
 void loop_func(void *data);
 void render_window(t_vars *vars);
-int init_vars(void);
+int init_vars(t_map_info *data);
 # endif
