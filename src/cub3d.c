@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/12 18:02:52 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/13 14:44:49 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,8 +161,8 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 		double speed=1.5;
 		if(mlx_is_key_down(vars->mlx,MLX_KEY_LEFT_SHIFT))
 			speed=3;
-		x = (int)floor((vars->player.x + (vars->player.dx * 5)) / 64);
-		y = (int)floor((vars->player.y + (vars->player.dy * 5)) / 64);
+		x = (int)floor((vars->player.x + (vars->player.dx * 3)) / 64);
+		y = (int)floor((vars->player.y + (vars->player.dy * 3)) / 64);
 		int xcheck = (int)floor((vars->player.x + (vars->player.dx )) / 64);
 		int ycheck = (int)floor((vars->player.y + (vars->player.dy )) / 64);
 		int factx = (int)floor((vars->player.x) / 64);
@@ -239,8 +239,8 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 
 		dxright = 5 * cos(angle);
 		dyright = 5 * sin(angle);
-		x = (int)floor((vars->player.x + (dxright * 2)) / 64);
-		y = (int)floor((vars->player.y + (dyright * 2)) / 64);
+		x = (int)floor((vars->player.x + (dxright )) / 64);
+		y = (int)floor((vars->player.y + (dyright )) / 64);
 		int factx = (int)floor((vars->player.x) / 64);
 		int facty = (int)floor((vars->player.y) / 64);
 		if (vars->map.map[y][x] != 1)
@@ -344,8 +344,8 @@ int init_vars(t_map_info *data)
 	g_vars->map.height = data->y_map_size;
 	g_vars->player.angle = data->angle_player * (PI / 180);
 	g_vars->player.prev_xpos = 0;
-	g_vars->player.x = data->x_player;
-	g_vars->player.y = data->y_player;
+	g_vars->player.x = data->x_player+32;
+	g_vars->player.y = data->y_player+32;
 	g_vars->player.dx = 5 * cos(g_vars->player.angle);
 	g_vars->player.dy = 5 * sin(g_vars->player.angle);
 	g_vars->keyboard.cursor = 0;
