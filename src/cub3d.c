@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/13 14:44:49 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/13 15:56:41 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,15 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 		else if(vars->map.map[y][x]==-10) 
 			vars->map.map[y][x]=500;
 	}
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_R))
+	{
+		if(!vars->player.reload && vars->player.bullet!=8)
+		{
+			vars->player.reload=42;
+			vars->player.bullet=8;
+			show_gun_magazine(vars);
+		}
+	}
 	
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
 	{
@@ -139,15 +148,6 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 		vars->player.dy = 5 * sin(vars->player.angle);
 	}
 
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_R))
-	{
-		if(!vars->player.reload && vars->player.bullet!=8)
-		{
-			vars->player.reload=42;
-			vars->player.bullet=8;
-			show_gun_magazine(vars);
-		}
-	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
 	{
 		vars->player.angle -= 0.1;

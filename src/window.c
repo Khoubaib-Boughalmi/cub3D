@@ -132,6 +132,8 @@ void redraw(t_vars *vars)
 {
 	static int frame =1;
 	char *str;
+	mlx_key_data_t keydata;
+	key_press_handler(keydata,vars);
 	mlx_delete_image(g_vars->mlx,g_vars->weapon_img);
 	clean_window(vars);		
 	draw_ray(vars);
@@ -264,8 +266,8 @@ void render_window(t_vars *vars)
 
 	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler, vars);
 	
-	mlx_cursor_hook(vars->mlx, (mlx_cursorfunc)mouse_handler, vars);
-	mlx_mouse_hook(vars->mlx, (mlx_mousefunc)mouse_click, vars);
+	// mlx_cursor_hook(vars->mlx, (mlx_cursorfunc)mouse_handler, vars);
+	// mlx_mouse_hook(vars->mlx, (mlx_mousefunc)mouse_click, vars);
 	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
 	mlx_loop_hook(vars->mlx,&loop_func,vars);
 	show_gun_magazine(vars);
