@@ -150,7 +150,7 @@ int cool(char **av,t_map_info *data)
     int i=0;
     while (g)
 	{
-        printf("((%s))\n",g);
+        // printf("((%s))\n",g);
 		free(g);
 		g = get_next_line(fd);
         i++;
@@ -158,27 +158,27 @@ int cool(char **av,t_map_info *data)
             break;
 	}
 
-    // while (g)
-	// {
-    //     len = ft_strlen(g);
-    //     if(g[len-1]=='\n')
-    //         len--;
-    //     if(shouldstop || !len)
-    //     {
-    //         printf("error\n");
-    //         exit(0);
-    //     }
-    //     if(len<2 )
-    //         shouldstop=1;
-    //     large = MAX(len,large);
-    //     str=ft_strjoin_gnl(str,g);
-	// 	free(g);
-	// 	g = get_next_line(fd);
-    //     printf("((%s))%d\n",g,len);
-    //     ylen++;
-	// }
-    // printf("%d  %d\n",large,ylen);
-    // printf("%s\n",str);
+    while (g)
+	{
+        len = ft_strlen(g);
+        if(g[len-1]=='\n')
+            len--;
+        if(shouldstop || !len)
+        {
+            printf("error\n");
+            exit(0);
+        }
+        if(len<2 )
+            shouldstop=1;
+        large = MAX(len,large);
+        str=ft_strjoin_gnl(str,g);
+		free(g);
+		g = get_next_line(fd);
+        printf("((%s))%d\n",g,len);
+        ylen++;
+	}
+    printf("-----\n\n%s\n\n",str);
+    printf("%d  %d\n",large,ylen);
 
     // char **map;
     // char **splited = ft_split(str,'\n');
@@ -226,5 +226,5 @@ int main(int ac, char  **av)
 {
     t_map_info data;
     cool(av,&data);
-    printf("%f, %f,   %f\n",data.angle_player,data.x_player,data.y_player);
+    // printf("%f, %f,   %f\n",data.angle_player,data.x_player,data.y_player);
 }
