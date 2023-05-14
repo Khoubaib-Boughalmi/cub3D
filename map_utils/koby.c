@@ -80,6 +80,8 @@ int	is_numerical(char *str)
 			return (0);
 		i++;
 	}
+	if(ft_atoi(str) > 255)
+		return (0);
 	return (1);
 }
 
