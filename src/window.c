@@ -21,7 +21,7 @@ void clean_window(t_vars *vars)
 	{
 		for (int x = 0; x < 512; x++)
 		{
-			mlx_put_pixel(vars->img, y, x, create_color(125, 125, 125, 255 - (y / 4)));
+			mlx_put_pixel(vars->img, y, x, create_color(125, 125, 125, x / 2 - 255));
 		}
 	}
 
@@ -29,7 +29,7 @@ void clean_window(t_vars *vars)
 	{
 		for (int x = 512; x < 1024; x++)
 		{
-			mlx_put_pixel(vars->img, y, x, create_color(125, 125, 125, 255 - (y / 4)) );
+			mlx_put_pixel(vars->img, y, x, create_color(0, 30, 60,  x / 2 - 255) );
 		}
 	}
 }
@@ -266,8 +266,8 @@ void render_window(t_vars *vars)
 
 	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler_2, vars);
 	
-	mlx_cursor_hook(vars->mlx, (mlx_cursorfunc)mouse_handler, vars);
-	mlx_mouse_hook(vars->mlx, (mlx_mousefunc)mouse_click, vars);
+	// mlx_cursor_hook(vars->mlx, (mlx_cursorfunc)mouse_handler, vars);
+	// mlx_mouse_hook(vars->mlx, (mlx_mousefunc)mouse_click, vars);
 	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
 	mlx_loop_hook(vars->mlx,&loop_func,vars);
 	show_gun_magazine(vars);
