@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 12:48:02 by aechaoub          #+#    #+#             */
-/*   Updated: 2023/05/12 17:51:15 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/15 17:15:11 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	planmap(int **tab, int x, int y);
 char	*get_next_line(int fd);
 char	*ft_strdup(const char *str);
-char	*ft_substr(char *s, unsigned int start, size_t len);
+char	*ft_substr2(char *s, unsigned int start, size_t len);
 char	*ft_strjoin_gnl(char *s1, char *s2);
 void	ft_bzero(void *str, size_t n);
 size_t	ft_strlen(const char *str);

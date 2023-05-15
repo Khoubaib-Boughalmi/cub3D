@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 12:44:22 by aechaoub          #+#    #+#             */
-/*   Updated: 2023/05/12 17:51:15 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/15 17:15:27 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*get_next_line(int fd)
 		{
 			if (*(t + y + 1))
 				f = ft_strdup(t + y + 1);
-			return (ft_substr(t, 0, y + 1));
+			return (ft_substr2(t, 0, y + 1));
 		}
 		ft_bzero(c, BUFFER_SIZE + 1);
 		red = read(fd, c, BUFFER_SIZE);

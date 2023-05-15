@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 12:50:14 by aechaoub          #+#    #+#             */
-/*   Updated: 2023/05/12 17:51:15 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/15 17:15:18 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	min(int a, int b)
 	return (a);
 }
 
-char	*ft_substr(char *s, unsigned int start, size_t len)
+char	*ft_substr2(char *s, unsigned int start, size_t len)
 {
 	char		*p;
 	size_t		i;

@@ -4,6 +4,21 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+typedef struct s_map_info {
+    int **map;
+    double x_player;
+    double y_player;
+    double angle_player;
+    int x_map_size;
+    int y_map_size;
+    int32_t c_color;
+    int32_t f_color;
+    char *NO_texure;
+    char *SO_texure;
+    char *WE_texure;
+    char *EA_texure;
+}                t_map_info;
+
 void	free_split(char **arr)
 {
 	int	i;
@@ -74,6 +89,8 @@ int	is_numerical(char *str)
 	int	i;
 
 	i = 0;
+	if(ft_strlen(str) > 3)
+		return (0);
 	while (str[i] && str[i] != '\n')
 	{
 		if(!ft_isnumber(str[i]))
@@ -108,6 +125,31 @@ int	check_floor_ceiling(char **floor_ceiling)
 	return (1);
 }
 
+char	*ft_trim_str(char *str)
+{
+	int		i;
+	int		j;
+	int		k;
+	char	*new_str;
+
+	i = 0;
+	k = 0;
+	new_str = (char *)malloc(sizeof(char) * (ft_strlen(str) + 1));
+	while (str[i] && (str[i] == ' ' || str[i] == '\n'))
+		i++;
+	j = ft_strlen(str) - 1;
+	while (j > 0  && (str[j] == ' ' || str[j] == '\n'))
+		j--;
+	while (str[i] && i <= j)
+	{
+		new_str[k] = str[i];
+		i++;
+		k++;
+	}
+	new_str[k] = '\0';
+	free(str);
+	return (new_str);
+}
 void	fill_texture_info()
 {
 	int32_t c_color;
@@ -128,7 +170,7 @@ void	fill_texture_info()
 
 	k = 0;
 	err = 0;
-	int fd = open("../map.ber", O_RDONLY);
+	int fd = open("parsing_map.txt", O_RDONLY);
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -148,28 +190,41 @@ void	fill_texture_info()
 	options_check[6] = NULL;
 	options_list = ft_split(options, ' ');
 	close(fd);
-	fd = open("../map.ber", O_RDONLY);
+	fd = open("parsing_map.txt", O_RDONLY);
 	line = get_next_line(fd);
 	while (line)
 	{
-		split_line = ft_split(line, ' ');
-		if(split_arr_len(split_line) > 1)
+		line = ft_trim_str(line);
+		if(ft_strlen(line))
 		{
-			if(find_in_list(options_list, split_line[0]))
-				options_check[k++] = ft_strdup(split_line[0]);
+			split_line = ft_split(line, ' ');
+			if(split_arr_len(split_line) == 2)
+			{
+				if(find_in_list(options_list, split_line[0]))
+					options_check[k++] = ft_strdup(split_line[0]);
+				else
+				{
+					printf("Wrong texture DATA\n");
+					err++;
+					//free shit
+					return ;
+				}
+				if(!check_floor_ceiling(split_line))
+				{
+					printf("ERROR with floor/ceiling data\n");		
+					err++;
+					// free shit
+					return;
+				}
+			}
 			else
 			{
-				printf("Wrong texture DATA\n");
-				err++;
+				printf("DATA MISSING %s %d\n", split_line[0], split_arr_len(split_line));
+				return ;
 			}
-			if(!check_floor_ceiling(split_line))
-			{
-				printf("ERROR with floor/ceiling data\n");		
-				err++;
-			}
+			free(line);
+			free_split(split_line);
 		}
-		free(line);
-		free_split(split_line);
 		line = get_next_line(fd);
 	}
 	if(!err && !check_all_elem(options_check))	
@@ -180,6 +235,13 @@ void	fill_texture_info()
 
 int main()
 {
-	fill_texture_info();
-	return (0);
+    t_map_info data;
+
+    char *str =ft_strdup("NO       ./path_to_the_south_texture  \nSO      ./path_to_the_south_texture\nWE ./path_to_the_south_texture\n\n\n\n\n\n     EA       ./path_to_the_east_texture\n\nF 220,100,0\nC 225,30,0\n");
+	int fd = open("parsing_map.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	write(fd, str, ft_strlen(str));
+    fill_texture_info();
+	close(fd);
+	free(str);
+    return (0);
 }
