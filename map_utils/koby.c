@@ -115,6 +115,8 @@ int	check_floor_ceiling(char **floor_ceiling)
 	if(!ft_strncmp(name, "F", ft_strlen(value)) || !ft_strncmp(name, "C", ft_strlen(value)))
 	{
 		ceiling_floor_lst = ft_split(value, ',');
+		if(split_arr_len(ceiling_floor_lst) != 3)
+			return (0);
 		while (ceiling_floor_lst[i])
 		{
 			if(!is_numerical(ceiling_floor_lst[i]))
@@ -150,7 +152,7 @@ char	*ft_trim_str(char *str)
 	free(str);
 	return (new_str);
 }
-void	fill_texture_info()
+void	fill_texture_info(char **wow,t_map_info *data)
 {
 	int		k;
 	int		err;
@@ -161,20 +163,22 @@ void	fill_texture_info()
 	char	*options = "NO SO WE EA F C"; 
 	char	**options_list;
 	char	**options_check;
-    t_map_info data;
+    // t_map_info data;
 
 	k = 0;
 	err = 0;
 	int fd = open("parsing_map.txt", O_RDONLY);
 	line = get_next_line(fd);
-	while (line)
+	int i=0;
+	while (wow[i])
 	{
-		split_line = ft_split(line, ' ');
+		// printf("%s\n",wow[i]);
+		split_line = ft_split(wow[i], ' ');
 		if(split_arr_len(split_line) > 1)
 			count_lines++;
-		free(line);
-		free_split(split_line);
-		line = get_next_line(fd);
+		// free(wow[i]);
+		// free_split(split_line);
+		i++;
 	}
 	if(count_lines != 6)
 	{
@@ -184,15 +188,16 @@ void	fill_texture_info()
 	options_check = (char **)malloc(sizeof(char *) * 7);
 	options_check[6] = NULL;
 	options_list = ft_split(options, ' ');
-	close(fd);
+	// close(fd);
+	i=0;
 	fd = open("parsing_map.txt", O_RDONLY);
 	line = get_next_line(fd);
-	while (line)
+	while (wow[i])
 	{
-		line = ft_trim_str(line);
-		if(ft_strlen(line))
+		wow[i] = ft_trim_str(wow[i]);
+		if(ft_strlen(wow[i]))
 		{
-			split_line = ft_split(line, ' ');
+			split_line = ft_split(wow[i], ' ');
 			if(split_arr_len(split_line) == 2)
 			{
 				if(find_in_list(options_list, split_line[0]))
@@ -218,37 +223,37 @@ void	fill_texture_info()
 				return ;
 			}
 			if(!ft_strncmp(split_line[0], "NO", ft_strlen(split_line[0])))
-				data.NO_texure = ft_strdup(split_line[1]);
+				data->NO_texure = ft_strdup(split_line[1]);
 			if(!ft_strncmp(split_line[0], "SO", ft_strlen(split_line[0])))
-				data.SO_texure = ft_strdup(split_line[1]);
+				data->SO_texure = ft_strdup(split_line[1]);
 			if(!ft_strncmp(split_line[0], "EA", ft_strlen(split_line[0])))
-				data.EA_texure = ft_strdup(split_line[1]);
+				data->EA_texure = ft_strdup(split_line[1]);
 			if(!ft_strncmp(split_line[0], "WE", ft_strlen(split_line[0])))
-				data.WE_texure = ft_strdup(split_line[1]);
+				data->WE_texure = ft_strdup(split_line[1]);
 			if(!ft_strncmp(split_line[0], "F", ft_strlen(split_line[0])))
-				data.f_color = ft_strdup(split_line[1]);
+				data->f_color = ft_strdup(split_line[1]);
 			if(!ft_strncmp(split_line[0], "C", ft_strlen(split_line[0])))
-				data.c_color = ft_strdup(split_line[1]);
-			free(line);
+				data->c_color = ft_strdup(split_line[1]);
+			free(wow[i]);
 			free_split(split_line);
 		}
-		line = get_next_line(fd);
+		i++;
 	}
 	if(!err && !check_all_elem(options_check))	
 		printf("ERROR with textures data");
 	free_split(options_list);
 	free_split(options_check);
-	printf("%s\n%s\n%s\n%s\n%s\n%s\n", data.NO_texure, data.SO_texure, data.EA_texure, data.WE_texure, data.c_color, data.f_color);
+	printf("%s\n%s\n%s\n%s\n%s\n%s\n", data->NO_texure, data->SO_texure, data->EA_texure, data->WE_texure, data->c_color, data->f_color);
 }
 
-int main()
-{
+// int main()
+// {
 
-    char *str =ft_strdup("NO       ./path_to_the_north_texture  \nSO      ./path_to_the_south_texture\nWE ./path_to_the_west_texture\n\n\n\n\n\n     EA       ./path_to_the_east_texture\n\nF 220,100,0\nC 225,30,0\n");
-	int fd = open("parsing_map.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	write(fd, str, ft_strlen(str));
-    fill_texture_info();
-	close(fd);
-	free(str);
-    return (0);
-}
+//     char **str =ft_split("NO ./path_to_the_south_texture\nSO      ./path_to_the_south_texture\nWE ./path_to_the_west_texture\n\n\n\n\n\n     EA       ./path_to_the_east_texture\n\nF 220,100,0\nC 225,3,0\n",'\n');
+// 	// int fd = open("parsing_map.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+// 	// write(fd, str, ft_strlen(str));
+//     fill_texture_info(str);
+// 	// close(fd);
+// 	// free(str);
+//     return (0);
+// }

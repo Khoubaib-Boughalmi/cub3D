@@ -1,6 +1,7 @@
 
 
 #include "get_next_line.h"
+#include "../libft/libft.h"
 #include <stdio.h>
 #include <math.h>
 
@@ -134,7 +135,7 @@ int **fillmap(char **map,t_map_info *data)
     return g_map;
 
 }
-
+void	fill_texture_info(char **wow,t_map_info *data);
 int cool(char **av,t_map_info *data)
 {
     int shouldstop=0;
@@ -147,38 +148,47 @@ int cool(char **av,t_map_info *data)
     int ylen=0;
     int j;
     char *str=ft_strdup("");
+    char *str_for_data=ft_strdup("");
     int i=0;
     while (g)
 	{
         // printf("((%s))\n",g);
+        int nb=ft_strlen(ft_strtrim(g,"\n "));
+        // printf("%d\n",nb);
+        if(nb>2)
+            i++;
+        str_for_data=ft_strjoin_gnl(str_for_data,g);
 		free(g);
-		g = get_next_line(fd);
-        i++;
-        if(i==8)
+        if(i==6)
             break;
-	}
-
-    while (g)
-	{
-        len = ft_strlen(g);
-        if(g[len-1]=='\n')
-            len--;
-        if(shouldstop || !len)
-        {
-            printf("error\n");
-            exit(0);
-        }
-        if(len<2 )
-            shouldstop=1;
-        large = MAX(len,large);
-        str=ft_strjoin_gnl(str,g);
-		free(g);
 		g = get_next_line(fd);
-        printf("((%s))%d\n",g,len);
-        ylen++;
+
 	}
-    printf("-----\n\n%s\n\n",str);
-    printf("%d  %d\n",large,ylen);
+    // printf("-----\n\n%s\n\n",str_for_data);
+    char **dbl =ft_split(str_for_data,'\n');
+    fill_texture_info(dbl,data);
+
+    // while (g)
+	// {
+    //     len = ft_strlen(g);
+    //     if(g[len-1]=='\n')
+    //         len--;
+    //     if(shouldstop || !len)
+    //     {
+    //         printf("error\n");
+    //         exit(0);
+    //     }
+    //     if(len<2 )
+    //         shouldstop=1;
+    //     large = MAX(len,large);
+    //     str=ft_strjoin_gnl(str,g);
+	// 	free(g);
+	// 	g = get_next_line(fd);
+    //     printf("((%s))%d\n",g,len);
+    //     ylen++;
+	// }
+    // printf("-----\n\n%s\n\n",str);
+    // printf("%d  %d\n",large,ylen);
 
     // char **map;
     // char **splited = ft_split(str,'\n');
@@ -228,3 +238,7 @@ int main(int ac, char  **av)
     cool(av,&data);
     // printf("%f, %f,   %f\n",data.angle_player,data.x_player,data.y_player);
 }
+
+
+
+//gcc map_utils/koby.c map_utils/get_next_line.c map_utils/get_next_line_utils.c  libft/libft.a map_utils/tst.c
