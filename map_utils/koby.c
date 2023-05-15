@@ -1,23 +1,24 @@
 #include "get_next_line.h"
 #include "../libft/libft.h"
+#include "../inc/cub3d.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 
-typedef struct s_map_info {
-    int **map;
-    double x_player;
-    double y_player;
-    double angle_player;
-    int x_map_size;
-    int y_map_size;
-    char	*c_color;
-    char	*f_color;
-    char 	*NO_texure;
-    char 	*SO_texure;
-    char 	*WE_texure;
-    char 	*EA_texure;
-}                t_map_info;
+// typedef struct s_map_info {
+//     int **map;
+//     double x_player;
+//     double y_player;
+//     double angle_player;
+//     int x_map_size;
+//     int y_map_size;
+//     char	*c_color;
+//     char	*f_color;
+//     char 	*NO_texure;
+//     char 	*SO_texure;
+//     char 	*WE_texure;
+//     char 	*EA_texure;
+// }                t_map_info;
 
 void	free_split(char **arr)
 {
@@ -167,8 +168,8 @@ void	fill_texture_info(char **wow,t_map_info *data)
 
 	k = 0;
 	err = 0;
-	int fd = open("parsing_map.txt", O_RDONLY);
-	line = get_next_line(fd);
+	// int fd = open("parsing_map.txt", O_RDONLY);
+	// line = get_next_line(fd);
 	int i=0;
 	while (wow[i])
 	{
@@ -190,8 +191,8 @@ void	fill_texture_info(char **wow,t_map_info *data)
 	options_list = ft_split(options, ' ');
 	// close(fd);
 	i=0;
-	fd = open("parsing_map.txt", O_RDONLY);
-	line = get_next_line(fd);
+	// fd = open("parsing_map.txt", O_RDONLY);
+	// line = get_next_line(fd);
 	while (wow[i])
 	{
 		wow[i] = ft_trim_str(wow[i]);

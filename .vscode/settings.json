@@ -6,6 +6,7 @@
         "__locale": "c",
         "sstream": "c",
         "stdio.h": "c",
-        "get_next_line.h": "c"
+        "get_next_line.h": "c",
+        "libft.h": "c"
     }
 }

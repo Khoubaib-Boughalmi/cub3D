@@ -128,7 +128,7 @@ void draw_one_sprite(t_vars *vars)
 		frame =0;
 }
 
-void redraw(t_vars *vars)
+void  redraw(t_vars *vars)
 {
 	static int frame =1;
 	char *str;
@@ -264,10 +264,10 @@ void render_window(t_vars *vars)
 	redraw(vars);
 	mlx_set_cursor_mode(vars->mlx, vars->keyboard.cursor ? MLX_MOUSE_NORMAL : MLX_MOUSE_DISABLED);
 
-	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler, vars);
+	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler_2, vars);
 	
-	// mlx_cursor_hook(vars->mlx, (mlx_cursorfunc)mouse_handler, vars);
-	// mlx_mouse_hook(vars->mlx, (mlx_mousefunc)mouse_click, vars);
+	mlx_cursor_hook(vars->mlx, (mlx_cursorfunc)mouse_handler, vars);
+	mlx_mouse_hook(vars->mlx, (mlx_mousefunc)mouse_click, vars);
 	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
 	mlx_loop_hook(vars->mlx,&loop_func,vars);
 	show_gun_magazine(vars);

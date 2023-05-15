@@ -26,6 +26,14 @@ typedef struct s_map {
 
 
 
+// typedef struct s_map_info {
+//     int **map;
+//     double x_player;
+//     double y_player;
+//     double angle_player;
+//     int x_map_size;
+//     int y_map_size;
+// }				t_map_info;
 typedef struct s_map_info {
     int **map;
     double x_player;
@@ -33,7 +41,13 @@ typedef struct s_map_info {
     double angle_player;
     int x_map_size;
     int y_map_size;
-}				t_map_info;
+    char	*c_color;
+    char	*f_color;
+    char 	*NO_texure;
+    char 	*SO_texure;
+    char 	*WE_texure;
+    char 	*EA_texure;
+}                t_map_info;
 typedef struct s_intersect {
 	double      x;
 	double		y;
@@ -139,6 +153,7 @@ void draw_tile(t_vars *vars, int y, int x);
 void draw_map(t_vars *vars);
 void draw_partcle(t_vars *vars);
 void redraw(t_vars *vars);
+int key_press_handler_2(mlx_key_data_t keydata, void *param);
 int key_press_handler(mlx_key_data_t keydata, void *param);
 void mouse_handler(double xpos, double ypos, void *param);
 void loop_func(void *data);

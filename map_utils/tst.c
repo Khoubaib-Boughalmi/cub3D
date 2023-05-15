@@ -31,39 +31,6 @@ typedef struct s_map_info {
 
 
 
-char first_th(char *str)
-{
-    int i=0;
-    while(str[i]==' ' && str [i])
-        i++;
-    return str[i];
-}
-
-
-char last_th(char *str)
-{
-    int i=ft_strlen(str)-1;
-    while(i>0 && str[i]==' ')
-        i--;
-    return str[i];
-}
-char first_in_y(char **map,int colm,t_map_info *data)
-{
-
-    int y=0;
-    while(map[y][colm]==' ' && y <data->y_map_size)
-        y++;
-    return map[y][colm];
-}
-char last_in_y(char **map,int colm,t_map_info *data)
-{
-
-    int y=data->y_map_size-1;
-    while(map[y][colm]==' ' && y >-1)
-        y--;
-    return map[y][colm];
-}
-
 
 
 int check_walls(char **map,t_map_info *data)
@@ -76,25 +43,32 @@ int check_walls(char **map,t_map_info *data)
         x=-1;
         while(map[y][++x])
         {
-            printf("%c",map[y][x]);
-            // if(map[y][x]!='1' &&  map[y][x]!=' ')
-            // {
-            //     if(y==0 || map[y][x]!='')
-            // }
+            printf("%c\n",map[y][x]);
+            if(map[y][x]!='1' &&  map[y][x]!=' ')
+            {
+                if(y==0 || map[y-1][x] == ' ')
+                {
+                    printf("Error5\n");
+                    exit(0);
+                }
+                if(x==0 || map[y][x-1] == ' ')
+                {
+                    printf("Error7\n");
+                    exit(0);
+                }
+                if(y+1>data->y_map_size || map[y+1][x] == ' ')
+                {
+                    printf("Error4 ((%c))\n", map[y+1][x]);
+                    exit(0);
+                }
+                if(x+1>data->x_map_size || map[y][x+1] == ' ')
+                {
+                    printf("Error0\n");
+                    exit(0);
+                }
+            }
         }
         printf("-\n");
-    }
-    y=-1;
-    while(++y < data->y_map_size)
-    {
-        printf("(%c) (%c)\n",first_th(map[y]),last_th(map[y]));
-    }
-    printf("-----------------------\n");
-    x=-1;
-    while(++x <data->x_map_size)
-    {
-        printf("(%c) (%c)\n",first_in_y(map,x,data),last_in_y(map,x,data));
-        // printf("(%c) (c)\n",first_in_y(map,x));
     }
     return 0;
 }
@@ -153,25 +127,40 @@ int cool(char **av,t_map_info *data)
     len = ft_strlen(g);
     int ylen=0;
     int j;
-    char *str=ft_strdup("");
     char *str_for_data=ft_strdup("");
     int i=0;
-    // while (g)
-	// {
-    //     // printf("((%s))\n",g);
-    //     int nb=ft_strlen(ft_strtrim(g,"\n "));
-    //     // printf("%d\n",nb);
-    //     if(nb>2)
-    //         i++;
-    //     str_for_data=ft_strjoin_gnl(str_for_data,g);
-    //     if(i==6)
-    //         break;
-	// 	free(g);
-	// 	g = get_next_line(fd);
-	// }
-    // printf("-----\n\n%s\n\n",str_for_data);
-    // char **dbl =ft_split(str_for_data,'\n');
-    // fill_texture_info(dbl,data);
+    while (g)
+	{
+        // printf("((%s))\n",g);
+        int nb=ft_strlen(ft_strtrim(g,"\n "));
+        // printf("%d\n",nb);
+        if(nb>2)
+            i++;
+        str_for_data=ft_strjoin_gnl(str_for_data,g);
+		free(g);
+        g=0;
+        if(i==6)
+            break;
+		g = get_next_line(fd);
+	}
+    printf("-----\n\n((%s))\n\n",str_for_data);
+    char **dbl =ft_split(str_for_data,'\n');
+    fill_texture_info(dbl,data);
+    char *str=ft_strdup("");
+    // g=0;
+	g = get_next_line(fd);
+    len = ft_strlen(g);
+    printf("((%s))%d\n",g,len);
+    while (g)
+	{
+        // printf("((%s))\n",g);
+        int nb=ft_strlen(ft_strtrim(g,"\n "));
+        printf("%d\n",nb);
+        if(nb>2)
+            break;
+		free(g);
+		g = get_next_line(fd);
+	}
 
     while (g)
 	{
@@ -189,10 +178,10 @@ int cool(char **av,t_map_info *data)
         str=ft_strjoin_gnl(str,g);
 		free(g);
 		g = get_next_line(fd);
-        printf("((%s))%d\n",g,len);
+        // printf("((%s))%d\n",g,len);
         ylen++;
 	}
-    printf("-----\n\n%s\n\n",str);
+    printf("-----\n\n((%s))\n\n",str);
     printf("%d  %d\n",large,ylen);
 
     char **map;
@@ -240,6 +229,7 @@ int cool(char **av,t_map_info *data)
 // {
 //     t_map_info data;
 //     cool(av,&data);
+//     // pause();
 //     // printf("%f, %f,   %f\n",data.angle_player,data.x_player,data.y_player);
 // }
 

@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/13 15:56:41 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/15 21:37:21 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,35 +109,6 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 	vars = (t_vars *)param;
 	int x=0;
 	int y=0;
-	
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_SPACE))
-	{
-		int factx = (int)floor((vars->player.x) / 64);
-		int facty = (int)floor((vars->player.y) / 64);
-		x=factx;
-		y=facty;
-		int i=1;
-		while(x==factx && y ==facty)
-		{
-			x = (int)floor((vars->player.x + (vars->player.dx * i)) / 64);
-			y = (int)floor((vars->player.y + (vars->player.dy * i)) / 64);
-			i++;
-		}
-		
-		if(vars->map.map[y][x]==500)
-			vars->map.map[y][x]=-10;
-		else if(vars->map.map[y][x]==-10) 
-			vars->map.map[y][x]=500;
-	}
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_R))
-	{
-		if(!vars->player.reload && vars->player.bullet!=8)
-		{
-			vars->player.reload=42;
-			vars->player.bullet=8;
-			show_gun_magazine(vars);
-		}
-	}
 	
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
 	{
@@ -254,6 +225,46 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 				vars->player.x += dxright;
 			if (vars->map.map[y][factx] != 1)
 				vars->player.y += dyright;
+		}
+	}
+	return (0);
+}
+
+int key_press_handler_2(mlx_key_data_t keydata, void *param)
+{
+	t_vars *vars;
+	float angle;
+	float dxright;
+	float dyright;
+	int x;
+	int y;
+	vars = (t_vars *)param;
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_SPACE))
+	{
+		int factx = (int)floor((vars->player.x) / 64);
+		int facty = (int)floor((vars->player.y) / 64);
+		x=factx;
+		y=facty;
+		int i=1;
+		while(x==factx && y ==facty)
+		{
+			x = (int)floor((vars->player.x + (vars->player.dx * i)) / 64);
+			y = (int)floor((vars->player.y + (vars->player.dy * i)) / 64);
+			i++;
+		}
+		
+		if(vars->map.map[y][x]==500)
+			vars->map.map[y][x]=-10;
+		else if(vars->map.map[y][x]==-10) 
+			vars->map.map[y][x]=500;
+	}
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_R))
+	{
+		if(!vars->player.reload && vars->player.bullet!=8)
+		{
+			vars->player.reload=42;
+			vars->player.bullet=8;
+			show_gun_magazine(vars);
 		}
 	}
 
