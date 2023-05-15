@@ -75,7 +75,13 @@ int check_walls(char **map,t_map_info *data)
     {
         x=-1;
         while(map[y][++x])
+        {
             printf("%c",map[y][x]);
+            // if(map[y][x]!='1' &&  map[y][x]!=' ')
+            // {
+            //     if(y==0 || map[y][x]!='')
+            // }
+        }
         printf("-\n");
     }
     y=-1;
@@ -150,94 +156,92 @@ int cool(char **av,t_map_info *data)
     char *str=ft_strdup("");
     char *str_for_data=ft_strdup("");
     int i=0;
-    while (g)
-	{
-        // printf("((%s))\n",g);
-        int nb=ft_strlen(ft_strtrim(g,"\n "));
-        // printf("%d\n",nb);
-        if(nb>2)
-            i++;
-        str_for_data=ft_strjoin_gnl(str_for_data,g);
-		free(g);
-        if(i==6)
-            break;
-		g = get_next_line(fd);
-
-	}
-    // printf("-----\n\n%s\n\n",str_for_data);
-    char **dbl =ft_split(str_for_data,'\n');
-    fill_texture_info(dbl,data);
-
     // while (g)
 	// {
-    //     len = ft_strlen(g);
-    //     if(g[len-1]=='\n')
-    //         len--;
-    //     if(shouldstop || !len)
-    //     {
-    //         printf("error\n");
-    //         exit(0);
-    //     }
-    //     if(len<2 )
-    //         shouldstop=1;
-    //     large = MAX(len,large);
-    //     str=ft_strjoin_gnl(str,g);
+    //     // printf("((%s))\n",g);
+    //     int nb=ft_strlen(ft_strtrim(g,"\n "));
+    //     // printf("%d\n",nb);
+    //     if(nb>2)
+    //         i++;
+    //     str_for_data=ft_strjoin_gnl(str_for_data,g);
+    //     if(i==6)
+    //         break;
 	// 	free(g);
 	// 	g = get_next_line(fd);
-    //     printf("((%s))%d\n",g,len);
-    //     ylen++;
 	// }
-    // printf("-----\n\n%s\n\n",str);
-    // printf("%d  %d\n",large,ylen);
+    // printf("-----\n\n%s\n\n",str_for_data);
+    // char **dbl =ft_split(str_for_data,'\n');
+    // fill_texture_info(dbl,data);
 
-    // char **map;
-    // char **splited = ft_split(str,'\n');
-    // map=malloc(sizeof(char *) * (ylen+1));
-    // data->y_map_size=ylen;
-    // data->x_map_size=large;
-    // int i;
-    // for(i =0; splited[i] ; i++)
-    // {
-    //     map[i]=malloc(large+1);
-    //     j=0;
-    //     while(splited[i][j])
-    //     {
-    //         map[i][j]=splited[i][j];
-    //         j++;
-    //     }
-    //     while(j<large)
-    //     {
-    //         map[i][j]=' ';
-    //         j++;
-    //     }
-    //         map[i][j]=0;
-    // }
-    // map[i]=0;
-    //     printf("-----------------------\n");
-    // for(int i =0; map[i] ; i++)
-    // {
-    //     printf("%s- %zu\n",map[i],ft_strlen(map[i]));
-    // }
-    // printf("-----------------------\n");
-    // check_walls(map,data);
-    // // int **g_map;
-    // data->map = fillmap(map,data);
-    // for(int i =0; i<data->y_map_size ; i++)
-    // {
-    //     for(int j =0; j<data->x_map_size ; j++)
-    //         printf("%d ,",data->map[i][j]);
-    //     printf("},\n{");
-    // }
+    while (g)
+	{
+        len = ft_strlen(g);
+        if(g[len-1]=='\n')
+            len--;
+        if(shouldstop || !len)
+        {
+            printf("error\n");
+            exit(0);
+        }
+        if(len<2 )
+            shouldstop=1;
+        large = MAX(len,large);
+        str=ft_strjoin_gnl(str,g);
+		free(g);
+		g = get_next_line(fd);
+        printf("((%s))%d\n",g,len);
+        ylen++;
+	}
+    printf("-----\n\n%s\n\n",str);
+    printf("%d  %d\n",large,ylen);
+
+    char **map;
+    char **splited = ft_split(str,'\n');
+    map=malloc(sizeof(char *) * (ylen+1));
+    data->y_map_size=ylen;
+    data->x_map_size=large;
+    for(i =0; splited[i] ; i++)
+    {
+        map[i]=malloc(large+1);
+        j=0;
+        while(splited[i][j])
+        {
+            map[i][j]=splited[i][j];
+            j++;
+        }
+        while(j<large)
+        {
+            map[i][j]=' ';
+            j++;
+        }
+            map[i][j]=0;
+    }
+    map[i]=0;
+        printf("-----------------------\n");
+    for(int i =0; map[i] ; i++)
+    {
+        printf("%s- %zu\n",map[i],ft_strlen(map[i]));
+    }
+    printf("-----------------------\n");
+    check_walls(map,data);
+    // int **g_map;
+    data->map = fillmap(map,data);
+    for(int i =0; i<data->y_map_size ; i++)
+    {
+        for(int j =0; j<data->x_map_size ; j++)
+            printf("%d ,",data->map[i][j]);
+        printf("},\n{");
+    }
     return 0;
 }
 
 
-int main(int ac, char  **av)
-{
-    t_map_info data;
-    cool(av,&data);
-    // printf("%f, %f,   %f\n",data.angle_player,data.x_player,data.y_player);
-}
+// int main(int ac, char  **av)
+// {
+//     t_map_info data;
+//     cool(av,&data);
+//     // printf("%f, %f,   %f\n",data.angle_player,data.x_player,data.y_player);
+// }
 
 
 
