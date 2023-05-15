@@ -11,12 +11,12 @@ typedef struct s_map_info {
     double angle_player;
     int x_map_size;
     int y_map_size;
-    int32_t c_color;
-    int32_t f_color;
-    char *NO_texure;
-    char *SO_texure;
-    char *WE_texure;
-    char *EA_texure;
+    char	*c_color;
+    char	*f_color;
+    char 	*NO_texure;
+    char 	*SO_texure;
+    char 	*WE_texure;
+    char 	*EA_texure;
 }                t_map_info;
 
 void	free_split(char **arr)
@@ -152,21 +152,16 @@ char	*ft_trim_str(char *str)
 }
 void	fill_texture_info()
 {
-	int32_t c_color;
-	int32_t f_color;
-	char *NO_texure;
-	char *SO_texure;
-	char *WE_texure;
-	char *EA_texure;
-	int	count = 0;
-	int	count_lines = 0;
+	int		k;
+	int		err;
+	int		count = 0;
+	int		count_lines = 0;
 	char	*line;
-	char **split_line;
+	char	**split_line;
 	char	*options = "NO SO WE EA F C"; 
 	char	**options_list;
 	char	**options_check;
-	int	k;
-	int	err;
+    t_map_info data;
 
 	k = 0;
 	err = 0;
@@ -222,6 +217,18 @@ void	fill_texture_info()
 				printf("DATA MISSING %s %d\n", split_line[0], split_arr_len(split_line));
 				return ;
 			}
+			if(!ft_strncmp(split_line[0], "NO", ft_strlen(split_line[0])))
+				data.NO_texure = ft_strdup(split_line[1]);
+			if(!ft_strncmp(split_line[0], "SO", ft_strlen(split_line[0])))
+				data.SO_texure = ft_strdup(split_line[1]);
+			if(!ft_strncmp(split_line[0], "EA", ft_strlen(split_line[0])))
+				data.EA_texure = ft_strdup(split_line[1]);
+			if(!ft_strncmp(split_line[0], "WE", ft_strlen(split_line[0])))
+				data.WE_texure = ft_strdup(split_line[1]);
+			if(!ft_strncmp(split_line[0], "F", ft_strlen(split_line[0])))
+				data.f_color = ft_strdup(split_line[1]);
+			if(!ft_strncmp(split_line[0], "C", ft_strlen(split_line[0])))
+				data.c_color = ft_strdup(split_line[1]);
 			free(line);
 			free_split(split_line);
 		}
@@ -231,13 +238,13 @@ void	fill_texture_info()
 		printf("ERROR with textures data");
 	free_split(options_list);
 	free_split(options_check);
+	printf("%s\n%s\n%s\n%s\n%s\n%s\n", data.NO_texure, data.SO_texure, data.EA_texure, data.WE_texure, data.c_color, data.f_color);
 }
 
 int main()
 {
-    t_map_info data;
 
-    char *str =ft_strdup("NO       ./path_to_the_south_texture  \nSO      ./path_to_the_south_texture\nWE ./path_to_the_south_texture\n\n\n\n\n\n     EA       ./path_to_the_east_texture\n\nF 220,100,0\nC 225,30,0\n");
+    char *str =ft_strdup("NO       ./path_to_the_north_texture  \nSO      ./path_to_the_south_texture\nWE ./path_to_the_west_texture\n\n\n\n\n\n     EA       ./path_to_the_east_texture\n\nF 220,100,0\nC 225,30,0\n");
 	int fd = open("parsing_map.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	write(fd, str, ft_strlen(str));
     fill_texture_info();
