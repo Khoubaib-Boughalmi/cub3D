@@ -3,23 +3,25 @@
 
 void draw_ray(t_vars *vars)
 {
-	int r;
-	int mx;
-	int my;
-	int mp;
-	int dof;
-	double rx;
-	double ry;
-	double ra;
-	double xo;
-	double yo;
-	double h_dist;
-	double h_x;
-	double h_y;
-	double v_dist;
-	double v_x;
-	double v_y;
-	double f_dist;
+	int		r;
+	int		mx;
+	int		my;
+	int		mp;
+	int		dof;
+	double	rx;
+	double	ry;
+	double	ra;
+	double	xo;
+	double	yo;
+	double	h_dist;
+	double	h_x;
+	double	h_y;
+	double	v_dist;
+	double	v_x;
+	double	v_y;
+	double	f_dist;
+	float	aTan;
+	float	nTan;
 
 	ra = vars->player.angle - DEG * 30;
 	if (ra < 0)
@@ -33,7 +35,7 @@ void draw_ray(t_vars *vars)
 		h_x = vars->player.x;
 		h_y = vars->player.y;
 		dof = 0;
-		float aTan = -1 / tan(ra);
+		aTan = -1 / tan(ra);
 		if (ra > PI)
 		{
 			ry = (((int)vars->player.y / 64) * 64) - 0.0001;
@@ -76,7 +78,7 @@ void draw_ray(t_vars *vars)
 		v_dist = 100000;
 		v_x = vars->player.x;
 		v_y = vars->player.y;
-		float nTan = -tan(ra);
+		nTan = -tan(ra);
 		if (ra > PI2 && ra < PI3)
 		{
 			rx = (((int)vars->player.x / 64) * 64) - 0.0001;
@@ -137,7 +139,7 @@ void draw_ray(t_vars *vars)
 			fish_eye_new_angle -= 2 * PI;
 		f_dist = f_dist * cos(fish_eye_new_angle);
 		double line_height = (64 * 800) / f_dist;
-		if(v_dist > h_dist)
+		if (v_dist > h_dist)
 			draw_wall(vars, i, rx,ry , line_height, 0);
 		else
 			draw_wall(vars, i, rx,ry ,line_height,1);

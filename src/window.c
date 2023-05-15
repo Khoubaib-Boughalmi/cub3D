@@ -29,7 +29,7 @@ void clean_window(t_vars *vars)
 	{
 		for (int x = 512; x < 1024; x++)
 		{
-			mlx_put_pixel(vars->img, y, x, create_color(125, 255, 60,  x / 2 - 255) );
+			mlx_put_pixel(vars->img, y, x, create_color(0, 30, 60,  x / 2 - 255) );
 		}
 	}
 }
@@ -264,7 +264,7 @@ void render_window(t_vars *vars)
 	redraw(vars);
 	mlx_set_cursor_mode(vars->mlx, vars->keyboard.cursor ? MLX_MOUSE_NORMAL : MLX_MOUSE_DISABLED);
 
-	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler, vars);
+	// mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler, vars);
 	
 	mlx_cursor_hook(vars->mlx, (mlx_cursorfunc)mouse_handler, vars);
 	mlx_mouse_hook(vars->mlx, (mlx_mousefunc)mouse_click, vars);
