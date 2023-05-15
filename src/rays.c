@@ -3,7 +3,6 @@
 
 void draw_ray(t_vars *vars)
 {
-	// t_ray	ray;
 	int r;
 	int mx;
 	int my;
@@ -12,8 +11,8 @@ void draw_ray(t_vars *vars)
 	double rx;
 	double ry;
 	double ra;
-	double xo; // x offset
-	double yo; // y offset
+	double xo;
+	double yo;
 	double h_dist;
 	double h_x;
 	double h_y;
@@ -33,19 +32,18 @@ void draw_ray(t_vars *vars)
 		h_dist = 100000;
 		h_x = vars->player.x;
 		h_y = vars->player.y;
-		/* horzontal check*/
 		dof = 0;
 		float aTan = -1 / tan(ra);
-		if (ra > PI) // facing down
+		if (ra > PI)
 		{
-			ry = (((int)vars->player.y >> 6) << 6) - 0.0001;
+			ry = (((int)vars->player.y / 64) * 64) - 0.0001;
 			rx = (vars->player.y - ry) * aTan + vars->player.x;
 			yo = -64;
 			xo = -yo * aTan;
 		}
-		if (ra < PI) // facing up
+		if (ra < PI)
 		{
-			ry = (((int)vars->player.y >> 6) << 6) + 64;
+			ry = (((int)vars->player.y / 64) * 64) + 64;
 			rx = (vars->player.y - ry) * aTan + vars->player.x;
 			yo = 64;
 			xo = -yo * aTan;
@@ -60,8 +58,6 @@ void draw_ray(t_vars *vars)
 		{
 			mx = (int)(rx) / 64;
 			my = (int)(ry) / 64;
-			// if(mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && g_map[my][mx] ==-50)
-			// 	printf("there is in a\n");
 			if (mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && vars->map.map[my][mx] >= 1)
 			{
 				h_x = rx;
@@ -71,35 +67,31 @@ void draw_ray(t_vars *vars)
 			}
 			else
 			{
-				// if(mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && vars->map.map[my][mx] ==-50)
-				// 	printf("there is in a\n");
 				rx += xo;
 				ry += yo;
 				dof++;
 			}
 		}
-
-		/* vertical check*/
 		dof = 0;
 		v_dist = 100000;
 		v_x = vars->player.x;
 		v_y = vars->player.y;
 		float nTan = -tan(ra);
-		if (ra > PI2 && ra < PI3) // facing left
+		if (ra > PI2 && ra < PI3)
 		{
-			rx = (((int)vars->player.x >> 6) << 6) - 0.0001;
+			rx = (((int)vars->player.x / 64) * 64) - 0.0001;
 			ry = (vars->player.x - rx) * nTan + vars->player.y;
 			xo = -64;
 			yo = -xo * nTan;
 		}
-		if (ra < PI2 || ra > PI3) // facing right
+		if (ra < PI2 || ra > PI3)
 		{
-			rx = (((int)vars->player.x >> 6) << 6) + 64;
+			rx = (((int)vars->player.x / 64) * 64) + 64;
 			ry = (vars->player.x - rx) * nTan + vars->player.y;
 			xo = 64;
 			yo = -xo * nTan;
 		}
-		if (ra == PI2 || ra == PI3) // up or down
+		if (ra == PI2 || ra == PI3)
 		{
 			rx = vars->player.x;
 			ry = vars->player.y;
@@ -109,9 +101,6 @@ void draw_ray(t_vars *vars)
 		{
 			mx = (int)(rx) / 64;
 			my = (int)(ry) / 64;
-
-			// if(mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && vars->map.map[my][mx] ==-50)
-			// 		printf("there is in b\n");
 			if (mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && vars->map.map[my][mx] >= 1)
 			{
 				v_x = rx;
@@ -139,10 +128,6 @@ void draw_ray(t_vars *vars)
 			f_dist = h_dist;
 		}
 		g_ray_ds[i]=f_dist;
-		// if(i==0)
-		// 	printf("in 1 rx = %f ry =%f \n",rx,ry);
-		// if(i==511)
-		// 	printf("in 511 rx = %f ry =%f \n",rx,ry);
 		if(vars->keyboard.show_map)
 			put_line(vars->mlx, vars->win, (vars->player.x * 16) / 64, (vars->player.y * 16) / 64, (rx * 16) / 64, (ry * 16) / 64, create_color(255, 255, 0, 255), vars->img->width, vars->img->height);
 		double fish_eye_new_angle = vars->player.angle - ra;
@@ -152,12 +137,6 @@ void draw_ray(t_vars *vars)
 			fish_eye_new_angle -= 2 * PI;
 		f_dist = f_dist * cos(fish_eye_new_angle);
 		double line_height = (64 * 800) / f_dist;
-		// if (line_height > 1020)
-		// 	line_height = 1020;
-		// if (v_dist > h_dist)
-		// 	draw_wall(vars, i, line_height, create_color(150, 150, 150, 256 - (i / 2 + 1)));
-		// else
-		// 	draw_wall(vars, i, line_height, create_color(150, 150, 150, i / 2 + 1));
 		if(v_dist > h_dist)
 			draw_wall(vars, i, rx,ry , line_height, 0);
 		else
