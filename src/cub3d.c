@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/16 16:17:46 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/16 16:28:37 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -377,6 +377,30 @@ int init_vars(t_map_info *data)
 	return (1);
 }
 
+
+
+void randomize_the_sprites(t_map_info *data)
+{
+	int i =0;
+	int j =0;
+    printf("----------------------\n\n\n\n\n%d\n",data->number_of_zeros);
+
+	while(i<data->y_map_size)
+    {
+		j=0;
+        while( j<data->x_map_size)
+		{
+            printf("%d ,",data->map[i][j]);
+			j++;
+		}
+        printf("},\n{");
+
+		i++;
+    }
+}
+
+
+
 int main(int argc, char **argv)
 {
 	// (void)argc;
@@ -389,16 +413,12 @@ int main(int argc, char **argv)
 
 	t_map_info data;
     cool(argv,&data);
-	printf("%s\n",data.NO_texure);
-	printf("%s\n",data.SO_texure);
-	printf("%s\n",data.WE_texure);
-	printf("%s\n",data.EA_texure);
-	printf("%d\n",data.f_color.r);
-	printf("%d\n",data.f_color.g);
-	printf("%d\n",data.f_color.b);
-	printf("%d\n",data.c_color.r);
-	printf("%d\n",data.c_color.g);
-	printf("%d\n",data.c_color.b);
+	randomize_the_sprites(&data);
+	// printf("%s\n",data.NO_texure);
+	// printf("%s\n",data.SO_texure);
+	// printf("%s\n",data.WE_texure);
+	// printf("%s\n",data.EA_texure);
+	// printf("%d\n",data.f_color);
 	
 	if (!init_vars(&data))
 		return (0);

@@ -3,6 +3,7 @@
 #include "get_next_line.h"
 #include "../libft/libft.h"
 #include <stdio.h>
+#include "../inc/cub3d.h"
 #include <math.h>
 
 #define MIN(a,b) (((a)<(b))?(a):(b))
@@ -10,20 +11,21 @@
 
 
 
-typedef struct s_map_info {
-    int **map;
-    double x_player;
-    double y_player;
-    double angle_player;
-    int x_map_size;
-    int y_map_size;
-    int32_t c_color;
-    int32_t f_color;
-    char *NO_texure;
-    char *SO_texure;
-    char *WE_texure;
-    char *EA_texure;
-}				t_map_info;
+// typedef struct s_map_info {
+//     int **map;
+//     double x_player;
+//     double y_player;
+//     double angle_player;
+//     int x_map_size;
+//     int y_map_size;
+//     int32_t c_color;
+//     int32_t f_color;
+//     char *NO_texure;
+//     char *SO_texure;
+//     char *WE_texure;
+//     char *EA_texure;
+//     int number_of_zeros;
+// }				t_map_info;
 
 
 // int data->x_map_size;
@@ -88,8 +90,10 @@ int **fillmap(char **map,t_map_info *data)
         {
             if(map[i][j]=='1')
                 g_map[i][j]=1;
-            else if(map[i][j]=='0' ||map[i][j]==' ')
-                g_map[i][j]=0;
+            else if(map[i][j]==' ')
+                g_map[i][j]=-1;
+            else if(map[i][j]=='d')
+                g_map[i][j]=500;
             else if(map[i][j]=='N' ||map[i][j]=='S'||map[i][j]=='W'||map[i][j]=='E')
             {
                 g_map[i][j]=0;
@@ -105,8 +109,20 @@ int **fillmap(char **map,t_map_info *data)
                 data->y_player=i*64;
                 // printf("player in %c \n",map[i][j]);
             }
-            else
+            else if (map[i][j]=='0')
+            {
                 g_map[i][j]=0;
+            }
+            else if (map[i][j]=='#')
+            {
+                data->number_of_zeros++;
+                g_map[i][j]=0;
+            }
+            else
+            {
+                printf("error\n");
+                exit (0);
+            }
             // printf("%d\n",g_map[i][j]);
             j++;
         }
@@ -214,13 +230,15 @@ int cool(char **av,t_map_info *data)
     printf("-----------------------\n");
     check_walls(map,data);
     // int **g_map;
+    data->number_of_zeros=0;
     data->map = fillmap(map,data);
-    for(int i =0; i<data->y_map_size ; i++)
-    {
-        for(int j =0; j<data->x_map_size ; j++)
-            printf("%d ,",data->map[i][j]);
-        printf("},\n{");
-    }
+    printf("%d\n",data->number_of_zeros);
+    // for(int i =0; i<data->y_map_size ; i++)
+    // {
+    //     for(int j =0; j<data->x_map_size ; j++)
+    //         printf("%d ,",data->map[i][j]);
+    //     printf("},\n{");
+    // }
     return 0;
 }
 
