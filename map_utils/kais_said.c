@@ -126,15 +126,20 @@ int	check_floor_ceiling(char **floor_ceiling, t_map_info *data)
 			return (0);
 		while (ceiling_floor_lst[i])
 		{
-			// if(!ft_strncmp(name, "F", ft_strlen(value)))
-			// {
-			// 	if(!is_numerical(data, ceiling_floor_lst[i], i, 'F'))
-			// 		return (0);
-			// }
-			// else
-			// 	if(!is_numerical(data, ceiling_floor_lst[i], i, 'C'))
-			// 		return (0);
-
+			if(!ft_strncmp(name, "F", ft_strlen(value)))
+			{
+				if(!is_numerical(data, ceiling_floor_lst[i], i, 'F'))
+				{
+					free_split(ceiling_floor_lst);
+					return (0);
+				}
+			}
+			else
+				if(!is_numerical(data, ceiling_floor_lst[i], i, 'C'))
+				{
+					free_split(ceiling_floor_lst);
+					return (0);
+				}
 			i++;
 		}
 		free_split(ceiling_floor_lst);
