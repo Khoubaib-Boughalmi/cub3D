@@ -21,7 +21,7 @@ void clean_window(t_vars *vars)
 	{
 		for (int x = 0; x < 512; x++)
 		{
-			mlx_put_pixel(vars->img, y, x, create_color(vars->map_info.c_color.r, vars->map_info.c_color.g, vars->map_info.c_color.b, x / 2));
+			mlx_put_pixel(vars->img, y, x, create_color(vars->map_info.c_color.r, vars->map_info.c_color.g, vars->map_info.c_color.b, 255 - x / 2));
 		}
 	}
 
@@ -59,8 +59,8 @@ void draw_tile(t_vars *vars, int y, int x)
 				mlx_put_pixel(vars->img, (16 * x) + i, (16 * y) + j, color_white);
 		}
 	}
-	frame++;
-	if(frame)
+	// frame++;
+	// if(frame)
 }
 
 void    draw_aim(t_vars *vars)

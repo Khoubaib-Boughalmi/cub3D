@@ -1,10 +1,10 @@
 NO ./src/textures/huge_1.png
 SO ./src/textures/huge_2.png
-WE ./src/textures/huge_3.png
+WE ./src/textures/lava.png
 
-F 60,100,0
-EA ./src/textures/huge_4.png
-C 225,30,0
+F 60,100,180
+EA ./src/textures/huge_2.png
+C 225,30,180
 
 
 
