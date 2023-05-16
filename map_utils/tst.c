@@ -94,8 +94,6 @@ int **fillmap(char **map,t_map_info *data)
                 g_map[i][j]=-1;
             else if(map[i][j]=='d')
                 g_map[i][j]=500;
-            else if(map[i][j]=='0' ||map[i][j]==' ')
-                g_map[i][j]=0;
             else if(map[i][j]=='N' ||map[i][j]=='S'||map[i][j]=='W'||map[i][j]=='E')
             {
                 g_map[i][j]=0;
@@ -113,7 +111,11 @@ int **fillmap(char **map,t_map_info *data)
             }
             else if (map[i][j]=='0')
             {
-                data->number_of_zeros=88;
+                g_map[i][j]=0;
+            }
+            else if (map[i][j]=='#')
+            {
+                data->number_of_zeros++;
                 g_map[i][j]=0;
             }
             else
@@ -230,6 +232,7 @@ int cool(char **av,t_map_info *data)
     // int **g_map;
     data->number_of_zeros=0;
     data->map = fillmap(map,data);
+    printf("%d\n",data->number_of_zeros);
     // for(int i =0; i<data->y_map_size ; i++)
     // {
     //     for(int j =0; j<data->x_map_size ; j++)

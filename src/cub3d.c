@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/16 16:11:02 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/16 16:13:42 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -417,8 +417,8 @@ int main(int argc, char **argv)
 	// printf("%s\n",data.EA_texure);
 	// printf("%d\n",data.f_color);
 	
-	// if (!init_vars(&data))
-	// 	return (0);
-	// render_window(g_vars);
+	if (!init_vars(&data))
+		return (0);
+	render_window(g_vars);
 	return (0);
 }

@@ -44,6 +44,7 @@ void draw_tile(t_vars *vars, int y, int x)
 	uint32_t color_blue =  create_color(66, 6, 156, 255);
 
 	i = -1;
+	static int frame=0;
 	while (++i < 16)
 	{
 		j = -1;
@@ -58,6 +59,8 @@ void draw_tile(t_vars *vars, int y, int x)
 				mlx_put_pixel(vars->img, (16 * x) + i, (16 * y) + j, color_white);
 		}
 	}
+	frame++;
+	if(frame)
 }
 
 void    draw_aim(t_vars *vars)
