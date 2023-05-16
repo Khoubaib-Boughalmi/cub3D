@@ -122,9 +122,10 @@ typedef struct s_vars {
 	mlx_image_t *weapon_img;
 	mlx_texture_t *weapon_texture;
 	mlx_image_t *wall_img2;
-	mlx_texture_t *wall_texture2;
-	mlx_texture_t *wall_texture3;
-	mlx_texture_t *wall_texture4;
+	mlx_texture_t *NO_wall_texture_texture;
+	mlx_texture_t *SO_wall_texture;
+	mlx_texture_t *EA_wall_texture;
+	mlx_texture_t *WE_wall_texture;
 	mlx_texture_t *door_texture;
 	mlx_texture_t *enemy_texture;
 	mlx_texture_t *ammo_texture;
@@ -147,13 +148,13 @@ int cool(char **av,t_map_info *data);
 
 
 void	show_gun_magazine(t_vars *vars);
-void draw_wall_5(t_vars *vars, double r,double distance,double ry, double lineH,int frame,char *sprite_path);
+void draw_wall_5(t_vars *vars, double r,double distance, double lineH,int frame,char *sprite_path);
 
 void draw_ray(t_vars *vars);
 double ft_abs(double nb);
-void put_line(void *mlx_ptr, void *win_ptr, int x0, int y0, int x1, int y1, int color, int height, int width);
+void put_line(  int x0, int y0, int x1, int y1, int color, int height, int width);
 void draw_wall(t_vars *vars, double r,double rx,double ry, double lineH,int hororver);
-float distance_to_wall(float px, float py, float wx, float wy, float angle_rad);
+float distance_to_wall(float px, float py, float wx, float wy);
 int32_t create_color(int32_t r, int32_t g, int32_t b, int32_t a);
 void clean_window(t_vars *vars);
 void draw_tile(t_vars *vars, int y, int x);

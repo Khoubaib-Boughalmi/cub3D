@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
+/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 19:58:50 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/01 20:18:47 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/16 22:17:59 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ double ft_abs(double nb)
 //     }
 // }
 
-void put_line(void *mlx_ptr, void *win_ptr, int x0, int y0, int x1, int y1, int color, int map_width, int map_height)
+void put_line( int x0, int y0, int x1, int y1, int color, int map_width, int map_height)
 {
     int dx = abs(x1 - x0); // Calculate absolute difference in x-coordinates
     int dy = abs(y1 - y0); // Calculate absolute difference in y-coordinates

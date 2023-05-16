@@ -62,8 +62,8 @@ void draw_tile(t_vars *vars, int y, int x)
 
 void    draw_aim(t_vars *vars)
 {
-    put_line(vars->mlx, vars->win, 512, 506, 512, 519, create_color(0, 255, 0, 255), vars->img->width, vars->img->height);
-    put_line(vars->mlx, vars->win, 506, 512, 519, 512, create_color(0, 255, 0, 255), vars->img->width, vars->img->height);
+    put_line( 512, 506, 512, 519, create_color(0, 255, 0, 255), vars->img->width, vars->img->height);
+    put_line( 506, 512, 519, 512, create_color(0, 255, 0, 255), vars->img->width, vars->img->height);
 }
 
 
@@ -116,11 +116,11 @@ void draw_one_sprite(t_vars *vars)
 		if(angle_diff*180/PI<=50 &&angle_diff*180/PI>=-50 )
 		{
 			porce_angle=(porce_angle+30)/60*512;
-			v_dist = distance_to_wall(vars->player.x, vars->player.y, sprite_ax, sprite_ay, porce_angle);
+			v_dist = distance_to_wall(vars->player.x, vars->player.y, sprite_ax, sprite_ay);
 			
 			// printf("%f\n",v_dist);
 			line_height = (64 * 600) / v_dist;
-			draw_wall_5(vars,(int)porce_angle,v_dist,64*3,line_height,frame,vars->sprites[i].path);
+			draw_wall_5(vars,(int)porce_angle,v_dist,line_height,frame,vars->sprites[i].path);
 		}
 	}
 		frame++;
@@ -132,12 +132,14 @@ void  redraw(t_vars *vars)
 {
 	static int frame =1;
 	char *str;
+	char *tmp;
 	mlx_key_data_t keydata;
 	key_press_handler(keydata,vars);
 	mlx_delete_image(g_vars->mlx,g_vars->weapon_img);
 	clean_window(vars);		
 	draw_ray(vars);
 	draw_one_sprite(vars);
+
 	if(vars->keyboard.show_map)
 	{	
 		draw_partcle(vars);
@@ -146,12 +148,13 @@ void  redraw(t_vars *vars)
 	
 	if(vars->player.reload)
 	{
-
-		str=ft_strjoin("./src/textures/kortas/StechkinR",ft_itoa(43-g_vars->player.reload));
+		tmp=ft_itoa(43-g_vars->player.reload);
+		str=ft_strjoin("./src/textures/kortas/StechkinR",tmp);
+		free(tmp);
+		tmp=str;
 		str=ft_strjoin(str,".png");
+		free(tmp);
 		g_vars->weapon_texture  = mlx_load_png(str);
-		// printf("%s\n",str);
-		// printf("%d\n",g_vars->weapon_texture);
 		g_vars->weapon_img = mlx_texture_to_image(g_vars->mlx, g_vars->weapon_texture);
 		mlx_image_to_window(vars->mlx,vars->weapon_img,50,257);
 		mlx_delete_texture(g_vars->weapon_texture);
@@ -161,13 +164,17 @@ void  redraw(t_vars *vars)
 	}
 	else if(vars->player.shoot)
 	{
-		str=ft_strjoin("./src/textures/kortas/StechkinF0",ft_itoa(9-g_vars->player.shoot));
+		tmp=ft_itoa(9-g_vars->player.shoot);
+		str=ft_strjoin("./src/textures/kortas/StechkinF0",tmp);
+		free(tmp);
+		tmp =str;
 		str=ft_strjoin(str,".png");
 		g_vars->weapon_texture  = mlx_load_png(str);
 		g_vars->weapon_img = mlx_texture_to_image(g_vars->mlx, g_vars->weapon_texture);
 		mlx_image_to_window(vars->mlx,vars->weapon_img,50,257);
 		mlx_delete_texture(g_vars->weapon_texture);
 		free(str);
+		free(tmp);
 		g_vars->player.shoot--;
 	}
 	else
@@ -185,18 +192,23 @@ void  redraw(t_vars *vars)
 	// free(str);
 	frame++;
 	if(frame ==9)
+	{
+		// pause();
 		frame =1;
+	}
     draw_aim(vars);
 }
 
 
 void	show_gun_magazine(t_vars *vars)
 {
-	char *str=ft_strjoin(": ",ft_itoa(vars->player.bullet));
+	char *tmp=ft_itoa(vars->player.bullet);
+	char *str=ft_strjoin(": ",tmp);
 	mlx_image_to_window(vars->mlx,vars->ammo_img,840,45);
 	mlx_delete_image(vars->mlx,vars->player.print_move);
 	vars->player.print_move=mlx_put_string(vars->mlx,str,880,52);
 	free(str);
+	free(tmp);
 }
 
 
@@ -204,6 +216,7 @@ void mouse_click(mouse_key_t button, action_t action, modifier_key_t mods, void 
 {
 	t_vars *vars;
 	vars = (t_vars *)param;
+	(void)mods;
 
 	if(button==0 && action == 1 && vars->player.bullet && !vars->player.reload)
 	{
@@ -236,17 +249,13 @@ void render_window(t_vars *vars)
 		exit(1);
 	}
 	g_vars->player.reload=0;
-	g_vars->weapon_texture  = mlx_load_png("./src/textures/StechkinEx1.png");
-	g_vars->weapon_img = mlx_texture_to_image(g_vars->mlx, g_vars->weapon_texture);
+	// g_vars->weapon_texture  = mlx_load_png("./src/textures/StechkinEx1.png");
+	// g_vars->weapon_img = mlx_texture_to_image(g_vars->mlx, g_vars->weapon_texture);
 	g_vars->wall_texture  =  mlx_load_png(g_vars->map_info.NO_texure);
-	if(!g_vars->wall_texture)
-	{
-		// printf("sadsdklajsdklajskldajsdklajsd\n");
-		exit(0);
-	}
-	g_vars->wall_texture2  = mlx_load_png(g_vars->map_info.SO_texure);
-	g_vars->wall_texture3  = mlx_load_png(g_vars->map_info.WE_texure);
-	g_vars->wall_texture4  = mlx_load_png(g_vars->map_info.EA_texure);
+	g_vars->SO_wall_texture  = mlx_load_png(g_vars->map_info.SO_texure);
+	g_vars->EA_wall_texture  = mlx_load_png(g_vars->map_info.WE_texure);
+	g_vars->WE_wall_texture  = mlx_load_png(g_vars->map_info.EA_texure);
+	g_vars->NO_wall_texture_texture  = mlx_load_png(g_vars->map_info.NO_texure);
 	g_vars->door_texture  = mlx_load_png("./src/textures/doorx.png");
 	g_vars->enemy_texture  = mlx_load_png("./src/textures/enemy1.png");
 	printf("%d %d %d %d \n",g_vars->enemy_texture->pixels[0],g_vars->enemy_texture->pixels[1],g_vars->enemy_texture->pixels[2],g_vars->enemy_texture->pixels[3]);
@@ -255,6 +264,8 @@ void render_window(t_vars *vars)
 	// g_vars->wall_img2 = mlx_texture_to_image(g_vars->mlx, g_vars->wall_texture);
 	mlx_set_window_limit(vars->mlx, width - 200, height - 200, width, height);
 	vars->img = mlx_new_image(vars->mlx, width, height);
+	// pause();
+
 	redraw(vars);
     // pause();
 

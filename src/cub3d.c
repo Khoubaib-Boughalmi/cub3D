@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/16 20:15:27 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/16 22:18:21 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int32_t create_color(int32_t r, int32_t g, int32_t b, int32_t a)
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
-float distance_to_wall(float px, float py, float wx, float wy, float angle_rad)
+float distance_to_wall(float px, float py, float wx, float wy)
 {
 	return (sqrt((wy - py) * (wy - py) + (wx - px) * (wx - px)));
 }
@@ -97,12 +97,13 @@ void draw_partcle(t_vars *vars)
 				mlx_put_pixel(vars->img, x, y, create_color(255, 255, 255, 255));
 		}
 	}
-	put_line(vars->mlx, vars->win, px, py, px + vars->player.dx * 4, py + vars->player.dy * 4, create_color(0, 255, 0, 255), 128, 128);
+	put_line( px, py, px + vars->player.dx * 4, py + vars->player.dy * 4, create_color(0, 255, 0, 255), 128, 128);
 }
 
 int key_press_handler(mlx_key_data_t keydata, void *param)
 {
 	t_vars *vars;
+	(void)keydata;
 	float angle;
 	float dxright;
 	float dyright;
@@ -232,6 +233,7 @@ int key_press_handler(mlx_key_data_t keydata, void *param)
 
 int key_press_handler_2(mlx_key_data_t keydata, void *param)
 {
+	(void)keydata;
 	t_vars *vars;
 	float angle;
 	float dxright;
@@ -294,6 +296,7 @@ void mouse_handler(double xpos, double ypos, void *param)
 {
 	t_vars *vars;
 	vars = (t_vars *)param;
+	(void)ypos;
 	
 	if (xpos > vars->player.prev_xpos)
 	{
@@ -352,7 +355,6 @@ void	init_map_info(t_map_info *data)
 	g_vars->map_info.SO_texure = data->SO_texure;
 	g_vars->map_info.WE_texure = data->WE_texure;
 	g_vars->map_info.EA_texure = data->EA_texure;
-	printf("%d . %d . %d \n",g_vars->map_info.f_color.r,g_vars->map_info.f_color.g,g_vars->map_info.f_color.b);
 }
 
 int init_vars(t_map_info *data)

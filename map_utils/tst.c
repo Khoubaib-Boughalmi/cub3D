@@ -143,9 +143,9 @@ int cool(char **av,t_map_info *data)
     char **dbl =ft_split(str_for_data,'\n');
     free(str_for_data);
     fill_texture_info(dbl,data);
-	printf("%d . %d . %d \n",data->f_color.r,data->f_color.g,data->f_color.b);
-
+    // pause();
     char *str=ft_strdup("");
+    // g=0;
 	g = get_next_line(fd);
     while (g)
 	{

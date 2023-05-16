@@ -64,7 +64,7 @@ void draw_ray(t_vars *vars)
 			{
 				h_x = rx;
 				h_y = ry;
-				h_dist = distance_to_wall(vars->player.x, vars->player.y, h_x, h_y, ra);
+				h_dist = distance_to_wall(vars->player.x, vars->player.y, h_x, h_y);
 				break;
 			}
 			else
@@ -107,7 +107,7 @@ void draw_ray(t_vars *vars)
 			{
 				v_x = rx;
 				v_y = ry;
-				v_dist = distance_to_wall(vars->player.x, vars->player.y, v_x, v_y, ra);
+				v_dist = distance_to_wall(vars->player.x, vars->player.y, v_x, v_y);
 				break;
 			}
 			else
@@ -131,7 +131,7 @@ void draw_ray(t_vars *vars)
 		}
 		g_ray_ds[i]=f_dist;
 		if(vars->keyboard.show_map)
-			put_line(vars->mlx, vars->win, (vars->player.x * 16) / 64, (vars->player.y * 16) / 64, (rx * 16) / 64, (ry * 16) / 64, create_color(255, 255, 0, 255), vars->img->width, vars->img->height);
+			put_line( (vars->player.x * 16) / 64, (vars->player.y * 16) / 64, (rx * 16) / 64, (ry * 16) / 64, create_color(255, 255, 0, 255), vars->img->width, vars->img->height);
 		double fish_eye_new_angle = vars->player.angle - ra;
 		if (fish_eye_new_angle < 0)
 			fish_eye_new_angle += 2 * PI;
