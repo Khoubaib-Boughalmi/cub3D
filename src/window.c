@@ -21,7 +21,7 @@ void clean_window(t_vars *vars)
 	{
 		for (int x = 0; x < 512; x++)
 		{
-			mlx_put_pixel(vars->img, y, x, create_color(vars->map_info.c_color.r, vars->map_info.c_color.g, vars->map_info.c_color.b, x / 2));
+			mlx_put_pixel(vars->img, y, x, create_color(vars->map_info.c_color.r, vars->map_info.c_color.g, vars->map_info.c_color.b, 255 - x / 2));
 		}
 	}
 
@@ -193,7 +193,7 @@ void  redraw(t_vars *vars)
 void	show_gun_magazine(t_vars *vars)
 {
 	char *str=ft_strjoin(": ",ft_itoa(vars->player.bullet));
-	mlx_image_to_window(vars->mlx,vars->ammo_img,800,20);
+	mlx_image_to_window(vars->mlx,vars->ammo_img,840,45);
 	mlx_delete_image(vars->mlx,vars->player.print_move);
 	vars->player.print_move=mlx_put_string(vars->mlx,str,880,52);
 	free(str);
@@ -210,6 +210,7 @@ void mouse_click(mouse_key_t button, action_t action, modifier_key_t mods, void 
 		vars->player.bullet--;
 		vars->player.shoot=8;
 		show_gun_magazine(vars);
+
 	}
 	else if(button==0 && action == 1 && !vars->player.bullet && !vars->player.reload)
 	{
@@ -237,14 +238,14 @@ void render_window(t_vars *vars)
 	g_vars->player.reload=0;
 	g_vars->weapon_texture  = mlx_load_png("./src/textures/StechkinEx1.png");
 	g_vars->weapon_img = mlx_texture_to_image(g_vars->mlx, g_vars->weapon_texture);
-	g_vars->wall_texture  =  mlx_load_png("./src/textures/huge_1.png");
-	g_vars->wall_texture2  = mlx_load_png("./src/textures/huge_2.png");
-	g_vars->wall_texture3  = mlx_load_png("./src/textures/huge_2.png");
-	g_vars->wall_texture4  = mlx_load_png("./src/textures/huge_1.png");
+	g_vars->wall_texture  =  mlx_load_png(g_vars->map_info.NO_texure);
+	g_vars->wall_texture2  = mlx_load_png(g_vars->map_info.SO_texure);
+	g_vars->wall_texture3  = mlx_load_png(g_vars->map_info.WE_texure);
+	g_vars->wall_texture4  = mlx_load_png(g_vars->map_info.EA_texure);
 	g_vars->door_texture  = mlx_load_png("./src/textures/doorx.png");
 	g_vars->enemy_texture  = mlx_load_png("./src/textures/enemy1.png");
 	printf("%d %d %d %d \n",g_vars->enemy_texture->pixels[0],g_vars->enemy_texture->pixels[1],g_vars->enemy_texture->pixels[2],g_vars->enemy_texture->pixels[3]);
-	g_vars->ammo_texture  = mlx_load_png("./src/textures/ammunition.png");
+	g_vars->ammo_texture  = mlx_load_png("./src/textures/bullet.png");
 	g_vars->ammo_img = mlx_texture_to_image(g_vars->mlx, g_vars->ammo_texture);
 	// g_vars->wall_img2 = mlx_texture_to_image(g_vars->mlx, g_vars->wall_texture);
 	mlx_set_window_limit(vars->mlx, width - 200, height - 200, width, height);
