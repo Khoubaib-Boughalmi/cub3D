@@ -47,11 +47,12 @@ typedef struct s_map_info {
     double angle_player;
     int x_map_size;
     int y_map_size;
-    t_rgb	*c_color;
-    t_rgb	*f_color;
+    char	*c_color;
+    char	*f_color;
     char 	*NO_texure;
     char 	*SO_texure;
     char 	*WE_texure;
+    int number_of_zeros;
     char 	*EA_texure;
 }                t_map_info;
 typedef struct s_intersect {
