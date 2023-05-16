@@ -196,7 +196,7 @@ void  redraw(t_vars *vars)
 void	show_gun_magazine(t_vars *vars)
 {
 	char *str=ft_strjoin(": ",ft_itoa(vars->player.bullet));
-	mlx_image_to_window(vars->mlx,vars->ammo_img,800,20);
+	mlx_image_to_window(vars->mlx,vars->ammo_img,840,45);
 	mlx_delete_image(vars->mlx,vars->player.print_move);
 	vars->player.print_move=mlx_put_string(vars->mlx,str,880,52);
 	free(str);
@@ -213,6 +213,7 @@ void mouse_click(mouse_key_t button, action_t action, modifier_key_t mods, void 
 		vars->player.bullet--;
 		vars->player.shoot=8;
 		show_gun_magazine(vars);
+
 	}
 	else if(button==0 && action == 1 && !vars->player.bullet && !vars->player.reload)
 	{
@@ -259,7 +260,7 @@ void render_window(t_vars *vars)
 	g_vars->door_texture  = mlx_load_png("./src/textures/doorx.png");
 	g_vars->enemy_texture  = mlx_load_png("./src/textures/enemy1.png");
 	printf("%d %d %d %d \n",g_vars->enemy_texture->pixels[0],g_vars->enemy_texture->pixels[1],g_vars->enemy_texture->pixels[2],g_vars->enemy_texture->pixels[3]);
-	g_vars->ammo_texture  = mlx_load_png("./src/textures/ammunition.png");
+	g_vars->ammo_texture  = mlx_load_png("./src/textures/bullet.png");
 	g_vars->ammo_img = mlx_texture_to_image(g_vars->mlx, g_vars->ammo_texture);
 	// g_vars->wall_img2 = mlx_texture_to_image(g_vars->mlx, g_vars->wall_texture);
 	mlx_set_window_limit(vars->mlx, width - 200, height - 200, width, height);

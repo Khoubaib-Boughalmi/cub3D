@@ -4,7 +4,7 @@ WE ./src/textures/lava.png
 
 F 60,100,180
 EA ./src/textures/huge_2.png
-C 225,30,180
+C 180,180,180
 
 
 
