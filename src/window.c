@@ -256,6 +256,8 @@ void render_window(t_vars *vars)
 	mlx_set_window_limit(vars->mlx, width - 200, height - 200, width, height);
 	vars->img = mlx_new_image(vars->mlx, width, height);
 	redraw(vars);
+    // pause();
+
 	mlx_set_cursor_mode(vars->mlx, vars->keyboard.cursor ? MLX_MOUSE_NORMAL : MLX_MOUSE_DISABLED);
 
 	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler_2, vars);

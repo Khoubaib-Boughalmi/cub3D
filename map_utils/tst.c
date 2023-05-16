@@ -47,6 +47,10 @@ int check_walls(char **map,t_map_info *data)
         }
         // printf("-\n");
     }
+    // y=-1;
+    // while(map[++y])
+    //     free(map[y]);
+    // free(map);
     return 0;
 }
 
@@ -99,11 +103,12 @@ int **fillmap(char **map,t_map_info *data)
                 printf("error\n");
                 exit (0);
             }
-            // printf("%d\n",g_map[i][j]);
             j++;
         }
+        free(map[i]);
         i++;
     }
+    free(map);
     return g_map;
 
 }
@@ -131,21 +136,23 @@ int cool(char **av,t_map_info *data)
             i++;
         str_for_data=ft_strjoin_gnl(str_for_data,g);
 		free(g);
-        g=0;
         if(i==6)
             break;
 		g = get_next_line(fd);
 	}
     char **dbl =ft_split(str_for_data,'\n');
+    free(str_for_data);
     fill_texture_info(dbl,data);
-    pause();
+	printf("%d . %d . %d \n",data->f_color.r,data->f_color.g,data->f_color.b);
+
     char *str=ft_strdup("");
 	g = get_next_line(fd);
-    len = ft_strlen(g);
     while (g)
 	{
-        int nb=ft_strlen(ft_strtrim(g,"\n "));
-        printf("%d\n",nb);
+         trimed_str = ft_strtrim(g,"\n ");
+        int nb=ft_strlen(trimed_str);
+        free(trimed_str);
+        // printf("%d\n",nb);
         if(nb>2)
             break;
 		free(g);
@@ -168,12 +175,12 @@ int cool(char **av,t_map_info *data)
         str=ft_strjoin_gnl(str,g);
 		free(g);
 		g = get_next_line(fd);
-        // printf("((%s))%d\n",g,len);
         ylen++;
 	}
 
     char **map;
     char **splited = ft_split(str,'\n');
+    free(str);
     map=malloc(sizeof(char *) * (ylen+1));
     data->y_map_size=ylen;
     data->x_map_size=large;
@@ -186,16 +193,19 @@ int cool(char **av,t_map_info *data)
             map[i][j]=splited[i][j];
             j++;
         }
+        free(splited[i]);
         while(j<large)
         {
             map[i][j]=' ';
             j++;
         }
-            map[i][j]=0;
+        map[i][j]=0;
     }
+    free(splited);
     map[i]=0;
     check_walls(map,data);
     data->number_of_sprites=0;
     data->map = fillmap(map,data);
+
     return 0;
 }
