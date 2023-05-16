@@ -249,10 +249,10 @@ void render_window(t_vars *vars)
 	// g_vars->wall_img = mlx_texture_to_image(g_vars->mlx, g_vars->wall_texture);
 	g_vars->weapon_texture  = mlx_load_png("./src/textures/StechkinEx1.png");
 	g_vars->weapon_img = mlx_texture_to_image(g_vars->mlx, g_vars->weapon_texture);
-	g_vars->wall_texture  =  mlx_load_png("./src/textures/huge_1.png");
-	g_vars->wall_texture2  = mlx_load_png("./src/textures/huge_2.png");
-	g_vars->wall_texture3  = mlx_load_png("./src/textures/huge_2.png");
-	g_vars->wall_texture4  = mlx_load_png("./src/textures/huge_1.png");
+	g_vars->wall_texture  =  mlx_load_png(g_vars->map_info.NO_texure);
+	g_vars->wall_texture2  = mlx_load_png(g_vars->map_info.SO_texure);
+	g_vars->wall_texture3  = mlx_load_png(g_vars->map_info.WE_texure);
+	g_vars->wall_texture4  = mlx_load_png(g_vars->map_info.EA_texure);
 	g_vars->door_texture  = mlx_load_png("./src/textures/doorx.png");
 	g_vars->enemy_texture  = mlx_load_png("./src/textures/enemy1.png");
 	printf("%d %d %d %d \n",g_vars->enemy_texture->pixels[0],g_vars->enemy_texture->pixels[1],g_vars->enemy_texture->pixels[2],g_vars->enemy_texture->pixels[3]);

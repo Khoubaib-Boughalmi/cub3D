@@ -1,9 +1,9 @@
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture55
-WE ./path_to_the_west_texture 
+NO ./src/textures/huge_1.png
+SO ./src/textures/huge_2.png
+WE ./src/textures/huge_3.png
 
-F 60,100,70
-EA ./path_to_the_east_texture
+F 60,100,0
+EA ./src/textures/huge_4.png
 C 225,30,0
 
 
