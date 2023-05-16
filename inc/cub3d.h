@@ -24,6 +24,12 @@ typedef struct s_map {
 	int			**map;
 }				t_map;
 
+typedef struct s_rgb {
+	int	r;
+	int	g;
+	int	b;
+}				t_rgb;
+
 
 
 // typedef struct s_map_info {
@@ -41,8 +47,8 @@ typedef struct s_map_info {
     double angle_player;
     int x_map_size;
     int y_map_size;
-    char	*c_color;
-    char	*f_color;
+    t_rgb	*c_color;
+    t_rgb	*f_color;
     char 	*NO_texure;
     char 	*SO_texure;
     char 	*WE_texure;

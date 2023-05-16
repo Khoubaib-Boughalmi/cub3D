@@ -266,8 +266,8 @@ void render_window(t_vars *vars)
 
 	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler_2, vars);
 	
-	// mlx_cursor_hook(vars->mlx, (mlx_cursorfunc)mouse_handler, vars);
-	// mlx_mouse_hook(vars->mlx, (mlx_mousefunc)mouse_click, vars);
+	mlx_cursor_hook(vars->mlx, (mlx_cursorfunc)mouse_handler, vars);
+	mlx_mouse_hook(vars->mlx, (mlx_mousefunc)mouse_click, vars);
 	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
 	mlx_loop_hook(vars->mlx,&loop_func,vars);
 	show_gun_magazine(vars);
