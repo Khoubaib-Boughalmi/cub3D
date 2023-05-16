@@ -39,13 +39,13 @@ int check_walls(char **map,t_map_info *data)
 {
     int x=-1;
     int y=-1;
-    printf("-----------------------\n");
+    // printf("-----------------------\n");
     while(map[++y])
     {
         x=-1;
         while(map[y][++x])
         {
-            printf("%c\n",map[y][x]);
+            // printf("%c\n",map[y][x]);
             if(map[y][x]!='1' &&  map[y][x]!=' ')
             {
                 if(y==0 || map[y-1][x] == ' ')
@@ -70,7 +70,7 @@ int check_walls(char **map,t_map_info *data)
                 }
             }
         }
-        printf("-\n");
+        // printf("-\n");
     }
     return 0;
 }
@@ -79,7 +79,7 @@ int **fillmap(char **map,t_map_info *data)
 {
     int **g_map;
     g_map =malloc(sizeof(int *) * data->y_map_size);
-    printf("this %d\n,",data->y_map_size);
+    // printf("this %d\n,",data->y_map_size);
     int i=0;
     int j=0;
     while(map[i])
@@ -148,9 +148,7 @@ int cool(char **av,t_map_info *data)
     int i=0;
     while (g)
 	{
-        // printf("((%s))\n",g);
         int nb=ft_strlen(ft_strtrim(g,"\n "));
-        // printf("%d\n",nb);
         if(nb>2)
             i++;
         str_for_data=ft_strjoin_gnl(str_for_data,g);
@@ -160,17 +158,13 @@ int cool(char **av,t_map_info *data)
             break;
 		g = get_next_line(fd);
 	}
-    printf("-----\n\n((%s))\n\n",str_for_data);
     char **dbl =ft_split(str_for_data,'\n');
     fill_texture_info(dbl,data);
     char *str=ft_strdup("");
-    // g=0;
 	g = get_next_line(fd);
     len = ft_strlen(g);
-    printf("((%s))%d\n",g,len);
     while (g)
 	{
-        // printf("((%s))\n",g);
         int nb=ft_strlen(ft_strtrim(g,"\n "));
         printf("%d\n",nb);
         if(nb>2)
@@ -198,8 +192,6 @@ int cool(char **av,t_map_info *data)
         // printf("((%s))%d\n",g,len);
         ylen++;
 	}
-    printf("-----\n\n((%s))\n\n",str);
-    printf("%d  %d\n",large,ylen);
 
     char **map;
     char **splited = ft_split(str,'\n');
@@ -223,35 +215,8 @@ int cool(char **av,t_map_info *data)
             map[i][j]=0;
     }
     map[i]=0;
-        printf("-----------------------\n");
-    for(int i =0; map[i] ; i++)
-    {
-        printf("%s- %zu\n",map[i],ft_strlen(map[i]));
-    }
-    printf("-----------------------\n");
     check_walls(map,data);
-    // int **g_map;
     data->number_of_sprites=0;
     data->map = fillmap(map,data);
-    printf("%d\n",data->number_of_sprites);
-    // for(int i =0; i<data->y_map_size ; i++)
-    // {
-    //     for(int j =0; j<data->x_map_size ; j++)
-    //         printf("%d ,",data->map[i][j]);
-    //     printf("},\n{");
-    // }
     return 0;
 }
-
-
-// int main(int ac, char  **av)
-// {
-//     t_map_info data;
-//     cool(av,&data);
-//     // pause();
-//     // printf("%f, %f,   %f\n",data.angle_player,data.x_player,data.y_player);
-// }
-
-
-
-//gcc map_utils/koby.c map_utils/get_next_line.c map_utils/get_next_line_utils.c  libft/libft.a map_utils/tst.c
