@@ -250,7 +250,7 @@ void	fill_texture_info(char **wow,t_map_info *data)
 		}
 		i++;
 	}
-	free(wow);
+    free(wow);
 	if(!err && !check_all_elem(options_check))	
 		printf("ERROR with textures data");
 	free_split(options_list);
