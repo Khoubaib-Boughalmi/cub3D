@@ -85,7 +85,7 @@ int	ft_isnumber(char c)
 	return (0);
 }
 
-int	is_numerical(char *str)
+int	is_numerical(t_map_info *data, char *str, int selecter, char val)
 {
 	int	i;
 
@@ -100,10 +100,31 @@ int	is_numerical(char *str)
 	}
 	if(ft_atoi(str) > 255)
 		return (0);
+	if(val == 'F')
+	{
+		if(selecter == 0)
+			data->f_color.r = ft_atoi(str);
+		if(selecter == 1)
+			data->f_color.g = ft_atoi(str);
+		if(selecter == 2)
+			data->f_color.b = ft_atoi(str);
+	}
+	else
+	{
+		if(selecter == 0)
+		{
+			printf("color %s\n", str);
+			data->c_color.r = ft_atoi(str);
+		}
+		if(selecter == 1)
+			data->c_color.g = ft_atoi(str);
+		if(selecter == 2)
+			data->c_color.b = ft_atoi(str);
+	}
 	return (1);
 }
 
-int	check_floor_ceiling(char **floor_ceiling)
+int	check_floor_ceiling(char **floor_ceiling, t_map_info *data)
 {
 	char	**ceiling_floor_lst;
 	char	*name;
@@ -120,8 +141,15 @@ int	check_floor_ceiling(char **floor_ceiling)
 			return (0);
 		while (ceiling_floor_lst[i])
 		{
-			if(!is_numerical(ceiling_floor_lst[i]))
-				return (0);
+			if(!ft_strncmp(name, "F", ft_strlen(value)))
+			{
+				if(!is_numerical(data, ceiling_floor_lst[i], i, 'F'))
+					return (0);
+			}
+			else
+				if(!is_numerical(data, ceiling_floor_lst[i], i, 'C'))
+					return (0);
+
 			i++;
 		}
 	}
@@ -210,7 +238,7 @@ void	fill_texture_info(char **wow,t_map_info *data)
 					//free shit
 					return ;
 				}
-				if(!check_floor_ceiling(split_line))
+				if(!check_floor_ceiling(split_line, data))
 				{
 					printf("ERROR with floor/ceiling data\n");		
 					err++;
@@ -231,10 +259,6 @@ void	fill_texture_info(char **wow,t_map_info *data)
 				data->EA_texure = ft_strdup(split_line[1]);
 			if(!ft_strncmp(split_line[0], "WE", ft_strlen(split_line[0])))
 				data->WE_texure = ft_strdup(split_line[1]);
-			if(!ft_strncmp(split_line[0], "F", ft_strlen(split_line[0])))
-				data->f_color = ft_strdup(split_line[1]);
-			if(!ft_strncmp(split_line[0], "C", ft_strlen(split_line[0])))
-				data->c_color = ft_strdup(split_line[1]);
 			free(wow[i]);
 			free_split(split_line);
 		}
@@ -244,7 +268,6 @@ void	fill_texture_info(char **wow,t_map_info *data)
 		printf("ERROR with textures data");
 	free_split(options_list);
 	free_split(options_check);
-	printf("%s\n%s\n%s\n%s\n%s\n%s\n", data->NO_texure, data->SO_texure, data->EA_texure, data->WE_texure, data->c_color, data->f_color);
 }
 
 // int main()
