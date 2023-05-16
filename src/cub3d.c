@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/16 16:13:42 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/16 17:10:42 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -379,18 +379,41 @@ int init_vars(t_map_info *data)
 void randomize_the_sprites(t_map_info *data)
 {
 	int i =0;
+	int sprite =0;
 	int j =0;
-    printf("----------------------\n\n\n\n\n%d\n",data->number_of_zeros);
+	g_vars->numerof_sprite=data->number_of_sprites;
+	g_vars->sprites=malloc(sizeof(t_sprite)*g_vars->numerof_sprite);
+	// for (int i=0; i<g_vars->numerof_sprite ; i++)
+	// {
+	// 	g_vars->sprites[i].x=64*i+200;
+	// 	g_vars->sprites[i].y=64*i+640;
+	// 	if(i%2==0)
+	// 		g_vars->sprites[i].path=ft_strdup("./src/textures/sprites/");
+	// 	else
+	// 		g_vars->sprites[i].path=ft_strdup("./src/textures/sprites/g");
+	// }
+    // printf("----------------------\n\n\n\n\n%d\n",data->number_of_sprites);
 
-	while(i<data->y_map_size)
+	while(i < data->y_map_size)
     {
 		j=0;
-        while( j<data->x_map_size)
+        while( j < data->x_map_size)
 		{
-            printf("%d ,",data->map[i][j]);
+			if(data->map[i][j]==-2)
+			{
+            	printf("get one %d\n",data->map[i][j]);
+				g_vars->sprites[sprite].x=64*j+32;
+				g_vars->sprites[sprite].y=64*i+32;
+				if(i%2==0)
+					g_vars->sprites[sprite].path=ft_strdup("./src/textures/sprites/");
+				else
+					g_vars->sprites[sprite].path=ft_strdup("./src/textures/sprites/g");
+				data->map[i][j]=0;
+				sprite++;
+			}
 			j++;
 		}
-        printf("},\n{");
+        // printf("},\n{");
 
 		i++;
     }
@@ -410,7 +433,6 @@ int main(int argc, char **argv)
 
 	t_map_info data;
     cool(argv,&data);
-	randomize_the_sprites(&data);
 	// printf("%s\n",data.NO_texure);
 	// printf("%s\n",data.SO_texure);
 	// printf("%s\n",data.WE_texure);
@@ -419,6 +441,7 @@ int main(int argc, char **argv)
 	
 	if (!init_vars(&data))
 		return (0);
+	randomize_the_sprites(&data);
 	render_window(g_vars);
 	return (0);
 }

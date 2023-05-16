@@ -44,7 +44,6 @@ void draw_tile(t_vars *vars, int y, int x)
 	uint32_t color_blue =  create_color(66, 6, 156, 255);
 
 	i = -1;
-	static int frame=0;
 	while (++i < 16)
 	{
 		j = -1;
@@ -59,8 +58,6 @@ void draw_tile(t_vars *vars, int y, int x)
 				mlx_put_pixel(vars->img, (16 * x) + i, (16 * y) + j, color_white);
 		}
 	}
-	frame++;
-	if(frame)
 }
 
 void    draw_aim(t_vars *vars)
@@ -238,18 +235,6 @@ void render_window(t_vars *vars)
 		exit(1);
 	}
 	g_vars->player.reload=0;
-	g_vars->numerof_sprite=5;
-	g_vars->sprites=malloc(sizeof(t_sprite)*g_vars->numerof_sprite);
-	for (int i=0; i<g_vars->numerof_sprite ; i++)
-	{
-		g_vars->sprites[i].x=64*i+200;
-		g_vars->sprites[i].y=64*i+640;
-		if(i%2==0)
-			g_vars->sprites[i].path=ft_strdup("./src/textures/sprites/");
-		else
-			g_vars->sprites[i].path=ft_strdup("./src/textures/sprites/g");
-	}
-	// g_vars->wall_img = mlx_texture_to_image(g_vars->mlx, g_vars->wall_texture);
 	g_vars->weapon_texture  = mlx_load_png("./src/textures/StechkinEx1.png");
 	g_vars->weapon_img = mlx_texture_to_image(g_vars->mlx, g_vars->weapon_texture);
 	g_vars->wall_texture  =  mlx_load_png("./src/textures/huge_1.png");

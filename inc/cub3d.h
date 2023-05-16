@@ -52,7 +52,7 @@ typedef struct s_map_info {
     char 	*NO_texure;
     char 	*SO_texure;
     char 	*WE_texure;
-    int number_of_zeros;
+    int number_of_sprites;
     char 	*EA_texure;
 }                t_map_info;
 typedef struct s_intersect {

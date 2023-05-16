@@ -115,8 +115,9 @@ int **fillmap(char **map,t_map_info *data)
             }
             else if (map[i][j]=='#')
             {
-                data->number_of_zeros++;
-                g_map[i][j]=0;
+                if(data->number_of_sprites <15)
+                    data->number_of_sprites++;
+                g_map[i][j]=-2;
             }
             else
             {
@@ -230,9 +231,9 @@ int cool(char **av,t_map_info *data)
     printf("-----------------------\n");
     check_walls(map,data);
     // int **g_map;
-    data->number_of_zeros=0;
+    data->number_of_sprites=0;
     data->map = fillmap(map,data);
-    printf("%d\n",data->number_of_zeros);
+    printf("%d\n",data->number_of_sprites);
     // for(int i =0; i<data->y_map_size ; i++)
     // {
     //     for(int j =0; j<data->x_map_size ; j++)
