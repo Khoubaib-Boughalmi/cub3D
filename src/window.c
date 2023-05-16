@@ -239,6 +239,11 @@ void render_window(t_vars *vars)
 	g_vars->weapon_texture  = mlx_load_png("./src/textures/StechkinEx1.png");
 	g_vars->weapon_img = mlx_texture_to_image(g_vars->mlx, g_vars->weapon_texture);
 	g_vars->wall_texture  =  mlx_load_png(g_vars->map_info.NO_texure);
+	if(!g_vars->wall_texture)
+	{
+		// printf("sadsdklajsdklajskldajsdklajsd\n");
+		exit(0);
+	}
 	g_vars->wall_texture2  = mlx_load_png(g_vars->map_info.SO_texure);
 	g_vars->wall_texture3  = mlx_load_png(g_vars->map_info.WE_texure);
 	g_vars->wall_texture4  = mlx_load_png(g_vars->map_info.EA_texure);

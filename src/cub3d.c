@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/16 18:16:42 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/16 18:51:50 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -348,6 +348,7 @@ void	init_map_info(t_map_info *data)
 	g_vars->map_info.f_color.b = data->f_color.b;
 	g_vars->map_info.f_color.r = data->f_color.r;
 	g_vars->map_info.f_color.g = data->f_color.g;
+	g_vars->map_info.f_color.b = data->f_color.b;
 	g_vars->map_info.NO_texure = data->NO_texure;
 	g_vars->map_info.SO_texure = data->SO_texure;
 	g_vars->map_info.WE_texure = data->WE_texure;

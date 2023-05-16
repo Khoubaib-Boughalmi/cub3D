@@ -6,33 +6,8 @@
 #include "../inc/cub3d.h"
 #include <math.h>
 
-#define MIN(a,b) (((a)<(b))?(a):(b))
+// #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
-
-
-
-// typedef struct s_map_info {
-//     int **map;
-//     double x_player;
-//     double y_player;
-//     double angle_player;
-//     int x_map_size;
-//     int y_map_size;
-//     int32_t c_color;
-//     int32_t f_color;
-//     char *NO_texure;
-//     char *SO_texure;
-//     char *WE_texure;
-//     char *EA_texure;
-//     int number_of_zeros;
-// }				t_map_info;
-
-
-// int data->x_map_size;
-// int data->y_map_size;
-
-
-
 
 
 int check_walls(char **map,t_map_info *data)
@@ -138,6 +113,7 @@ int cool(char **av,t_map_info *data)
     int shouldstop=0;
     int fd = open(av[1], O_RDONLY);
     char *g;
+    char    *trimed_str;
     int large=0;
     int len;
 	g = get_next_line(fd);
@@ -148,7 +124,9 @@ int cool(char **av,t_map_info *data)
     int i=0;
     while (g)
 	{
-        int nb=ft_strlen(ft_strtrim(g,"\n "));
+        trimed_str = ft_strtrim(g,"\n ");
+        int nb=ft_strlen(trimed_str);
+        free(trimed_str);
         if(nb>2)
             i++;
         str_for_data=ft_strjoin_gnl(str_for_data,g);
@@ -160,6 +138,7 @@ int cool(char **av,t_map_info *data)
 	}
     char **dbl =ft_split(str_for_data,'\n');
     fill_texture_info(dbl,data);
+    pause();
     char *str=ft_strdup("");
 	g = get_next_line(fd);
     len = ft_strlen(g);

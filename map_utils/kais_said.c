@@ -5,21 +5,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-// typedef struct s_map_info {
-//     int **map;
-//     double x_player;
-//     double y_player;
-//     double angle_player;
-//     int x_map_size;
-//     int y_map_size;
-//     char	*c_color;
-//     char	*f_color;
-//     char 	*NO_texure;
-//     char 	*SO_texure;
-//     char 	*WE_texure;
-//     char 	*EA_texure;
-// }                t_map_info;
-
 void	free_split(char **arr)
 {
 	int	i;
@@ -141,17 +126,18 @@ int	check_floor_ceiling(char **floor_ceiling, t_map_info *data)
 			return (0);
 		while (ceiling_floor_lst[i])
 		{
-			if(!ft_strncmp(name, "F", ft_strlen(value)))
-			{
-				if(!is_numerical(data, ceiling_floor_lst[i], i, 'F'))
-					return (0);
-			}
-			else
-				if(!is_numerical(data, ceiling_floor_lst[i], i, 'C'))
-					return (0);
+			// if(!ft_strncmp(name, "F", ft_strlen(value)))
+			// {
+			// 	if(!is_numerical(data, ceiling_floor_lst[i], i, 'F'))
+			// 		return (0);
+			// }
+			// else
+			// 	if(!is_numerical(data, ceiling_floor_lst[i], i, 'C'))
+			// 		return (0);
 
 			i++;
 		}
+		free_split(ceiling_floor_lst);
 	}
 	return (1);
 }
@@ -185,9 +171,7 @@ void	fill_texture_info(char **wow,t_map_info *data)
 {
 	int		k;
 	int		err;
-	int		count = 0;
 	int		count_lines = 0;
-	char	*line;
 	char	**split_line;
 	char	*options = "NO SO WE EA F C"; 
 	char	**options_list;
@@ -206,7 +190,7 @@ void	fill_texture_info(char **wow,t_map_info *data)
 		if(split_arr_len(split_line) > 1)
 			count_lines++;
 		// free(wow[i]);
-		// free_split(split_line);
+		free_split(split_line);
 		i++;
 	}
 	if(count_lines != 6)
@@ -217,10 +201,7 @@ void	fill_texture_info(char **wow,t_map_info *data)
 	options_check = (char **)malloc(sizeof(char *) * 7);
 	options_check[6] = NULL;
 	options_list = ft_split(options, ' ');
-	// close(fd);
 	i=0;
-	// fd = open("parsing_map.txt", O_RDONLY);
-	// line = get_next_line(fd);
 	while (wow[i])
 	{
 		wow[i] = ft_trim_str(wow[i]);
