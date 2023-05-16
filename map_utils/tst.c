@@ -143,7 +143,7 @@ int cool(char **av,t_map_info *data)
     printf("-----\n\n((%s))\n\n",str_for_data);
     char **dbl =ft_split(str_for_data,'\n');
     fill_texture_info(dbl,data);
-    pause();
+    // pause();
     char *str=ft_strdup("");
     // g=0;
 	g = get_next_line(fd);

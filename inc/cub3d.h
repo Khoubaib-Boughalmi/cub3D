@@ -122,6 +122,7 @@ typedef struct s_vars {
 	mlx_image_t *weapon_img;
 	mlx_texture_t *weapon_texture;
 	mlx_image_t *wall_img2;
+	mlx_texture_t *wall_texture1;
 	mlx_texture_t *wall_texture2;
 	mlx_texture_t *wall_texture3;
 	mlx_texture_t *wall_texture4;

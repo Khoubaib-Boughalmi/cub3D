@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/16 18:13:35 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/16 20:14:32 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -352,6 +352,8 @@ void	init_map_info(t_map_info *data)
 	g_vars->map_info.SO_texure = data->SO_texure;
 	g_vars->map_info.WE_texure = data->WE_texure;
 	g_vars->map_info.EA_texure = data->EA_texure;
+	printf("color %d %d %d\n", g_vars->map_info.c_color.r, g_vars->map_info.c_color.g, g_vars->map_info.c_color.b);
+	printf("color %d %d %d\n", g_vars->map_info.f_color.r, g_vars->map_info.f_color.g, g_vars->map_info.f_color.b);
 }
 
 int init_vars(t_map_info *data)

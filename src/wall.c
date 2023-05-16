@@ -26,17 +26,19 @@ void draw_wall(t_vars *vars, double r,double rx,double ry, double lineH,int horo
 	if(y2<0)
 		y2=0;
 	porcentsage-=(int)porcentsage;
-	imgtxet=vars->wall_texture;
+	imgtxet=vars->wall_texture1;
 	if(vars->map.map[(int)floor(ry/64)][(int)floor(rx/64)]==500)
 	{
-	imgtxet=vars->door_texture;
+		imgtxet=vars->door_texture;
 		
 	}
    else if(hororver==0 )
    {
 
 	if(vars->player.y>ry)
-	imgtxet=vars->wall_texture3;
+		imgtxet=vars->wall_texture3;
+	else
+		imgtxet=vars->wall_texture4;
 	// imgtxet=vars->wall_texture2;
 	if(vars->player.angle<PI)
 	   porcentsage=1-porcentsage;
@@ -44,7 +46,7 @@ void draw_wall(t_vars *vars, double r,double rx,double ry, double lineH,int horo
    else if(hororver==1 )
    {
 	if(vars->player.x>rx)
-	imgtxet=vars->wall_texture2;
+		imgtxet=vars->wall_texture2;
 	// imgtxet=vars->wall_texture2;
 	if (vars->player.angle>PI/2 && vars->player.angle<3*PI/2)
 	   porcentsage=1-porcentsage;
