@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -fsanitize=address -g #-Werror -Wextra -Wextra
+CFLAGS = #-fsanitize=address -g #-Werror -Wextra -Wextra
 INC = inc
 SRC = src
 INCLUDES = $(INC)/cub3d.h

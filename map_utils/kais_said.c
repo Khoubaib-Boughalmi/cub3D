@@ -201,7 +201,7 @@ void	fill_texture_info(char **wow,t_map_info *data)
 	if(count_lines != 6)
 	{
 		printf("ERROR MAP DATA\n");
-		return ;
+		exit(1) ;
 	}
 	options_check = (char **)malloc(sizeof(char *) * 7);
 	options_check[6] = NULL;
@@ -220,22 +220,26 @@ void	fill_texture_info(char **wow,t_map_info *data)
 				else
 				{
 					printf("Wrong texture DATA\n");
-					err++;
-					//free shit
-					return ;
+					free(split_line);
+					free(options_check);
+					free(options_list);
+					free(wow);
+					exit(1) ;
 				}
 				if(!check_floor_ceiling(split_line, data))
 				{
 					printf("ERROR with floor/ceiling data\n");		
-					err++;
-					// free shit
-					return;
+					free(split_line);
+					free(options_check);
+					free(options_list);
+					free(wow);
+					exit(1);
 				}
 			}
 			else
 			{
-				printf("DATA MISSING %s %d\n", split_line[0], split_arr_len(split_line));
-				return ;
+				printf("DATA MISSING\n");
+				exit(1);
 			}
 			if(!ft_strncmp(split_line[0], "NO", ft_strlen(split_line[0])))
 				data->NO_texure = ft_strdup(split_line[1]);
@@ -254,6 +258,11 @@ void	fill_texture_info(char **wow,t_map_info *data)
 		printf("ERROR with textures data");
 	free_split(options_list);
 	free_split(options_check);
+	// while (1)
+	// {
+	// 	/* code */
+	// }
+	
 }
 
 // int main()
