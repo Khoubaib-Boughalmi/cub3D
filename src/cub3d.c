@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/16 15:12:25 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/16 15:58:23 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -340,6 +340,16 @@ void loop_func(void *data)
 	
 }
 
+void	init_map_info(t_map_info *data)
+{
+	g_vars->map_info.c_color.r = data->c_color.r;
+	g_vars->map_info.c_color.g = data->c_color.g;
+	g_vars->map_info.c_color.b = data->c_color.b;
+	g_vars->map_info.f_color.r = data->f_color.r;
+	g_vars->map_info.f_color.g = data->f_color.g;
+	g_vars->map_info.f_color.b = data->f_color.b;
+}
+
 int init_vars(t_map_info *data)
 {
 	g_vars = (t_vars *)malloc(sizeof(t_vars));
@@ -360,6 +370,7 @@ int init_vars(t_map_info *data)
 	g_vars->player.dx = 5 * cos(g_vars->player.angle);
 	g_vars->player.dy = 5 * sin(g_vars->player.angle);
 	g_vars->keyboard.cursor = 0;
+	init_map_info(data);
 	return (1);
 }
 
@@ -379,10 +390,15 @@ int main(int argc, char **argv)
 	printf("%s\n",data.SO_texure);
 	printf("%s\n",data.WE_texure);
 	printf("%s\n",data.EA_texure);
-	printf("%s\n",data.f_color);
+	printf("%d\n",data.f_color.r);
+	printf("%d\n",data.f_color.g);
+	printf("%d\n",data.f_color.b);
+	printf("%d\n",data.c_color.r);
+	printf("%d\n",data.c_color.g);
+	printf("%d\n",data.c_color.b);
 	
-	// if (!init_vars(&data))
-	// 	return (0);
-	// render_window(g_vars);
+	if (!init_vars(&data))
+		return (0);
+	render_window(g_vars);
 	return (0);
 }

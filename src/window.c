@@ -21,7 +21,7 @@ void clean_window(t_vars *vars)
 	{
 		for (int x = 0; x < 512; x++)
 		{
-			mlx_put_pixel(vars->img, y, x, create_color(125, 125, 125, x / 2 - 255));
+			mlx_put_pixel(vars->img, y, x, create_color(vars->map_info.c_color.r, vars->map_info.c_color.g, vars->map_info.c_color.b, x / 2));
 		}
 	}
 
@@ -29,7 +29,7 @@ void clean_window(t_vars *vars)
 	{
 		for (int x = 512; x < 1024; x++)
 		{
-			mlx_put_pixel(vars->img, y, x, create_color(0, 30, 60,  x / 2 - 255) );
+			mlx_put_pixel(vars->img, y, x, create_color(vars->map_info.f_color.r, vars->map_info.f_color.g,vars->map_info.f_color.b, x / 2 - 255) );
 		}
 	}
 }
