@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/17 16:37:27 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/17 18:35:58 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -405,8 +405,9 @@ void randomize_the_sprites(t_map_info *data)
 		j=0;
         while( j < data->x_map_size)
 		{
-			if(data->map[i][j]==-2)
+			if(data->map[i][j]==-2 && sprite < 15)
 			{
+				printf("sss %d\n", sprite);
             	printf("get one %d\n",data->map[i][j]);
 				g_vars->sprites[sprite].x=64*j+32;
 				g_vars->sprites[sprite].y=64*i+32;

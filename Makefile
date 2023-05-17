@@ -12,7 +12,13 @@ SRCS = $(SRC)/cub3d.c \
 		$(SRC)/rays.c \
 		$(SRC)/window.c \
 		$(SRC)/utils.c \
-		map_utils/tst.c  map_utils/get_next_line.c  map_utils/get_next_line_utils.c  map_utils/kais_said.c  
+		map_utils/tst.c \
+		map_utils/get_next_line.c \
+		map_utils/get_next_line_utils.c \
+		map_utils/kais_said.c \
+		map_utils/utils1.c \
+		map_utils/utils2.c \
+		map_utils/free_and_exit.c
 
 OBJS = $(SRCS:.c=.o)
 NAME = cub3d
