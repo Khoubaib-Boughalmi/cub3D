@@ -6,9 +6,19 @@
 #include "../inc/cub3d.h"
 #include <math.h>
 
-// #define MIN(a,b) (((a)<(b))?(a):(b))
-#define MAX(a,b) (((a)>(b))?(a):(b))
+int ft_max(int a,int b)
+{
+    if(a>b)
+        return a;
+    return b;
+}
 
+void check_walls_exit(char **map)
+{
+    free_split(map);
+    printf("Error\n");
+    exit(0);
+}
 
 int check_walls(char **map,t_map_info *data)
 {
@@ -22,30 +32,14 @@ int check_walls(char **map,t_map_info *data)
             if(map[y][x]!='1' &&  map[y][x]!=' ')
             {
                 if(y==0 || map[y-1][x] == ' ')
-                {
-                    free_split(map);
-                    printf("Error\n");
-                    exit(0);
-                }
+                    check_walls_exit(map);
                 if(x==0 || map[y][x-1] == ' ')
-                {
-                    free_split(map);
-                    printf("Error\n");
-                    exit(0);
-                }
-                if(y+1>data->y_map_size || map[y+1][x] == ' ')
-                {
-                    free_split(map);
-                    printf("Error\n");
-                    exit(0);
-                }
-                if(x+1>data->x_map_size || map[y][x+1] == ' ')
-                {
-                    free_split(map);
-                    printf("Error\n");
-                    exit(0);
-                }
-            }
+                    check_walls_exit(map);
+               if(y+1>data->y_map_size || map[y+1][x] == ' ')
+                    check_walls_exit(map);
+               if(x+1>data->x_map_size || map[y][x+1] == ' ')
+                    check_walls_exit(map);
+           }
         }
     }
     return 0;
@@ -62,79 +56,87 @@ void free_g_map(int **map,int till)
     free(map);
 
 }
+int **allocate_map_memory(int y_size, int x_size)
+{
+    int **map = malloc(sizeof(int *) * y_size);
+    for (int i = 0; i < y_size; i++) {
+        map[i] = malloc(sizeof(int) * x_size);
+    }
+    return map;
+}
+void fillmap_exit(char **map,t_map_info *data)
+{
+    free_g_map(data->map,data->y_map_size);
+    free_split(map);
+    printf("Error  number of content \n");
+    exit (0);
+}
 
 
-int **fillmap(char **map,t_map_info *data)
+void set_player_info(char cell, t_map_info *data, int i, int j)
+{
+    if (cell == 'N')
+        data->angle_player = 270;
+    else if (cell == 'S')
+        data->angle_player = 90;
+    else if (cell == 'W')
+        data->angle_player = 180;
+    else if (cell == 'E')
+        data->angle_player = 0;
+
+    data->x_player = j * 64;
+    data->y_player = i * 64;
+}
+
+
+void set_map_value(char **map,t_map_info *data,int **g_map,int i,int j)
+{
+    if(map[i][j]=='1')
+        g_map[i][j]=1;
+    else if(map[i][j]==' ')
+        g_map[i][j]=-1;
+    else if(map[i][j]=='d')
+        g_map[i][j]=500;
+    else if (map[i][j]=='0')
+        g_map[i][j]=0;
+    else if (map[i][j]=='#')
+    {
+        if(data->number_of_sprites <15)
+            data->number_of_sprites++;
+        g_map[i][j]=-2;
+    }
+    else
+        fillmap_exit(map,data);
+}
+
+void fillmap(char **map,t_map_info *data)
 {
     int i=0;
     int j=0;
     int player_mara=0;
-    int **g_map;
-    g_map =malloc(sizeof(int *) * data->y_map_size);
+    data->map =allocate_map_memory(data->y_map_size, data->x_map_size);
     while(map[i])
     {
-        g_map[i]=malloc(sizeof(int) * data->x_map_size);
         j=0;
         while(j<data->x_map_size)
         {
-            if(map[i][j]=='1')
-                g_map[i][j]=1;
-            else if(map[i][j]==' ')
-                g_map[i][j]=-1;
-            else if(map[i][j]=='d')
-                g_map[i][j]=500;
-            else if(map[i][j]=='N' ||map[i][j]=='S'||map[i][j]=='W'||map[i][j]=='E')
+            if(map[i][j]=='N' ||map[i][j]=='S'||map[i][j]=='W'||map[i][j]=='E')
             {
                 if(player_mara==1)
-                {
-                    free_g_map(g_map,i+1);
-                    free_split(map);
-                    printf("Error player number  \n");
-                    exit (0);
-                }
-                g_map[i][j]=0;
-                if(map[i][j]=='N' )
-                    data->angle_player= 270;
-                if(map[i][j]=='S' )
-                    data->angle_player= 90;
-                if(map[i][j]=='W' )
-                    data->angle_player= 180;
-                if(map[i][j]=='E' )
-                    data->angle_player= 0;
-                data->x_player=j*64;
-                data->y_player=i*64;
+                    fillmap_exit(map,data);
+                data->map[i][j]=0;
+                set_player_info(map[i][j], data, i, j);
                 player_mara++;
             }
-            else if (map[i][j]=='0')
-            {
-                g_map[i][j]=0;
-            }
-            else if (map[i][j]=='#')
-            {
-                if(data->number_of_sprites <15)
-                    data->number_of_sprites++;
-                g_map[i][j]=-2;
-            }
             else
-            {
-                free_g_map(g_map,i+1);
-                free_split(map);
-                printf("error\n");
-                exit (0);
-            }
+                set_map_value(map,data,data->map,i,j);
             j++;
         }
         i++;
     }
     if(player_mara==0)
-    {
-        free_g_map(g_map,i+1);
-        free_split(map);
-        printf("Error player number \n");
-        exit (0);
-    }
+        fillmap_exit(map,data);
     free_split(map);
-    return g_map;
 
 }
 void	fill_texture_info(char **wow,t_map_info *data);
@@ -202,7 +204,7 @@ char **get_the_map_from_file(char *g,int fd,t_map_info *data)
         }
         if(len<2 )
             shouldstop=1;
-        data->x_map_size = MAX(len,data->x_map_size);
+        data->x_map_size = ft_max(len,data->x_map_size);
         str=ft_strjoin_gnl(str,g);
 		free(g);
 		g = get_next_line(fd);
@@ -253,6 +255,6 @@ int cool(char **av,t_map_info *data)
     char **map = get_the_map_from_last_funct(data,splited);
     check_walls(map,data);
     data->number_of_sprites=0;
-    data->map = fillmap(map,data);
+    fillmap(map,data);
     return 0;
 }
