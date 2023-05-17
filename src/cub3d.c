@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/16 22:18:21 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/17 16:37:27 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ void draw_partcle(t_vars *vars)
 {
 	int radius;
 	int i;
-	int j;
+	// int j;
 	int py;
 	int px;
-	uint32_t color;
+	// uint32_t color;
 
 	i = -1;
 	radius = 3;
@@ -100,10 +100,9 @@ void draw_partcle(t_vars *vars)
 	put_line( px, py, px + vars->player.dx * 4, py + vars->player.dy * 4, create_color(0, 255, 0, 255), 128, 128);
 }
 
-int key_press_handler(mlx_key_data_t keydata, void *param)
+int key_press_handler( void *param)
 {
 	t_vars *vars;
-	(void)keydata;
 	float angle;
 	float dxright;
 	float dyright;
@@ -235,9 +234,9 @@ int key_press_handler_2(mlx_key_data_t keydata, void *param)
 {
 	(void)keydata;
 	t_vars *vars;
-	float angle;
-	float dxright;
-	float dyright;
+	// float angle;
+	// float dxright;
+	// float dyright;
 	int x;
 	int y;
 	vars = (t_vars *)param;
@@ -441,12 +440,6 @@ int main(int argc, char **argv)
 	t_map_info data;
     cool(argv,&data);
 
-	// printf("%s\n",data.NO_texure);
-	// printf("%s\n",data.SO_texure);
-	// printf("%s\n",data.WE_texure);
-	// printf("%s\n",data.EA_texure);
-	// printf("%d\n",data.f_color);
-	
 	if (!init_vars(&data))
 		return (0);
 	randomize_the_sprites(&data);

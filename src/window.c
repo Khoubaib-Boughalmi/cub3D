@@ -38,7 +38,7 @@ void draw_tile(t_vars *vars, int y, int x)
 {
 	int i;
 	int j;
-	uint32_t color_black = create_color(0, 0, 0, 255);
+	// uint32_t color_black = create_color(0, 0, 0, 255);
 	uint32_t color_white = create_color(255, 255, 255, 255);
 	uint32_t color_grey = create_color(160, 60, 60, 255);
 	uint32_t color_blue =  create_color(66, 6, 156, 255);
@@ -70,7 +70,7 @@ void    draw_aim(t_vars *vars)
 
 void draw_wal7(t_vars *vars, int r, int lineH, int32_t color)
 {
-	static int frame =0;
+	// static int frame =0;
    int x1 = r * 2 + 513;
 	double ligne_offset = 220 - lineH/2;
    int y1 = 220 - lineH/2;
@@ -133,8 +133,7 @@ void  redraw(t_vars *vars)
 	static int frame =1;
 	char *str;
 	char *tmp;
-	mlx_key_data_t keydata;
-	key_press_handler(keydata,vars);
+	key_press_handler(vars);
 	mlx_delete_image(g_vars->mlx,g_vars->weapon_img);
 	clean_window(vars);		
 	draw_ray(vars);

@@ -1,3 +1,5 @@
+CC = gcc
+CFLAGS =  -Werror -Wextra -Wall -fsanitize=address -g
 INC = inc
 CFLAGS = -Werror -Wextra -Wextra -fsanitize=address -g 
 CC = gcc
