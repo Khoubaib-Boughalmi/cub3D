@@ -193,4 +193,15 @@ void render_window(t_vars *vars);
 void	free_split(char **arr);
 int init_vars(t_map_info *data);
 void    ft_recalibrate(double *ra);
+int	is_numerical(t_map_info *data, char *str, int selecter, char val);
+int	check_floor_ceiling(char **floor_ceiling, t_map_info *data);
+char	*ft_trim_str(char *str);
+void	free_split(char **arr);
+int	split_arr_len(char **arr);
+int	find_in_list(char **options_list, char *needle);
+int	check_all_elem(char **options_check);
+int	ft_isnumber(char c);
+void	textures_naming_err(char **options_check, char **options_list);
+void	free_and_exit(char **split_line, char **options_check, char **options_list, char **wow);
+
 # endif

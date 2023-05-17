@@ -1,10 +1,10 @@
+SO ./src/textures/huge_2.png
 NO ./src/textures/huge_1.png
 EA ./src/textures/huge_2.png
 SO ./src/textures/wall_d.png
 WE ./src/textures/huge_4.png
-
-C 196,126,33
-F 2,29,92
+C 10,60,80
+F 0,0,0
 
 
 
