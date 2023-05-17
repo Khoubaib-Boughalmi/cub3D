@@ -1,9 +1,4 @@
-#include "get_next_line.h"
-#include "../libft/libft.h"
 #include "../inc/cub3d.h"
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
 
 void	free_split(char **arr)
 {
@@ -223,7 +218,7 @@ void	fill_texture_info(char **wow,t_map_info *data)
 					free(split_line);
 					free(options_check);
 					free(options_list);
-					free(wow);
+					free_split(wow);
 					exit(1) ;
 				}
 				if(!check_floor_ceiling(split_line, data))
@@ -232,7 +227,7 @@ void	fill_texture_info(char **wow,t_map_info *data)
 					free(split_line);
 					free(options_check);
 					free(options_list);
-					free(wow);
+					free_split(wow);
 					exit(1);
 				}
 			}
@@ -249,21 +244,15 @@ void	fill_texture_info(char **wow,t_map_info *data)
 				data->EA_texure = ft_strdup(split_line[1]);
 			if(!ft_strncmp(split_line[0], "WE", ft_strlen(split_line[0])))
 				data->WE_texure = ft_strdup(split_line[1]);
-			free(wow[i]);
 			free_split(split_line);
 		}
 		i++;
 	}
-    free(wow);
+    free_split(wow);
 	if(!err && !check_all_elem(options_check))	
 		printf("ERROR with textures data");
 	free_split(options_list);
-	free_split(options_check);
-	// while (1)
-	// {
-	// 	/* code */
-	// }
-	
+	free_split(options_check);	
 }
 
 // int main()

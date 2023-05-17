@@ -1,12 +1,5 @@
 #include "../inc/cub3d.h"
 
-
-
-
-
-
-
-
 void draw_wall(t_vars *vars, double r,double rx,double ry, double lineH,int hororver)
 {
 	mlx_texture_t *imgtxet;
@@ -62,7 +55,7 @@ void draw_wall(t_vars *vars, double r,double rx,double ry, double lineH,int horo
 	{
 		in=0;
 		rl=y2;
-		for (int y = y1; y <= lineH + (int)ligne_offset && y < 1023; y++)
+		for (int y = y1 - 2; y <= lineH + (int)ligne_offset && y < 1023; y++)
 		{
 			in=512*4*(int)floor(rl);
 			// printf("%d %d \n",theline+in,imgtxet->height*imgtxet->width*4);
