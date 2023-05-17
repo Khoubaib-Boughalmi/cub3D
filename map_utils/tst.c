@@ -14,53 +14,63 @@ int check_walls(char **map,t_map_info *data)
 {
     int x=-1;
     int y=-1;
-    // printf("-----------------------\n");
     while(map[++y])
     {
         x=-1;
         while(map[y][++x])
         {
-            // printf("%c\n",map[y][x]);
             if(map[y][x]!='1' &&  map[y][x]!=' ')
             {
                 if(y==0 || map[y-1][x] == ' ')
                 {
-                    printf("Error5\n");
+                    free_split(map);
+                    printf("Error\n");
                     exit(0);
                 }
                 if(x==0 || map[y][x-1] == ' ')
                 {
-                    printf("Error7\n");
+                    free_split(map);
+                    printf("Error\n");
                     exit(0);
                 }
                 if(y+1>data->y_map_size || map[y+1][x] == ' ')
                 {
-                    printf("Error4 ((%c))\n", map[y+1][x]);
+                    free_split(map);
+                    printf("Error\n");
                     exit(0);
                 }
                 if(x+1>data->x_map_size || map[y][x+1] == ' ')
                 {
-                    printf("Error0\n");
+                    free_split(map);
+                    printf("Error\n");
                     exit(0);
                 }
             }
         }
-        // printf("-\n");
     }
-    // y=-1;
-    // while(map[++y])
-    //     free(map[y]);
-    // free(map);
     return 0;
 }
 
+void free_g_map(int **map,int till)
+{
+    int i=0;
+    while(i<till)
+    {
+        free(map[i]);
+        i++;
+    }
+    free(map);
+
+}
+
+
 int **fillmap(char **map,t_map_info *data)
 {
-    int **g_map;
-    g_map =malloc(sizeof(int *) * data->y_map_size);
-    // printf("this %d\n,",data->y_map_size);
     int i=0;
     int j=0;
+    int player_mara=0;
+    int **g_map;
+    g_map =malloc(sizeof(int *) * data->y_map_size);
     while(map[i])
     {
         g_map[i]=malloc(sizeof(int) * data->x_map_size);
@@ -75,6 +85,13 @@ int **fillmap(char **map,t_map_info *data)
                 g_map[i][j]=500;
             else if(map[i][j]=='N' ||map[i][j]=='S'||map[i][j]=='W'||map[i][j]=='E')
             {
+                if(player_mara==1)
+                {
+                    free_g_map(g_map,i+1);
+                    free_split(map);
+                    printf("Error player number  \n");
+                    exit (0);
+                }
                 g_map[i][j]=0;
                 if(map[i][j]=='N' )
                     data->angle_player= 270;
@@ -86,7 +103,7 @@ int **fillmap(char **map,t_map_info *data)
                     data->angle_player= 0;
                 data->x_player=j*64;
                 data->y_player=i*64;
-                // printf("player in %c \n",map[i][j]);
+                player_mara++;
             }
             else if (map[i][j]=='0')
             {
@@ -100,33 +117,36 @@ int **fillmap(char **map,t_map_info *data)
             }
             else
             {
+                free_g_map(g_map,i+1);
+                free_split(map);
                 printf("error\n");
                 exit (0);
             }
             j++;
         }
-        free(map[i]);
         i++;
     }
-    free(map);
+    if(player_mara==0)
+    {
+        free_g_map(g_map,i+1);
+        free_split(map);
+        printf("Error player number \n");
+        exit (0);
+    }
+    free_split(map);
     return g_map;
 
 }
 void	fill_texture_info(char **wow,t_map_info *data);
-int cool(char **av,t_map_info *data)
+
+
+
+void get_data_to_fill_texture_info(int fd,t_map_info *data)
 {
-    int shouldstop=0;
-    int fd = open(av[1], O_RDONLY);
-    char *g;
     char    *trimed_str;
-    int large=0;
-    int len;
-	g = get_next_line(fd);
-    len = ft_strlen(g);
-    int ylen=0;
-    int j;
-    char *str_for_data=ft_strdup("");
     int i=0;
+    char *str_for_data=ft_strdup("");
+	char *g = get_next_line(fd);
     while (g)
 	{
         trimed_str = ft_strtrim(g,"\n ");
@@ -143,22 +163,31 @@ int cool(char **av,t_map_info *data)
     char **dbl =ft_split(str_for_data,'\n');
     free(str_for_data);
     fill_texture_info(dbl,data);
-    // pause();
-    char *str=ft_strdup("");
-    // g=0;
-	g = get_next_line(fd);
+}
+
+
+char *skip_all_lines_before_the_map(int fd)
+{
+    char    *trimed_str;
+    char *g = get_next_line(fd);
     while (g)
 	{
-         trimed_str = ft_strtrim(g,"\n ");
+        trimed_str = ft_strtrim(g,"\n ");
         int nb=ft_strlen(trimed_str);
         free(trimed_str);
-        // printf("%d\n",nb);
         if(nb>2)
             break;
 		free(g);
 		g = get_next_line(fd);
 	}
+    return g;
+}
 
+char **get_the_map_from_file(char *g,int fd,t_map_info *data)
+{
+    int shouldstop=0;
+    int len;
+    char *str=ft_strdup("");
     while (g)
 	{
         len = ft_strlen(g);
@@ -167,45 +196,63 @@ int cool(char **av,t_map_info *data)
         if(shouldstop || !len)
         {
             printf("error\n");
-            exit(0);
+            free(g);
+            free(str);
+            exit(1);
         }
         if(len<2 )
             shouldstop=1;
-        large = MAX(len,large);
+        data->x_map_size = MAX(len,data->x_map_size);
         str=ft_strjoin_gnl(str,g);
 		free(g);
 		g = get_next_line(fd);
-        ylen++;
+        data->y_map_size++;
 	}
-
-    char **map;
     char **splited = ft_split(str,'\n');
     free(str);
-    map=malloc(sizeof(char *) * (ylen+1));
-    data->y_map_size=ylen;
-    data->x_map_size=large;
-    for(i =0; splited[i] ; i++)
+    return splited;
+}
+
+
+char **get_the_map_from_last_funct(t_map_info *data,char **splited)
+{
+    char **map;
+    int i=-1;
+    int j;
+    map=malloc(sizeof(char *) * (data->y_map_size+1));
+    while(splited[++i])
     {
-        map[i]=malloc(large+1);
-        j=0;
-        while(splited[i][j])
-        {
+        map[i]=malloc(data->x_map_size+1);
+        j=-1;
+        while(splited[i][++j])
             map[i][j]=splited[i][j];
-            j++;
-        }
         free(splited[i]);
-        while(j<large)
+        while(j<data->x_map_size)
         {
             map[i][j]=' ';
             j++;
         }
         map[i][j]=0;
     }
-    free(splited);
     map[i]=0;
+    free(splited);
+    return map;
+}
+
+
+
+int cool(char **av,t_map_info *data)
+{
+    int fd = open(av[1], O_RDONLY);
+    char *g;
+    data->y_map_size=0;
+    data->x_map_size=0;
+    get_data_to_fill_texture_info(fd,data);
+    g= skip_all_lines_before_the_map(fd);
+    char **splited = get_the_map_from_file(g,fd,data);
+    char **map = get_the_map_from_last_funct(data,splited);
     check_walls(map,data);
     data->number_of_sprites=0;
     data->map = fillmap(map,data);
-
     return 0;
 }

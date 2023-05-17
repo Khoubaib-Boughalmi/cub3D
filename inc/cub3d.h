@@ -184,9 +184,10 @@ void draw_map(t_vars *vars);
 void draw_partcle(t_vars *vars);
 void redraw(t_vars *vars);
 int key_press_handler_2(mlx_key_data_t keydata, void *param);
-int key_press_handler(mlx_key_data_t keydata, void *param);
+int key_press_handler( void *param);
 void mouse_handler(double xpos, double ypos, void *param);
 void loop_func(void *data);
 void render_window(t_vars *vars);
+void	free_split(char **arr);
 int init_vars(t_map_info *data);
 # endif

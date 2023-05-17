@@ -85,7 +85,7 @@ void draw_wall_5(t_vars *vars, double r,double distance, double lineH,int frame,
 	int32_t trans=create_color(0,0,0,0);;
 	int32_t color;
 	int x1 = r * 2 + 2;
-	int k=lineH;
+	// int k=lineH;
 	if (lineH > 1020)
 			lineH = 1020;
 	int ligne_offset = 512 - lineH / 2.9;
