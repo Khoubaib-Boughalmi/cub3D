@@ -135,6 +135,7 @@ typedef struct s_vars {
 	int numerof_sprite;
 	t_sprite *sprites;
 }				t_vars;
+
 typedef struct    s_ray_info
 {
     int        r;
@@ -156,6 +157,7 @@ typedef struct    s_ray_info
     double    f_dist;
     float    aTan;
     float    nTan;
+
 } t_ray_info;
 
 extern t_vars *g_vars;
@@ -190,4 +192,5 @@ void loop_func(void *data);
 void render_window(t_vars *vars);
 void	free_split(char **arr);
 int init_vars(t_map_info *data);
+void    ft_recalibrate(double *ra);
 # endif

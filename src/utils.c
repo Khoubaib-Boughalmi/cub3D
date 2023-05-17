@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 19:58:50 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/16 22:17:59 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/17 15:36:31 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,12 @@ void put_line( int x0, int y0, int x1, int y1, int color, int map_width, int map
             y0 += sy; // Move to the next y-coordinate
         }
     }
+}
+
+void    ft_recalibrate(double *ra)
+{
+    if (*ra < 0)
+		*ra += 2 * PI;
+	if (*ra > 2 * PI)
+		*ra -= 2 * PI;
 }
