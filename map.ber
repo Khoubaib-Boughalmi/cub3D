@@ -4,7 +4,7 @@ EA ./src/textures/huge_3.png
 WE ./src/textures/huge_4.png
 
 C 60,150,0
-F 180,100,100
+F 60,100,100
 
 
 
