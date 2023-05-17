@@ -1,152 +1,136 @@
 
 #include "../inc/cub3d.h"
 
-void draw_ray(t_vars *vars)
+void	draw_ray(t_vars *vars)
 {
-	int		r;
-	int		mx;
-	int		my;
-	int		mp;
-	int		dof;
-	double	rx;
-	double	ry;
-	double	ra;
-	double	xo;
-	double	yo;
-	double	h_dist;
-	double	h_x;
-	double	h_y;
-	double	v_dist;
-	double	v_x;
-	double	v_y;
-	double	f_dist;
-	float	aTan;
-	float	nTan;
+	t_ray_info	ray;
+	int			i;
 
-	ra = vars->player.angle - DEG * 30;
-	if (ra < 0)
-		ra += 2 * PI;
-	if (ra > 2 * PI)
-		ra -= 2 * PI;
-
-	for (int i = 0; i < 512; i++)
+	i = 0;
+	ray.ra = vars->player.angle - DEG * 30;
+	if (ray.ra < 0)
+		ray.ra += 2 * PI;
+	if (ray.ra > 2 * PI)
+		ray.ra -= 2 * PI;
+	while (i < 512)
 	{
-		h_dist = 100000;
-		h_x = vars->player.x;
-		h_y = vars->player.y;
-		dof = 0;
-		aTan = -1 / tan(ra);
-		if (ra > PI)
+		ray.h_dist = 100000;
+		ray.h_x = vars->player.x;
+		ray.h_y = vars->player.y;
+		ray.dof = 0;
+		ray.aTan = -1 / tan(ray.ra);
+		if (ray.ra > PI)
 		{
-			ry = (((int)vars->player.y / 64) * 64) - 0.0001;
-			rx = (vars->player.y - ry) * aTan + vars->player.x;
-			yo = -64;
-			xo = -yo * aTan;
+			ray.ry = (((int)vars->player.y / 64) * 64) - 0.0001;
+			ray.rx = (vars->player.y - ray.ry) * ray.aTan + vars->player.x;
+			ray.yo = -64;
+			ray.xo = -ray.yo * ray.aTan;
 		}
-		if (ra < PI)
+		if (ray.ra < PI)
 		{
-			ry = (((int)vars->player.y / 64) * 64) + 64;
-			rx = (vars->player.y - ry) * aTan + vars->player.x;
-			yo = 64;
-			xo = -yo * aTan;
+			ray.ry = (((int)vars->player.y / 64) * 64) + 64;
+			ray.rx = (vars->player.y - ray.ry) * ray.aTan + vars->player.x;
+			ray.yo = 64;
+			ray.xo = -ray.yo * ray.aTan;
 		}
-		if (ra == 0 || ra == PI)
+		if (ray.ra == 0 || ray.ra == PI)
 		{
-			rx = vars->player.x;
-			ry = vars->player.y;
-			dof = 100;
+			ray.rx = vars->player.x;
+			ray.ry = vars->player.y;
+			ray.dof = 100;
 		}
-		while (dof < 100)
+		while (ray.dof < 100)
 		{
-			mx = (int)(rx) / 64;
-			my = (int)(ry) / 64;
-			if (mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && vars->map.map[my][mx] >= 1)
+			ray.mx = (int)(ray.rx) / 64;
+			ray.my = (int)(ray.ry) / 64;
+			if (ray.mx >= 0 && ray.my >= 0 && ray.mx < vars->map.width && ray.my < vars->map.height && vars->map.map[ray.my][ray.mx] >= 1)
 			{
-				h_x = rx;
-				h_y = ry;
-				h_dist = distance_to_wall(vars->player.x, vars->player.y, h_x, h_y);
-				break;
+				ray.h_x = ray.rx;
+				ray.h_y = ray.ry;
+				ray.h_dist = distance_to_wall(vars->player.x, vars->player.y, ray.h_x, ray.h_y);
+				break ;
 			}
 			else
 			{
-				rx += xo;
-				ry += yo;
-				dof++;
+				ray.rx += ray.xo;
+				ray.ry += ray.yo;
+				ray.dof++;
 			}
 		}
-		dof = 0;
-		v_dist = 100000;
-		v_x = vars->player.x;
-		v_y = vars->player.y;
-		nTan = -tan(ra);
-		if (ra > PI2 && ra < PI3)
+		ray.dof = 0;
+		ray.v_dist = 100000;
+		ray.v_x = vars->player.x;
+		ray.v_y = vars->player.y;
+		ray.nTan = -tan(ray.ra);
+		if (ray.ra > PI2 && ray.ra < PI3)
 		{
-			rx = (((int)vars->player.x / 64) * 64) - 0.0001;
-			ry = (vars->player.x - rx) * nTan + vars->player.y;
-			xo = -64;
-			yo = -xo * nTan;
+			ray.rx = (((int)vars->player.x / 64) * 64) - 0.0001;
+			ray.ry = (vars->player.x - ray.rx) * ray.nTan + vars->player.y;
+			ray.xo = -64;
+			ray.yo = -ray.xo * ray.nTan;
 		}
-		if (ra < PI2 || ra > PI3)
+		if (ray.ra < PI2 || ray.ra > PI3)
 		{
-			rx = (((int)vars->player.x / 64) * 64) + 64;
-			ry = (vars->player.x - rx) * nTan + vars->player.y;
-			xo = 64;
-			yo = -xo * nTan;
+			ray.rx = (((int)vars->player.x / 64) * 64) + 64;
+			ray.ry = (vars->player.x - ray.rx) * ray.nTan + vars->player.y;
+			ray.xo = 64;
+			ray.yo = -ray.xo * ray.nTan;
 		}
-		if (ra == PI2 || ra == PI3)
+		if (ray.ra == PI2 || ray.ra == PI3)
 		{
-			rx = vars->player.x;
-			ry = vars->player.y;
-			dof = 100;
+			ray.rx = vars->player.x;
+			ray.ry = vars->player.y;
+			ray.dof = 100;
 		}
-		while (dof < 100)
+		while (ray.dof < 100)
 		{
-			mx = (int)(rx) / 64;
-			my = (int)(ry) / 64;
-			if (mx >= 0 && my >= 0 && mx < vars->map.width && my < vars->map.height && vars->map.map[my][mx] >= 1)
+			ray.mx = (int)(ray.rx) / 64;
+			ray.my = (int)(ray.ry) / 64;
+			if (ray.mx >= 0 && ray.my >= 0 && ray.mx < vars->map.width && ray.my < vars->map.height && vars->map.map[ray.my][ray.mx] >= 1)
 			{
-				v_x = rx;
-				v_y = ry;
-				v_dist = distance_to_wall(vars->player.x, vars->player.y, v_x, v_y);
-				break;
+				ray.v_x = ray.rx;
+				ray.v_y = ray.ry;
+				ray.v_dist = distance_to_wall(vars->player.x, vars->player.y, ray.v_x, ray.v_y);
+				break ;
 			}
 			else
 			{
-				rx += xo;
-				ry += yo;
-				dof++;
+				ray.rx += ray.xo;
+				ray.ry += ray.yo;
+				ray.dof++;
 			}
 		}
-		if (v_dist < h_dist)
+		if (ray.v_dist < ray.h_dist)
 		{
-			rx = v_x;
-			ry = v_y;
-			f_dist = v_dist;
+			ray.rx = ray.v_x;
+			ray.ry = ray.v_y;
+			ray.f_dist = ray.v_dist;
 		}
 		else
 		{
-			rx = h_x;
-			ry = h_y;
-			f_dist = h_dist;
+			ray.rx = ray.h_x;
+			ray.ry = ray.h_y;
+			ray.f_dist = ray.h_dist;
 		}
-		g_ray_ds[i]=f_dist;
-		if(vars->keyboard.show_map)
-			put_line( (vars->player.x * 16) / 64, (vars->player.y * 16) / 64, (rx * 16) / 64, (ry * 16) / 64, create_color(255, 255, 0, 255), vars->img->width, vars->img->height);
-		double fish_eye_new_angle = vars->player.angle - ra;
+		g_ray_ds[i] = ray.f_dist;
+		if (vars->keyboard.show_map)
+			put_line( (vars->player.x * 16) / 64, (vars->player.y * 16) / 64, (ray.rx * 16) / 64, (ray.ry * 16) / 64, create_color(255, 255, 0, 255), vars->img->width, vars->img->height);
+		double fish_eye_new_angle = vars->player.angle - ray.ra;
 		if (fish_eye_new_angle < 0)
 			fish_eye_new_angle += 2 * PI;
 		if (fish_eye_new_angle > 2 * PI)
 			fish_eye_new_angle -= 2 * PI;
-		f_dist = f_dist * cos(fish_eye_new_angle);
-		double line_height = (64 * 800) / f_dist;
-		if (v_dist > h_dist)
-			draw_wall(vars, i, rx,ry , line_height, 0);
+		ray.f_dist = ray.f_dist * cos(fish_eye_new_angle);
+		double line_height = (64 * 800) / ray.f_dist;
+		if (ray.v_dist > ray.h_dist)
+			draw_wall(vars, i, ray.rx, ray.ry, line_height, 0);
 		else
-			draw_wall(vars, i, rx,ry ,line_height,1);
-		ra = ra + DEG / 8;
-		if (ra < 0)
-			ra += 2 * PI;
-		if (ra > 2 * PI)
-			ra -= 2 * PI;
+			draw_wall(vars, i, ray.rx, ray.ry, line_height, 1);
+		ray.ra = ray.ra + DEG / 8;
+		if (ray.ra < 0)
+			ray.ra += 2 * PI;
+		if (ray.ra > 2 * PI)
+			ray.ra -= 2 * PI;
+		i++;
 	}
 }

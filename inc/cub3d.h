@@ -135,6 +135,28 @@ typedef struct s_vars {
 	int numerof_sprite;
 	t_sprite *sprites;
 }				t_vars;
+typedef struct    s_ray_info
+{
+    int        r;
+    int        mx;
+    int        my;
+    int        mp;
+    int        dof;
+    double    rx;
+    double    ry;
+    double    ra;
+    double    xo;
+    double    yo;
+    double    h_dist;
+    double    h_x;
+    double    h_y;
+    double    v_dist;
+    double    v_x;
+    double    v_y;
+    double    f_dist;
+    float    aTan;
+    float    nTan;
+} t_ray_info;
 
 extern t_vars *g_vars;
 
