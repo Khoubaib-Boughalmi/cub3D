@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 22:09:08 by aechaoub          #+#    #+#             */
-/*   Updated: 2023/05/17 22:39:19 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/18 15:24:35 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,7 @@ int	cool(char **av, t_map_info *data)
 	get_data_to_fill_texture_info(fd, data);
 	g = skip_all_lines_before_the_map(fd);
 	splited = get_the_map_from_file(g, fd, data);
-	if (data->y_map_size > 50 || data->x_map_size > 90)
+	if (data->y_map_size > 34 || data->x_map_size > 34)
 	{
 		printf("map too big\n");
 		free_split(splited);
