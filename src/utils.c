@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 19:58:50 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/18 19:23:19 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/18 21:43:59 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,37 +19,41 @@ double	ft_abs(double nb)
 	return (nb);
 }
 
-void	put_line(int x0, int y0, int x1, int y1, int color, int map_width,
-		int map_height)
+void	brs_initialize(t_bresenham	*brs, t_line *line)
 {
-	int	dx;
-	int	dy;
-	int	sx;
-	int	sy;
-	int	err;
-	int	err2;
+	brs->dx = abs(line->x1 - line->x0);
+	brs->dy = abs(line->y1 - line->y0);
+	if (line->x0 < line->x1)
+		brs->sx = 1;
+	else
+		brs->sx = -1;
+	if (line->y0 < line->y1)
+		brs->sy = 1;
+	else
+		brs->sy = -1;
+	brs->err = brs->dx - brs->dy;
+}
 
-	dx = abs(x1 - x0);
-	dy = abs(y1 - y0);
-	sx = (x0 < x1) ? 1 : -1;
-	sy = (y0 < y1) ? 1 : -1;
-	err = dx - dy;
-	while (x0 != x1 || y0 != y1)
+void	put_line(t_line *line)
+{
+	t_bresenham	brs;
+
+	brs_initialize(&brs, line);
+	while (line->x0 != line->x1 || line->y0 != line->y1)
 	{
-		if (x0 >= 0 && x0 < map_width && y0 >= 0 && y0 < map_height)
+		if (line->x0 >= 0 && line->x0 < line->map_width && \
+		line->y0 >= 0 && line->y0 < line->map_height)
+			mlx_put_pixel(g_vars->img, line->x0, line->y0, line->color);
+		brs.err2 = brs.err * 2;
+		if (brs.err2 > -brs.dy)
 		{
-			mlx_put_pixel(g_vars->img, x0, y0, color);
+			brs.err -= brs.dy;
+			line->x0 += brs.sx;
 		}
-		err2 = err * 2;
-		if (err2 > -dy)
+		if (brs.err2 < brs.dx)
 		{
-			err -= dy;
-			x0 += sx;
-		}
-		if (err2 < dx)
-		{
-			err += dx;
-			y0 += sy;
+			brs.err += brs.dx;
+			line->y0 += brs.sy;
 		}
 	}
 }

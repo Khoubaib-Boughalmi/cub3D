@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 15:43:47 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/18 18:57:30 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/18 21:01:14 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,28 @@
 
 void	clean_window(t_vars *vars)
 {
-	for (int y = 0; y < 1024; y++)
-	{
-		for (int x = 0; x < 512; x++)
-		{
-			mlx_put_pixel(vars->img, y, x, create_color(vars->map_info.c_color.r, vars->map_info.c_color.g, vars->map_info.c_color.b, 255 - x / 2));
-		}
-	}
+	int	y;
+	int	x;
 
-	for (int y = 0; y < 1024; y++)
+	y = 0;
+	while (y < 1024)
 	{
-		for (int x = 512; x < 1024; x++)
-		{
-			mlx_put_pixel(vars->img, y, x, create_color(vars->map_info.f_color.r, vars->map_info.f_color.g,vars->map_info.f_color.b, x / 2 - 255) );
-		}
+		x = -1;
+		while (++x < 512)
+			mlx_put_pixel(vars->img, y, x, \
+			create_color(vars->map_info.c_color.r, \
+			vars->map_info.c_color.g, vars->map_info.c_color.b, 255 - x / 2));
+		y++;
+	}
+	y = 0;
+	while (y < 1024)
+	{
+		x = 511;
+		while (++x < 1024)
+			mlx_put_pixel(vars->img, y, x, \
+			create_color(vars->map_info.f_color.r, \
+			vars->map_info.f_color.g, vars->map_info.f_color.b, x / 2 - 255));
+		y++;
 	}
 }
 

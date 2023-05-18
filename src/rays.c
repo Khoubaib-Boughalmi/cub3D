@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 16:08:47 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/18 20:19:30 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/18 21:33:56 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ void	calculate_hor_intersect(t_vars *vars, t_ray_info *ray)
 
 void	get_shortest_intersection(t_vars *vars, t_ray_info *ray, int i)
 {
+	t_line	line;
+	
 	if (ray->v_dist < ray->h_dist)
 	{
 		ray->rx = ray->v_x;
@@ -114,11 +116,16 @@ void	get_shortest_intersection(t_vars *vars, t_ray_info *ray, int i)
 		ray->ry = ray->h_y;
 		ray->f_dist = ray->h_dist;
 	}
+	line.x0 = (vars->player.x * 16) / 64;
+	line.y0 = (vars->player.y * 16) / 64;
+	line.x1 = (ray->rx * 16) / 64;
+	line.y1 = (ray->ry * 16) / 64;
+	line.map_height = vars->img->height;
+	line.map_width = vars->img->width;
+	line.color = create_color(255, 255, 0, 255);
 	g_ray_ds[i] = ray->f_dist;
 	if (vars->keyboard.show_map)
-		put_line((vars->player.x * 16) / 64, (vars->player.y * 16) / 64, \
-		(ray->rx * 16) / 64, (ray->ry * 16) / 64, \
-		create_color(255, 255, 0, 255), vars->img->width, vars->img->height);
+		put_line(&line);
 }
 
 void	draw_ray(t_vars *vars)

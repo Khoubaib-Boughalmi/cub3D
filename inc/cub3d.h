@@ -30,6 +30,16 @@ typedef struct s_rgb {
 	int	b;
 }				t_rgb;
 
+typedef struct s_line {
+	int x0;
+	int y0;
+	int x1;
+	int y1;
+	int color;
+	int map_width;
+	int map_height;
+}				t_line;
+
 
 
 // typedef struct s_map_info {
@@ -161,6 +171,15 @@ typedef struct s_sprite {
 	char *path;
 }				t_sprite;
 
+typedef struct s_bresenham {
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	err;
+	int	err2;
+}				t_bresenham;
+
 // extern int g_map[31][11];
  int g_ray_ds[513];
 
@@ -233,7 +252,7 @@ void draw_the_sprite(t_vars *vars, t_sp *sp, int frame,char *sprite_path);
 
 void draw_ray(t_vars *vars);
 double ft_abs(double nb);
-void put_line(  int x0, int y0, int x1, int y1, int color, int height, int width);
+void put_line(t_line *line);
 void	draw_wall(t_vars *vars, t_ray_info	ray, double lineH,int hororver);
 float distance_to_wall(float px, float py, float wx, float wy);
 int32_t create_color(int32_t r, int32_t g, int32_t b, int32_t a);
