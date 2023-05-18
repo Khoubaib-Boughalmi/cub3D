@@ -248,30 +248,23 @@ void render_window(t_vars *vars)
 		exit(1);
 	}
 	g_vars->player.reload=0;
-	// g_vars->weapon_texture  = mlx_load_png("./src/textures/StechkinEx1.png");
-	// g_vars->weapon_img = mlx_texture_to_image(g_vars->mlx, g_vars->weapon_texture);
-	g_vars->wall_texture  =  mlx_load_png(g_vars->map_info.NO_texure);
 	g_vars->SO_wall_texture  = mlx_load_png(g_vars->map_info.SO_texure);
 	g_vars->EA_wall_texture  = mlx_load_png(g_vars->map_info.WE_texure);
 	g_vars->WE_wall_texture  = mlx_load_png(g_vars->map_info.EA_texure);
 	g_vars->NO_wall_texture_texture  = mlx_load_png(g_vars->map_info.NO_texure);
+	free(g_vars->map_info.NO_texure);
+	free(g_vars->map_info.SO_texure);
+	free(g_vars->map_info.WE_texure);
+	free(g_vars->map_info.EA_texure);
 	g_vars->door_texture  = mlx_load_png("./src/textures/doorx.png");
 	g_vars->enemy_texture  = mlx_load_png("./src/textures/enemy1.png");
-	printf("%d %d %d %d \n",g_vars->enemy_texture->pixels[0],g_vars->enemy_texture->pixels[1],g_vars->enemy_texture->pixels[2],g_vars->enemy_texture->pixels[3]);
 	g_vars->ammo_texture  = mlx_load_png("./src/textures/bullet.png");
 	g_vars->ammo_img = mlx_texture_to_image(g_vars->mlx, g_vars->ammo_texture);
-	// g_vars->wall_img2 = mlx_texture_to_image(g_vars->mlx, g_vars->wall_texture);
 	mlx_set_window_limit(vars->mlx, width - 200, height - 200, width, height);
 	vars->img = mlx_new_image(vars->mlx, width, height);
-	// pause();
-
 	redraw(vars);
-    // pause();
-
 	mlx_set_cursor_mode(vars->mlx, vars->keyboard.cursor ? MLX_MOUSE_NORMAL : MLX_MOUSE_DISABLED);
-
 	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler_2, vars);
-	
 	mlx_cursor_hook(vars->mlx, (mlx_cursorfunc)mouse_handler, vars);
 	mlx_mouse_hook(vars->mlx, (mlx_mousefunc)mouse_click, vars);
 	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
