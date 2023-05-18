@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/18 15:12:17 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/18 15:32:08 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,8 @@ void draw_partcle(t_vars *vars)
 {
 	int radius;
 	int i;
-	// int j;
 	int py;
 	int px;
-	// uint32_t color;
 
 	i = -1;
 	radius = 3;
@@ -77,7 +75,7 @@ int key_press_handler( void *param)
 		vars->player.dx = 5 * cos(vars->player.angle);
 		vars->player.dy = 5 * sin(vars->player.angle);
 	}
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_W)) /// . ila l amam
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_W))
 	{
 		double speed=1.5;
 		if(mlx_is_key_down(vars->mlx,MLX_KEY_LEFT_SHIFT))
@@ -108,20 +106,6 @@ int key_press_handler( void *param)
 	{
 		x = (int)floor((vars->player.x - (vars->player.dx * 2)) / 64);
 		y = (int)floor((vars->player.y - (vars->player.dy * 2)) / 64);
-		// int factx = (int)floor((vars->player.x) / 64);
-		// int facty = (int)floor((vars->player.y) / 64);
-		// if (vars->map.map[y][x] != 1)
-		// {
-		// 	vars->player.x -= vars->player.dx;
-		// 	vars->player.y -= vars->player.dy;
-		// }
-		// else
-		// {
-		// 	if (vars->map.map[facty][x] != 1)
-		// 		vars->player.x -= vars->player.dx;
-		// 	if (vars->map.map[y][factx] != 1)
-		// 		vars->player.y -= vars->player.dy;
-		// }
 		int xcheck = (int)floor((vars->player.x - (vars->player.dx )) / 64);
 		int ycheck = (int)floor((vars->player.y - (vars->player.dy )) / 64);
 		int factx = (int)floor((vars->player.x) / 64);
@@ -152,24 +136,6 @@ int key_press_handler( void *param)
 
 		dxright = 5 * cos(angle);
 		dyright = 5 * sin(angle);
-		// x = (int)floor((vars->player.x + (dxright )) / 64);
-		// y = (int)floor((vars->player.y + (dyright )) / 64);
-		// int factx = (int)floor((vars->player.x) / 64);
-		// int facty = (int)floor((vars->player.y) / 64);
-		// if (vars->map.map[y][x] != 1)
-		// {
-		// 	vars->player.x += dxright;
-		// 	vars->player.y += dyright;
-		// }
-		// else
-		// {
-		// 	if (vars->map.map[facty][x] != 1)
-		// 		vars->player.x += dxright;
-		// 	if (vars->map.map[y][factx] != 1)
-		// 		vars->player.y += dyright;
-		// }
-
-		
 		x = (int)floor((vars->player.x + (dxright * 3)) / 64);
 		y = (int)floor((vars->player.y + (dyright * 3)) / 64);
 		int xcheck = (int)floor((vars->player.x + (dxright )) / 64);
@@ -202,22 +168,6 @@ int key_press_handler( void *param)
 
 		dxright = 5 * cos(angle);
 		dyright = 5 * sin(angle);
-		// x = (int)floor((vars->player.x + (dxright )) / 64);
-		// y = (int)floor((vars->player.y + (dyright )) / 64);
-		// int factx = (int)floor((vars->player.x) / 64);
-		// int facty = (int)floor((vars->player.y) / 64);
-		// if (vars->map.map[y][x] != 1)
-		// {
-		// 	vars->player.x += dxright;
-		// 	vars->player.y += dyright;
-		// }
-		// else
-		// {
-		// 	if (vars->map.map[facty][x] != 1)
-		// 		vars->player.x += dxright;
-		// 	if (vars->map.map[y][factx] != 1)
-		// 		vars->player.y += dyright;
-		// }
 		x = (int)floor((vars->player.x + (dxright * 3)) / 64);
 		y = (int)floor((vars->player.y + (dyright * 3)) / 64);
 		int xcheck = (int)floor((vars->player.x + (dxright )) / 64);
@@ -247,9 +197,6 @@ int key_press_handler_2(mlx_key_data_t keydata, void *param)
 {
 	(void)keydata;
 	t_vars *vars;
-	// float angle;
-	// float dxright;
-	// float dyright;
 	int x;
 	int y;
 	vars = (t_vars *)param;
@@ -420,8 +367,6 @@ void randomize_the_sprites(t_map_info *data)
 		{
 			if(data->map[i][j]==-2 && sprite < 15)
 			{
-				printf("sss %d\n", sprite);
-            	printf("get one %d\n",data->map[i][j]);
 				g_vars->sprites[sprite].x=64*j+32;
 				g_vars->sprites[sprite].y=64*i+32;
 				if(i%2==0)
