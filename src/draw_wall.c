@@ -6,22 +6,11 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 19:58:19 by aechaoub          #+#    #+#             */
-/*   Updated: 2023/05/18 20:19:47 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/18 21:36:00 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
-
-int32_t	collect_color(uint8_t *pixels, int index)
-{
-	int32_t	color;
-
-	color = create_color(pixels[index],
-			pixels[index + 1],
-			pixels[index + 2],
-			pixels[index + 3]);
-	return (color);
-}
 
 void	draw_it(t_vars *vars, t_draw_value *info, int lineH)
 {
@@ -82,8 +71,7 @@ int	draw_wall_data(t_draw_value *info, int lineH)
 	return (lineH);
 }
 
-void	draw_wall(t_vars *vars,  t_ray_info	ray, double lineH,
-		int hororver)
+void	draw_wall(t_vars *vars, t_ray_info	ray, double lineH, int hororver)
 {
 	t_draw_value	info;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
+/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:44:14 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/18 18:44:51 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/18 21:00:37 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,5 @@ void	draw_one_sprite_norm(t_vars *vars, t_sp *sp, int frame, int i)
 	sp->v_dist = distance_to_wall(vars->player.x, \
 	vars->player.y, sp->sprite_ax, sp->sprite_ay);
 	sp->line_height = (64 * 600) / sp->v_dist;
-	draw_the_sprite(vars, (int)sp->porce_angle, sp->v_dist, \
-	sp->line_height, frame, vars->sprites[i].path);
+	draw_the_sprite(vars, sp, frame, vars->sprites[i].path);
 }

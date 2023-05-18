@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Werror -Wextra   #-fsanitize=address -g 
+CFLAGS = -Werror -Wextra   -fsanitize=address -g 
 INC = inc
 CC = gcc
 SRC = src
@@ -7,7 +7,7 @@ INCLUDES = $(INC)/cub3d.h
 
 
 SRCS = $(SRC)/cub3d.c \
-		$(SRC)/wall.c \
+		$(SRC)/draw_sprite.c \
 		$(SRC)/rays.c \
 		$(SRC)/window.c \
 		$(SRC)/utils.c \

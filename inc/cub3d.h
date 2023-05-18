@@ -138,6 +138,22 @@ typedef struct s_draw_value {
 	int				in;
 }				t_draw_value;
 
+typedef struct s_sprite_value {
+	mlx_texture_t *imgtxet;
+	int32_t trans ;
+	int32_t color;
+	int x1;
+	float por_h;
+	float tot_h;
+	float por_v;
+	float tot_v;
+	int ligne_offset;
+	int lol;
+	int suu;
+	int time;
+	int y1;
+}				t_sprite_value;
+
 
 typedef struct s_sprite {
 	float			x;
@@ -213,7 +229,7 @@ int cool(char **av,t_map_info *data);
 
 
 void	show_gun_magazine(t_vars *vars);
-void draw_the_sprite(t_vars *vars, double r,double distance, double lineH,int frame,char *sprite_path);
+void draw_the_sprite(t_vars *vars, t_sp *sp, int frame,char *sprite_path);
 
 void draw_ray(t_vars *vars);
 double ft_abs(double nb);
@@ -271,6 +287,7 @@ void	draw_one_sprite(t_vars *vars);
 void	draw_initial_gun(t_vars *vars);
 void	show_gun_magazine(t_vars *vars);
 void	for_key_w(t_vars *vars);
+int32_t	collect_color(uint8_t *pixels, int index);
 void	for_key_s(t_vars *vars);
 void	draw_one_sprite_norm(t_vars *vars, t_sp *sp, int frame, int i);
 # endif
