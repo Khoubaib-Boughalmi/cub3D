@@ -135,6 +135,7 @@ typedef struct s_vars {
 	int numerof_sprite;
 	t_sprite *sprites;
 }				t_vars;
+t_vars *g_vars;
 
 typedef struct    s_ray_info
 {
@@ -205,5 +206,8 @@ void	textures_naming_err(char **options_check, char **options_list);
 void	free_and_exit(char **split_line, char **options_check, char **options_list, char **wow);
 int	check_walls(char **map, t_map_info *data);
 char	**get_the_map_from_file(char *g, int fd, t_map_info *data);
+void	free_g_map(int **map, int tail);
+void	fillmap(char **map, t_map_info *data, int player_mara);
+void	fillmap_exit(char **map, t_map_info *data);
 
 # endif

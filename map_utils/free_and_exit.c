@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_and_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
+/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 21:42:06 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/17 21:44:33 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/18 14:51:26 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,3 +34,23 @@ void	textures_naming_err(char **options_check, char **options_list)
 	}
 }
 
+void	free_g_map(int **map, int tail)
+{
+	int	i;
+
+	i = 0;
+	while (i < tail)
+	{
+		free(map[i]);
+		i++;
+	}
+	free(map);
+}
+
+void	fillmap_exit(char **map, t_map_info *data)
+{
+	free_g_map(data->map, data->y_map_size);
+	free_split(map);
+	printf("Error  number of content \n");
+	exit(0);
+}

@@ -12,8 +12,9 @@ SRCS = $(SRC)/cub3d.c \
 		$(SRC)/rays.c \
 		$(SRC)/window.c \
 		$(SRC)/utils.c \
-		map_utils/map_parsing_part_2.c \
 		map_utils/map_parsing.c \
+		map_utils/map_parsing_part_2.c \
+		map_utils/map_parsing_part_3.c \
 		map_utils/get_next_line.c \
 		map_utils/get_next_line_utils.c \
 		map_utils/kais_said.c \
