@@ -203,5 +203,7 @@ int	check_all_elem(char **options_check);
 int	ft_isnumber(char c);
 void	textures_naming_err(char **options_check, char **options_list);
 void	free_and_exit(char **split_line, char **options_check, char **options_list, char **wow);
+int	check_walls(char **map, t_map_info *data);
+char	**get_the_map_from_file(char *g, int fd, t_map_info *data);
 
 # endif

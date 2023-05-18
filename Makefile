@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS =  -Werror -Wextra -Wall #-fsanitize=address -g
+# CFLAGS =  -Werror -Wextra -Wall #-fsanitize=address -g
 INC = inc
 CFLAGS = -Werror -Wextra -Wextra -fsanitize=address -g 
 CC = gcc
@@ -12,6 +12,7 @@ SRCS = $(SRC)/cub3d.c \
 		$(SRC)/rays.c \
 		$(SRC)/window.c \
 		$(SRC)/utils.c \
+		map_utils/map_parsing_part_2.c \
 		map_utils/map_parsing.c \
 		map_utils/get_next_line.c \
 		map_utils/get_next_line_utils.c \
