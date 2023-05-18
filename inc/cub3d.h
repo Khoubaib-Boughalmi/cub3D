@@ -121,7 +121,22 @@ typedef struct s_key_value {
 	int		ycheck;
 	int		factx;
 	int		facty;
+	float		speed;
 }				t_key_value;
+typedef struct s_draw_value {
+	mlx_texture_t	*imgtxet;
+	int32_t			color;
+	double			porcentsage;
+	int				x1;
+	int				k;
+	int				ligne_offset;
+	int				y1;
+	float			y2;
+	int				theline;
+	float			g;
+	float			rl;
+	int				in;
+}				t_draw_value;
 
 
 typedef struct s_sprite {
@@ -141,7 +156,7 @@ typedef struct s_vars {
 	t_player        player;
 	t_window		window_info;
 	double			*rays_lst;
-		mlx_image_t *wall_img;
+	mlx_image_t *wall_img;
 	mlx_texture_t *wall_texture;
 	mlx_image_t *weapon_img;
 	mlx_texture_t *weapon_texture;
@@ -163,6 +178,7 @@ t_vars *g_vars;
 
 typedef struct    s_ray_info
 {
+    int        ray;
     int        r;
     int        mx;
     int        my;
@@ -202,7 +218,7 @@ void draw_the_sprite(t_vars *vars, double r,double distance, double lineH,int fr
 void draw_ray(t_vars *vars);
 double ft_abs(double nb);
 void put_line(  int x0, int y0, int x1, int y1, int color, int height, int width);
-void draw_wall(t_vars *vars, double r,double rx,double ry, double lineH,int hororver);
+void	draw_wall(t_vars *vars, t_ray_info	ray, double lineH,int hororver);
 float distance_to_wall(float px, float py, float wx, float wy);
 int32_t create_color(int32_t r, int32_t g, int32_t b, int32_t a);
 void clean_window(t_vars *vars);
@@ -254,5 +270,7 @@ void	clean_window(t_vars *vars);
 void	draw_one_sprite(t_vars *vars);
 void	draw_initial_gun(t_vars *vars);
 void	show_gun_magazine(t_vars *vars);
+void	for_key_w(t_vars *vars);
+void	for_key_s(t_vars *vars);
 void	draw_one_sprite_norm(t_vars *vars, t_sp *sp, int frame, int i);
 # endif

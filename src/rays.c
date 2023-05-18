@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 16:08:47 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/17 21:57:25 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/18 20:19:30 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,29 +124,29 @@ void	get_shortest_intersection(t_vars *vars, t_ray_info *ray, int i)
 void	draw_ray(t_vars *vars)
 {
 	t_ray_info	ray;
-	int			i;
+	// int			i;
 	double		fish_eye_new_angle;
 	double		line_height;
 
-	i = 0;
+	ray.ray = 0;
 	ray.ra = vars->player.angle - DEG * 30;
 	ft_recalibrate(&(ray.ra));
-	while (i < 512)
+	while (ray.ray < 512)
 	{
 		calculate_hor_intersect(vars, &ray);
 		calculate_ver_intersect(vars, &ray);
-		get_shortest_intersection(vars, &ray, i);
+		get_shortest_intersection(vars, &ray, ray.ray);
 		fish_eye_new_angle = vars->player.angle - ray.ra;
 		ft_recalibrate(&fish_eye_new_angle);
 		ray.f_dist = ray.f_dist * cos(fish_eye_new_angle);
 		line_height = (64 * 800) / ray.f_dist;
 		if (ray.v_dist > ray.h_dist)
-			draw_wall(vars, i, ray.rx, ray.ry, line_height, 0);
+			draw_wall(vars,  ray, line_height, 0);
 		else
-			draw_wall(vars, i, ray.rx, ray.ry, line_height, 1);
+			draw_wall(vars,  ray, line_height, 1);
 		ray.ra = ray.ra + DEG / 8;
 		ft_recalibrate(&(ray.ra));
-		i++;
+		ray.ray++;
 	}
 }
 

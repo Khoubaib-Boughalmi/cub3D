@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Werror -Wextra -Wall  #-fsanitize=address -g 
+CFLAGS = -Werror -Wextra   #-fsanitize=address -g 
 INC = inc
 CC = gcc
 SRC = src
@@ -16,6 +16,8 @@ SRCS = $(SRC)/cub3d.c \
 		$(SRC)/redraw.c \
 		$(SRC)/keys_handler.c \
 		$(SRC)/keys_handler_P_2.c \
+		$(SRC)/draw_wall.c \
+		$(SRC)/keys_handler_P_3.c \
 		map_utils/map_parsing.c \
 		map_utils/map_parsing_part_2.c \
 		map_utils/map_parsing_part_3.c \
