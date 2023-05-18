@@ -100,6 +100,18 @@ typedef struct s_player {
 }				t_player;
 
 
+typedef struct s_key_value {
+	int x;
+	int y;
+	int xcheck;
+	float	dxright;
+	float	dyright;
+	int		ycheck;
+	int		factx;
+	int		facty;
+}				t_key_value;
+
+
 typedef struct s_sprite {
 	float			x;
 	float       y;
@@ -209,5 +221,11 @@ char	**get_the_map_from_file(char *g, int fd, t_map_info *data);
 void	free_g_map(int **map, int tail);
 void	fillmap(char **map, t_map_info *data, int player_mara);
 void	fillmap_exit(char **map, t_map_info *data);
+void	for_key_w(t_vars *vars);
+
+void for_key_s(t_vars *vars);
+void for_key_a(t_vars *vars);
+void for_key_d(t_vars *vars);
+void for_key_right(t_vars *vars);
 
 # endif

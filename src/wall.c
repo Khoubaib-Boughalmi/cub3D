@@ -92,7 +92,7 @@ void draw_the_sprite(t_vars *vars, double r,double distance, double lineH,int fr
 	str=ft_strjoin(sprite_path,tmp);
 	free(tmp);
 	tmp=str;
-	printf("%s\n",str);
+	// printf("%s\n",str);
 	str=ft_strjoin(str,".png");
 	imgtxet= mlx_load_png(str);
 	free(tmp);

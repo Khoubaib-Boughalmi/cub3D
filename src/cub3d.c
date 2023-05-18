@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/18 15:32:08 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/18 18:45:26 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,25 +48,16 @@ void draw_partcle(t_vars *vars)
 	put_line( px, py, px + vars->player.dx * 4, py + vars->player.dy * 4, create_color(0, 255, 0, 255), 128, 128);
 }
 
+
+
+
 int key_press_handler( void *param)
 {
 	t_vars *vars;
-	float angle;
-	float dxright;
-	float dyright;
 	vars = (t_vars *)param;
-	int x=0;
-	int y=0;
 	
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
-	{
-		vars->player.angle += 0.1;
-		if (vars->player.angle > 2 * PI)
-			vars->player.angle -= 2 * PI;
-		vars->player.dx = 5 * cos(vars->player.angle);
-		vars->player.dy = 5 * sin(vars->player.angle);
-	}
-
+		for_key_right(vars);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
 	{
 		vars->player.angle -= 0.1;
@@ -76,180 +67,16 @@ int key_press_handler( void *param)
 		vars->player.dy = 5 * sin(vars->player.angle);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_W))
-	{
-		double speed=1.5;
-		if(mlx_is_key_down(vars->mlx,MLX_KEY_LEFT_SHIFT))
-			speed=3;
-		x = (int)floor((vars->player.x + (vars->player.dx * 3)) / 64);
-		y = (int)floor((vars->player.y + (vars->player.dy * 3)) / 64);
-		int xcheck = (int)floor((vars->player.x + (vars->player.dx )) / 64);
-		int ycheck = (int)floor((vars->player.y + (vars->player.dy )) / 64);
-		int factx = (int)floor((vars->player.x) / 64);
-		int facty = (int)floor((vars->player.y) / 64);
-		if (vars->map.map[y][x] <= 0 && vars->map.map[ycheck][xcheck] <= 0)
-		{
-			if(!(x != factx && y!=facty && vars->map.map[y][factx] >0 && vars->map.map[facty][x] >0))
-			{
-			vars->player.x += vars->player.dx*speed;
-			vars->player.y += vars->player.dy*speed;
-			}
-		}
-		else
-		{
-			if (vars->map.map[facty][x] <= 0 && vars->map.map[facty][xcheck] <= 0)
-				vars->player.x += vars->player.dx;
-			else if (vars->map.map[y][factx] <= 0 && vars->map.map[ycheck][factx] <= 0 )
-				vars->player.y += vars->player.dy;
-		}
-	}
+		for_key_w(vars);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_S))
-	{
-		x = (int)floor((vars->player.x - (vars->player.dx * 2)) / 64);
-		y = (int)floor((vars->player.y - (vars->player.dy * 2)) / 64);
-		int xcheck = (int)floor((vars->player.x - (vars->player.dx )) / 64);
-		int ycheck = (int)floor((vars->player.y - (vars->player.dy )) / 64);
-		int factx = (int)floor((vars->player.x) / 64);
-		int facty = (int)floor((vars->player.y) / 64);
-		if (vars->map.map[y][x] <= 0 && vars->map.map[ycheck][xcheck] <= 0)
-		{
-			if(!(x != factx && y!=facty && vars->map.map[y][factx] >0 && vars->map.map[facty][x] >0))
-			{
-			vars->player.x -= vars->player.dx;
-			vars->player.y -= vars->player.dy;
-			}
-		}
-		else
-		{
-			if (vars->map.map[facty][x] <= 0 && vars->map.map[facty][xcheck] <= 0)
-				vars->player.x -= vars->player.dx;
-			else if (vars->map.map[y][factx] <= 0 && vars->map.map[ycheck][factx] <= 0 )
-				vars->player.y -= vars->player.dy;
-		}
-	}
+		for_key_s(vars);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
-	{
-		angle = vars->player.angle - PI / 2;
-		if (angle > 2 * PI)
-			angle -= 2 * PI;
-		if (angle < 0)
-			angle += 2 * PI;
-
-		dxright = 5 * cos(angle);
-		dyright = 5 * sin(angle);
-		x = (int)floor((vars->player.x + (dxright * 3)) / 64);
-		y = (int)floor((vars->player.y + (dyright * 3)) / 64);
-		int xcheck = (int)floor((vars->player.x + (dxright )) / 64);
-		int ycheck = (int)floor((vars->player.y + (dyright )) / 64);
-		int factx = (int)floor((vars->player.x) / 64);
-		int facty = (int)floor((vars->player.y) / 64);
-		if (vars->map.map[y][x] <= 0 && vars->map.map[ycheck][xcheck] <= 0)
-		{
-			if(!(x != factx && y!=facty && vars->map.map[y][factx] >0 && vars->map.map[facty][x] >0))
-			{
-			vars->player.x += dxright;
-			vars->player.y += dyright;
-			}
-		}
-		else
-		{
-			if (vars->map.map[facty][x] <= 0 && vars->map.map[facty][xcheck] <= 0)
-				vars->player.x += dxright;
-			else if (vars->map.map[y][factx] <= 0 && vars->map.map[ycheck][factx] <= 0 )
-				vars->player.y += dyright;
-		}
-	}
+		for_key_a(vars);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_D))
-	{
-		angle = vars->player.angle + PI / 2;
-		if (angle > 2 * PI)
-			angle -= 2 * PI;
-		if (angle < 0)
-			angle += 2 * PI;
-
-		dxright = 5 * cos(angle);
-		dyright = 5 * sin(angle);
-		x = (int)floor((vars->player.x + (dxright * 3)) / 64);
-		y = (int)floor((vars->player.y + (dyright * 3)) / 64);
-		int xcheck = (int)floor((vars->player.x + (dxright )) / 64);
-		int ycheck = (int)floor((vars->player.y + (dyright )) / 64);
-		int factx = (int)floor((vars->player.x) / 64);
-		int facty = (int)floor((vars->player.y) / 64);
-		if (vars->map.map[y][x] <= 0 && vars->map.map[ycheck][xcheck] <= 0)
-		{
-			if(!(x != factx && y!=facty && vars->map.map[y][factx] >0 && vars->map.map[facty][x] >0))
-			{
-			vars->player.x += dxright;
-			vars->player.y += dyright;
-			}
-		}
-		else
-		{
-			if (vars->map.map[facty][x] <= 0 && vars->map.map[facty][xcheck] <= 0)
-				vars->player.x += dxright;
-			else if (vars->map.map[y][factx] <= 0 && vars->map.map[ycheck][factx] <= 0 )
-				vars->player.y += dyright;
-		}
-	}
+		for_key_d(vars);
 	return (0);
 }
 
-int key_press_handler_2(mlx_key_data_t keydata, void *param)
-{
-	(void)keydata;
-	t_vars *vars;
-	int x;
-	int y;
-	vars = (t_vars *)param;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_SPACE))
-	{
-		int factx = (int)floor((vars->player.x) / 64);
-		int facty = (int)floor((vars->player.y) / 64);
-		x=factx;
-		y=facty;
-		int i=1;
-		while(x==factx && y ==facty)
-		{
-			x = (int)floor((vars->player.x + (vars->player.dx * i)) / 64);
-			y = (int)floor((vars->player.y + (vars->player.dy * i)) / 64);
-			i++;
-		}
-		
-		if(vars->map.map[y][x]==500)
-			vars->map.map[y][x]=-10;
-		else if(vars->map.map[y][x]==-10) 
-			vars->map.map[y][x]=500;
-	}
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_R))
-	{
-		if(!vars->player.reload && vars->player.bullet!=8)
-		{
-			vars->player.reload=42;
-			vars->player.bullet=8;
-			show_gun_magazine(vars);
-		}
-	}
-
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE)) // free shit
-		exit(0);
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_TAB)) // free shit
-	{
-		if(vars->keyboard.show_map)
-			vars->keyboard.show_map=0;
-		else
-			vars->keyboard.show_map=1;
-	}
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_F)) // free shit
-	{
-
-		mlx_set_cursor_mode(vars->mlx, vars->keyboard.cursor ? MLX_MOUSE_NORMAL : MLX_MOUSE_DISABLED);
-		if(vars->keyboard.cursor)
-			vars->keyboard.cursor=0;
-		else
-			vars->keyboard.cursor=1;
-	}
-	// redraw(vars);
-	return (0);
-}
 
 void mouse_handler(double xpos, double ypos, void *param)
 {
