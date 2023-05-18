@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/18 14:53:55 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/18 15:12:17 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,18 +108,37 @@ int key_press_handler( void *param)
 	{
 		x = (int)floor((vars->player.x - (vars->player.dx * 2)) / 64);
 		y = (int)floor((vars->player.y - (vars->player.dy * 2)) / 64);
+		// int factx = (int)floor((vars->player.x) / 64);
+		// int facty = (int)floor((vars->player.y) / 64);
+		// if (vars->map.map[y][x] != 1)
+		// {
+		// 	vars->player.x -= vars->player.dx;
+		// 	vars->player.y -= vars->player.dy;
+		// }
+		// else
+		// {
+		// 	if (vars->map.map[facty][x] != 1)
+		// 		vars->player.x -= vars->player.dx;
+		// 	if (vars->map.map[y][factx] != 1)
+		// 		vars->player.y -= vars->player.dy;
+		// }
+		int xcheck = (int)floor((vars->player.x - (vars->player.dx )) / 64);
+		int ycheck = (int)floor((vars->player.y - (vars->player.dy )) / 64);
 		int factx = (int)floor((vars->player.x) / 64);
 		int facty = (int)floor((vars->player.y) / 64);
-		if (vars->map.map[y][x] != 1)
+		if (vars->map.map[y][x] <= 0 && vars->map.map[ycheck][xcheck] <= 0)
 		{
+			if(!(x != factx && y!=facty && vars->map.map[y][factx] >0 && vars->map.map[facty][x] >0))
+			{
 			vars->player.x -= vars->player.dx;
 			vars->player.y -= vars->player.dy;
+			}
 		}
 		else
 		{
-			if (vars->map.map[facty][x] != 1)
+			if (vars->map.map[facty][x] <= 0 && vars->map.map[facty][xcheck] <= 0)
 				vars->player.x -= vars->player.dx;
-			if (vars->map.map[y][factx] != 1)
+			else if (vars->map.map[y][factx] <= 0 && vars->map.map[ycheck][factx] <= 0 )
 				vars->player.y -= vars->player.dy;
 		}
 	}
@@ -133,20 +152,43 @@ int key_press_handler( void *param)
 
 		dxright = 5 * cos(angle);
 		dyright = 5 * sin(angle);
-		x = (int)floor((vars->player.x + (dxright )) / 64);
-		y = (int)floor((vars->player.y + (dyright )) / 64);
+		// x = (int)floor((vars->player.x + (dxright )) / 64);
+		// y = (int)floor((vars->player.y + (dyright )) / 64);
+		// int factx = (int)floor((vars->player.x) / 64);
+		// int facty = (int)floor((vars->player.y) / 64);
+		// if (vars->map.map[y][x] != 1)
+		// {
+		// 	vars->player.x += dxright;
+		// 	vars->player.y += dyright;
+		// }
+		// else
+		// {
+		// 	if (vars->map.map[facty][x] != 1)
+		// 		vars->player.x += dxright;
+		// 	if (vars->map.map[y][factx] != 1)
+		// 		vars->player.y += dyright;
+		// }
+
+		
+		x = (int)floor((vars->player.x + (dxright * 3)) / 64);
+		y = (int)floor((vars->player.y + (dyright * 3)) / 64);
+		int xcheck = (int)floor((vars->player.x + (dxright )) / 64);
+		int ycheck = (int)floor((vars->player.y + (dyright )) / 64);
 		int factx = (int)floor((vars->player.x) / 64);
 		int facty = (int)floor((vars->player.y) / 64);
-		if (vars->map.map[y][x] != 1)
+		if (vars->map.map[y][x] <= 0 && vars->map.map[ycheck][xcheck] <= 0)
 		{
+			if(!(x != factx && y!=facty && vars->map.map[y][factx] >0 && vars->map.map[facty][x] >0))
+			{
 			vars->player.x += dxright;
 			vars->player.y += dyright;
+			}
 		}
 		else
 		{
-			if (vars->map.map[facty][x] != 1)
+			if (vars->map.map[facty][x] <= 0 && vars->map.map[facty][xcheck] <= 0)
 				vars->player.x += dxright;
-			if (vars->map.map[y][factx] != 1)
+			else if (vars->map.map[y][factx] <= 0 && vars->map.map[ycheck][factx] <= 0 )
 				vars->player.y += dyright;
 		}
 	}
@@ -160,20 +202,41 @@ int key_press_handler( void *param)
 
 		dxright = 5 * cos(angle);
 		dyright = 5 * sin(angle);
-		x = (int)floor((vars->player.x + (dxright )) / 64);
-		y = (int)floor((vars->player.y + (dyright )) / 64);
+		// x = (int)floor((vars->player.x + (dxright )) / 64);
+		// y = (int)floor((vars->player.y + (dyright )) / 64);
+		// int factx = (int)floor((vars->player.x) / 64);
+		// int facty = (int)floor((vars->player.y) / 64);
+		// if (vars->map.map[y][x] != 1)
+		// {
+		// 	vars->player.x += dxright;
+		// 	vars->player.y += dyright;
+		// }
+		// else
+		// {
+		// 	if (vars->map.map[facty][x] != 1)
+		// 		vars->player.x += dxright;
+		// 	if (vars->map.map[y][factx] != 1)
+		// 		vars->player.y += dyright;
+		// }
+		x = (int)floor((vars->player.x + (dxright * 3)) / 64);
+		y = (int)floor((vars->player.y + (dyright * 3)) / 64);
+		int xcheck = (int)floor((vars->player.x + (dxright )) / 64);
+		int ycheck = (int)floor((vars->player.y + (dyright )) / 64);
 		int factx = (int)floor((vars->player.x) / 64);
 		int facty = (int)floor((vars->player.y) / 64);
-		if (vars->map.map[y][x] != 1)
+		if (vars->map.map[y][x] <= 0 && vars->map.map[ycheck][xcheck] <= 0)
 		{
+			if(!(x != factx && y!=facty && vars->map.map[y][factx] >0 && vars->map.map[facty][x] >0))
+			{
 			vars->player.x += dxright;
 			vars->player.y += dyright;
+			}
 		}
 		else
 		{
-			if (vars->map.map[facty][x] != 1)
+			if (vars->map.map[facty][x] <= 0 && vars->map.map[facty][xcheck] <= 0)
 				vars->player.x += dxright;
-			if (vars->map.map[y][factx] != 1)
+			else if (vars->map.map[y][factx] <= 0 && vars->map.map[ycheck][factx] <= 0 )
 				vars->player.y += dyright;
 		}
 	}
