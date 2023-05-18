@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:44:14 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/18 18:44:51 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/18 21:34:21 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,21 @@ void	draw_tile(t_vars *vars, int y, int x)
 
 void	draw_aim(t_vars *vars)
 {
-	put_line(512, 506, 512, 519, create_color(0, 255, 0, 255), \
-			vars->img->width, vars->img->height);
-	put_line(506, 512, 519, 512, create_color(0, 255, 0, 255), \
-			vars->img->width, vars->img->height);
+	t_line	line;
+
+	line.x0 = 512;
+	line.y0 = 504;
+	line.x1 = 512;
+	line.y1 = 521;
+	line.map_height = vars->img->height;
+	line.map_width = vars->img->width;
+	line.color = create_color(0, 255, 0, 255);
+	put_line(&line);
+	line.x0 = 504;
+	line.y0 = 512;
+	line.x1 = 521;
+	line.y1 = 512;
+	put_line(&line);
 }
 
 void	draw_wal7(t_vars *vars, int r, int lineH, int32_t color)

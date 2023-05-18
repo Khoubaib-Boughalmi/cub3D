@@ -6,72 +6,61 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 19:58:50 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/17 15:36:31 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/18 21:43:59 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-double ft_abs(double nb)
+double	ft_abs(double nb)
 {
-	if(nb < 0)
+	if (nb < 0)
 		return (-nb);
 	return (nb);
 }
 
-
-// void put_line(void *mlx_ptr, void *win_ptr, int x0, int y0, int x1, int y1, int color)
-// {
-//     int dx = abs(x1 - x0); // Calculate absolute difference in x-coordinates
-//     int dy = abs(y1 - y0); // Calculate absolute difference in y-coordinates
-//     int sx = (x0 < x1) ? 1 : -1; // Determine the sign of x-increment
-//     int sy = (y0 < y1) ? 1 : -1; // Determine the sign of y-increment
-//     int err = dx - dy; // Initialize the error term
-
-//     while (x0 != x1 || y0 != y1) {
-//         mlx_put_pixel(g_vars->img , x0, y0, color); // Draw the current pixel
-
-//         int err2 = err * 2; // Double the error term
-//         if (err2 > -dy) {
-//             err -= dy; // Update the error term
-//             x0 += sx; // Move to the next x-coordinate
-//         }
-//         if (err2 < dx) {
-//             err += dx; // Update the error term
-//             y0 += sy; // Move to the next y-coordinate
-//         }
-//     }
-// }
-
-void put_line( int x0, int y0, int x1, int y1, int color, int map_width, int map_height)
+void	brs_initialize(t_bresenham	*brs, t_line *line)
 {
-    int dx = abs(x1 - x0); // Calculate absolute difference in x-coordinates
-    int dy = abs(y1 - y0); // Calculate absolute difference in y-coordinates
-    int sx = (x0 < x1) ? 1 : -1; // Determine the sign of x-increment
-    int sy = (y0 < y1) ? 1 : -1; // Determine the sign of y-increment
-    int err = dx - dy; // Initialize the error term
-
-    while (x0 != x1 || y0 != y1) {
-        // Check if the current pixel is within the map boundaries
-        if (x0 >= 0 && x0 < map_width && y0 >= 0 && y0 < map_height) {
-            mlx_put_pixel(g_vars->img , x0, y0, color); // Draw the current pixel
-        }
-
-        int err2 = err * 2; // Double the error term
-        if (err2 > -dy) {
-            err -= dy; // Update the error term
-            x0 += sx; // Move to the next x-coordinate
-        }
-        if (err2 < dx) {
-            err += dx; // Update the error term
-            y0 += sy; // Move to the next y-coordinate
-        }
-    }
+	brs->dx = abs(line->x1 - line->x0);
+	brs->dy = abs(line->y1 - line->y0);
+	if (line->x0 < line->x1)
+		brs->sx = 1;
+	else
+		brs->sx = -1;
+	if (line->y0 < line->y1)
+		brs->sy = 1;
+	else
+		brs->sy = -1;
+	brs->err = brs->dx - brs->dy;
 }
 
-void    ft_recalibrate(double *ra)
+void	put_line(t_line *line)
 {
-    if (*ra < 0)
+	t_bresenham	brs;
+
+	brs_initialize(&brs, line);
+	while (line->x0 != line->x1 || line->y0 != line->y1)
+	{
+		if (line->x0 >= 0 && line->x0 < line->map_width && \
+		line->y0 >= 0 && line->y0 < line->map_height)
+			mlx_put_pixel(g_vars->img, line->x0, line->y0, line->color);
+		brs.err2 = brs.err * 2;
+		if (brs.err2 > -brs.dy)
+		{
+			brs.err -= brs.dy;
+			line->x0 += brs.sx;
+		}
+		if (brs.err2 < brs.dx)
+		{
+			brs.err += brs.dx;
+			line->y0 += brs.sy;
+		}
+	}
+}
+
+void	ft_recalibrate(double *ra)
+{
+	if (*ra < 0)
 		*ra += 2 * PI;
 	if (*ra > 2 * PI)
 		*ra -= 2 * PI;
