@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 20:08:21 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/17 20:08:45 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/18 14:28:35 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int	check_all_elem(char **options_check)
 		j = i + 1;
 		while (options_check[j])
 		{
-			if (!(ft_strncmp(options_check[i], options_check[j], ft_strlen(options_check[j]))))
+			if (!(ft_strncmp(options_check[i], \
+			options_check[j], ft_strlen(options_check[j]))))
 				return (0);
 			j++;
 		}

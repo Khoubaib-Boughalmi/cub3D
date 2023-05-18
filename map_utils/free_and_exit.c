@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 21:42:06 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/17 21:44:33 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/18 14:28:45 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,3 @@ void	textures_naming_err(char **options_check, char **options_list)
 		exit(0);
 	}
 }
-
