@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parsing_part_2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 22:09:08 by aechaoub          #+#    #+#             */
-/*   Updated: 2023/05/17 22:39:00 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/18 15:19:58 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	get_the_map_from_file_help(char *g, int len, char *str, int shouldstop)
 		len--;
 	if (shouldstop || !len)
 	{
-		printf("error\n");
+		printf("error map_pars %d\n",len);
 		free(g);
 		free(str);
 		exit(1);
