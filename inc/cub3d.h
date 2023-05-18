@@ -173,7 +173,7 @@ int cool(char **av,t_map_info *data);
 
 
 void	show_gun_magazine(t_vars *vars);
-void draw_wall_5(t_vars *vars, double r,double distance, double lineH,int frame,char *sprite_path);
+void draw_the_sprite(t_vars *vars, double r,double distance, double lineH,int frame,char *sprite_path);
 
 void draw_ray(t_vars *vars);
 double ft_abs(double nb);

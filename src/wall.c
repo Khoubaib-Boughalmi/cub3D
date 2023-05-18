@@ -71,14 +71,12 @@ void draw_wall(t_vars *vars, double r,double rx,double ry, double lineH,int horo
 
 int ff=0;
 
-void draw_wall_5(t_vars *vars, double r,double distance, double lineH,int frame,char *sprite_path)
+void draw_the_sprite(t_vars *vars, double r,double distance, double lineH,int frame,char *sprite_path)
 {
-	static int op=0;
 	mlx_texture_t *imgtxet;
 	int32_t trans=create_color(0,0,0,0);;
 	int32_t color;
 	int x1 = r * 2 + 2;
-	// int k=lineH;
 	if (lineH > 1020)
 			lineH = 1020;
 	int ligne_offset = 512 - lineH / 2.9;
@@ -94,12 +92,11 @@ void draw_wall_5(t_vars *vars, double r,double distance, double lineH,int frame,
 	str=ft_strjoin(sprite_path,tmp);
 	free(tmp);
 	tmp=str;
+	printf("%s\n",str);
 	str=ft_strjoin(str,".png");
-	// printf("%s\n",str);
 	imgtxet= mlx_load_png(str);
 	free(tmp);
 	free(str);
-	// free(str);
 	int time=r -(lineH/10);
 	if(time<0)
 	{
@@ -107,13 +104,10 @@ void draw_wall_5(t_vars *vars, double r,double distance, double lineH,int frame,
 		time =0;
 
 	}
-	// printf("time = %f\n",por_v);
 	int lol=0;
 	int suu=0;
 	while(time <r +(lineH/10) && time <512)
 	{
-		// printf("%d\n",g_ray_ds[time]);
-		// printf("aa %d\n",suu);
 		if(distance<g_ray_ds[time])
 		{
 			g_ray_ds[time ]=distance;
@@ -126,16 +120,10 @@ void draw_wall_5(t_vars *vars, double r,double distance, double lineH,int frame,
 				lol=(int)(tot_h*160*4)+suu;
 				for (int y = y1; y <= lineH + (int)ligne_offset &&  y <1024; y++)
 				{
-					// color =create_color(255,255,255,255);
 					if(lol<(int)imgtxet->height*(int)imgtxet->width *4)
 						color =create_color(imgtxet->pixels[lol],imgtxet->pixels[lol+1], imgtxet->pixels[lol+2],imgtxet->pixels[lol+3]);
-				// printf("%d\n",y);
 				if(color !=trans )
 					mlx_put_pixel(vars->img, x1 - i, y, color);
-					
-
-				// mlx_put_pixel(vars->img, x1 - i, y, color);
-					// lol+=imgtxet->width *4;
 					tot_h+=por_h;
 					lol = (int)tot_h*160*4+suu;
 				}
@@ -144,13 +132,7 @@ void draw_wall_5(t_vars *vars, double r,double distance, double lineH,int frame,
 		}
 		else
 				tot_v+=2*por_v;
-		// suu+=4;
 		time++;
 	}
 	mlx_delete_texture(imgtxet);
-	// free(str);
-	op++;
-	if(op==2)
-		op=0;
-
 }

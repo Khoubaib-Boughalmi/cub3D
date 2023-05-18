@@ -100,10 +100,8 @@ void draw_one_sprite(t_vars *vars)
 	double line_height;
 	for (int i =0; i<vars->numerof_sprite ;i++)
 	{
-		// printf("(%s)\n",vars->sprites[i].path);
 		sprite_ax=vars->sprites[i].x;
 		sprite_ay=vars->sprites[i].y;
-		// sprite_ay=64*i+10;
 		dx = sprite_ax- vars->player.x  ;
 		dy = sprite_ay -vars->player.y ;
 		angle = atan2(dy, dx);
@@ -117,10 +115,8 @@ void draw_one_sprite(t_vars *vars)
 		{
 			porce_angle=(porce_angle+30)/60*512;
 			v_dist = distance_to_wall(vars->player.x, vars->player.y, sprite_ax, sprite_ay);
-			
-			// printf("%f\n",v_dist);
 			line_height = (64 * 600) / v_dist;
-			draw_wall_5(vars,(int)porce_angle,v_dist,line_height,frame,vars->sprites[i].path);
+			draw_the_sprite(vars,(int)porce_angle,v_dist,line_height,frame,vars->sprites[i].path);
 		}
 	}
 		frame++;
@@ -130,7 +126,6 @@ void draw_one_sprite(t_vars *vars)
 
 void  redraw(t_vars *vars)
 {
-	static int frame =1;
 	char *str;
 	char *tmp;
 	key_press_handler(vars);
@@ -138,7 +133,6 @@ void  redraw(t_vars *vars)
 	clean_window(vars);		
 	draw_ray(vars);
 	draw_one_sprite(vars);
-
 	if(vars->keyboard.show_map)
 	{	
 		draw_partcle(vars);
@@ -182,18 +176,6 @@ void  redraw(t_vars *vars)
 	g_vars->weapon_img = mlx_texture_to_image(g_vars->mlx, g_vars->weapon_texture);
 	mlx_image_to_window(vars->mlx,vars->weapon_img,50,257);
 	mlx_delete_texture(g_vars->weapon_texture);
-	}
-	// str=ft_strjoin(": ",ft_itoa(vars->player.bullet));
-	// mlx_image_to_window(vars->mlx,vars->ammo_img,800,20);
-	// mlx_delete_image(vars->mlx,vars->player.print_move);
-	// vars->player.print_move=mlx_put_string(vars->mlx,str,880,52);
-	
-	// free(str);
-	frame++;
-	if(frame ==9)
-	{
-		// pause();
-		frame =1;
 	}
     draw_aim(vars);
 }

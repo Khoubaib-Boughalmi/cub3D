@@ -55,17 +55,17 @@ $(mlx_lib):
 ifeq ($(shell uname -s), $(LINUX))
 
 %.o: %.c $(INCLUDES)  $(LIBFT)
-	$(CC) $(CFLAGS) -g -I$(INC) -I$(INC_MLX) -I./libft -c $(filter %.c, $<) -o $@
+	$(CC) $(CFLAGS)  -I$(INC) -I$(INC_MLX) -I./libft -c $(filter %.c, $<) -o $@
 
 $(NAME): $(OBJS) $(INCLUDES)
-	$(CC) $(FLAGS) -g -o $@ $(OBJS) ./libft/libft.a $(DEPENDENCIES_LINUX)
+	$(CC) $(FLAGS)  -o $@ $(OBJS) ./libft/libft.a $(DEPENDENCIES_LINUX)
 else ifeq ($(shell uname -s), $(MAC))
 
 $(NAME): $(OBJS) $(INCLUDES) $(LIBFT)
-	$(CC) $(CFLAGS) ./libft/libft.a -g -o $(@) $(OBJS) $(DEPENDENCIES_MAC) -lglfw -L"$(glfw)/lib"
+	$(CC) $(CFLAGS) ./libft/libft.a  -o $(@) $(OBJS) $(DEPENDENCIES_MAC) -lglfw -L"$(glfw)/lib"
 
 %.o: %.c $(INCLUDES)
-	$(CC) $(CFLAGS) -g -I$(INC) -I$(INC_MLX) -c $(filter %.c, $<) -o $@
+	$(CC) $(CFLAGS)  -I$(INC) -I$(INC_MLX) -c $(filter %.c, $<) -o $@
 
 endif
 
