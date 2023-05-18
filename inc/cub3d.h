@@ -100,6 +100,18 @@ typedef struct s_player {
 }				t_player;
 
 
+typedef struct s_sp {
+	double		sprite_ax;
+	double		sprite_ay;
+	float		dx;
+	float		dy;
+	float		angle;
+	float		angle_diff ;
+	float		porce_angle;
+	float		v_dist;
+	double		line_height;
+}	t_sp;
+
 typedef struct s_key_value {
 	int x;
 	int y;
@@ -227,5 +239,20 @@ void for_key_s(t_vars *vars);
 void for_key_a(t_vars *vars);
 void for_key_d(t_vars *vars);
 void for_key_right(t_vars *vars);
-
+void	render_window(t_vars *vars);
+void	my_mlx_hooks(t_vars *vars);
+void	initialize_textures(void);
+void	mouse_click(mouse_key_t button, action_t action, modifier_key_t mods, void *param);
+void	draw_map(t_vars *vars);
+void	draw_tile(t_vars *vars, int y, int x);
+void	draw_aim(t_vars *vars);
+void	draw_wal7(t_vars *vars, int r, int lineH, int32_t color);
+void	redraw_shoot(t_vars *vars, char *tmp, char *str);
+void	redraw_reload(t_vars *vars, char *tmp, char *str);
+void	redraw(t_vars *vars);
+void	clean_window(t_vars *vars);
+void	draw_one_sprite(t_vars *vars);
+void	draw_initial_gun(t_vars *vars);
+void	show_gun_magazine(t_vars *vars);
+void	draw_one_sprite_norm(t_vars *vars, t_sp *sp, int frame, int i);
 # endif
