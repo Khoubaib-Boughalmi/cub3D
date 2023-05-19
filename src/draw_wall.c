@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 19:58:19 by aechaoub          #+#    #+#             */
-/*   Updated: 2023/05/19 15:24:23 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/19 15:41:58 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	decide_horizontal_textures(t_vars *vars, t_draw_value *info, int rx)
 void	decide_vertical_textures(t_vars *vars, t_draw_value *info, int ry)
 {
 	if (vars->player.y > ry)
-		info->imgtxet = vars->NO_wall_texture_texture;
+		info->imgtxet = vars->NO_wall_texture;
 	else
 		info->imgtxet = vars->SO_wall_texture;
 	if (vars->player.angle < PI)

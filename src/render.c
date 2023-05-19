@@ -6,32 +6,43 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:40:35 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/18 22:05:34 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:07:29 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	mouse_click(mouse_key_t button, action_t action, \
-		modifier_key_t mods, void *param)
+void	mouse_click(mouse_key_t button, action_t action, modifier_key_t mods,
+		void *param)
 {
 	t_vars	*vars;
 
 	(void)mods;
 	vars = (t_vars *)param;
-	if (button == 0 && action == 1 && vars->player.bullet \
+	if (button == 0 && action == 1 && vars->player.bullet
 		&& !vars->player.reload)
 	{
 		vars->player.bullet--;
 		vars->player.shoot = 8;
 		show_gun_magazine(vars);
 	}
-	else if (button == 0 && action == 1 && !vars->player.bullet \
+	else if (button == 0 && action == 1 && !vars->player.bullet
 		&& !vars->player.reload)
 	{
 		vars->player.bullet = 8;
 		vars->player.reload = 42;
 		show_gun_magazine(vars);
+	}
+}
+
+void	check_textures(void)
+{
+	if (!g_vars->SO_wall_texture || !g_vars->EA_wall_texture
+		|| !g_vars->WE_wall_texture || !g_vars->NO_wall_texture
+		|| !g_vars->door_texture || !g_vars->ammo_texture || !g_vars->ammo_img)
+	{
+		free_g_map(g_vars->map.map, g_vars->map.height);
+		exit(0);
 	}
 }
 
@@ -41,11 +52,11 @@ void	initialize_textures(void)
 	g_vars->SO_wall_texture = mlx_load_png(g_vars->map_info.SO_texure);
 	g_vars->EA_wall_texture = mlx_load_png(g_vars->map_info.WE_texure);
 	g_vars->WE_wall_texture = mlx_load_png(g_vars->map_info.EA_texure);
-	g_vars->NO_wall_texture_texture = mlx_load_png(g_vars->map_info.NO_texure);
+	g_vars->NO_wall_texture = mlx_load_png(g_vars->map_info.NO_texure);
 	g_vars->door_texture = mlx_load_png("./src/textures/doorx.png");
-	g_vars->enemy_texture = mlx_load_png("./src/textures/enemy1.png");
 	g_vars->ammo_texture = mlx_load_png("./src/textures/bullet.png");
 	g_vars->ammo_img = mlx_texture_to_image(g_vars->mlx, g_vars->ammo_texture);
+	check_textures();
 	free(g_vars->map_info.NO_texure);
 	free(g_vars->map_info.SO_texure);
 	free(g_vars->map_info.WE_texure);

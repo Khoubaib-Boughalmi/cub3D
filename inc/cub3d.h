@@ -196,7 +196,7 @@ typedef struct s_vars {
 	mlx_image_t *weapon_img;
 	mlx_texture_t *weapon_texture;
 	mlx_image_t *wall_img2;
-	mlx_texture_t *NO_wall_texture_texture;
+	mlx_texture_t *NO_wall_texture;
 	mlx_texture_t *SO_wall_texture;
 	mlx_texture_t *EA_wall_texture;
 	mlx_texture_t *WE_wall_texture;
@@ -322,5 +322,6 @@ int	draw_wall_data(t_draw_value *info, int lineH);
 void	decide_vertical_textures(t_vars *vars, t_draw_value *info, int ry);
 void	decide_horizontal_textures(t_vars *vars, t_draw_value *info, int rx);
 void	draw_it(t_vars *vars, t_draw_value *info, int lineH);
+void	check_textures();
 int32_t	collect_color(uint8_t *pixels, int index);
 # endif
