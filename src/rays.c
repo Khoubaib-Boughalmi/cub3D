@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 16:08:47 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/18 21:33:56 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/19 15:21:53 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	calculate_hor_intersect(t_vars *vars, t_ray_info *ray)
 void	get_shortest_intersection(t_vars *vars, t_ray_info *ray, int i)
 {
 	t_line	line;
-	
+
 	if (ray->v_dist < ray->h_dist)
 	{
 		ray->rx = ray->v_x;
@@ -131,7 +131,6 @@ void	get_shortest_intersection(t_vars *vars, t_ray_info *ray, int i)
 void	draw_ray(t_vars *vars)
 {
 	t_ray_info	ray;
-	// int			i;
 	double		fish_eye_new_angle;
 	double		line_height;
 
@@ -148,12 +147,11 @@ void	draw_ray(t_vars *vars)
 		ray.f_dist = ray.f_dist * cos(fish_eye_new_angle);
 		line_height = (64 * 800) / ray.f_dist;
 		if (ray.v_dist > ray.h_dist)
-			draw_wall(vars,  ray, line_height, 0);
+			draw_wall(vars, ray, line_height, 0);
 		else
-			draw_wall(vars,  ray, line_height, 1);
+			draw_wall(vars, ray, line_height, 1);
 		ray.ra = ray.ra + DEG / 8;
 		ft_recalibrate(&(ray.ra));
 		ray.ray++;
 	}
 }
-

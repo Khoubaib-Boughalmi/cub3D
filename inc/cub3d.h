@@ -309,4 +309,13 @@ void	for_key_w(t_vars *vars);
 int32_t	collect_color(uint8_t *pixels, int index);
 void	for_key_s(t_vars *vars);
 void	draw_one_sprite_norm(t_vars *vars, t_sp *sp, int frame, int i);
+int32_t	create_color(int32_t r, int32_t g, int32_t b, int32_t a);
+float	distance_to_wall(float px, float py, float wx, float wy);
+void	init_map_info(t_map_info *data);
+int	init_vars(t_map_info *data);
+void	draw_partcle(t_vars *vars);
+void	loop_func(void *data);
+void	mouse_handler(double xpos, double ypos, void *param);
+int	key_press_handler(void *param);
+void	draw_wall(t_vars *vars,  t_ray_info	ray, double lineH, int hororver);
 # endif

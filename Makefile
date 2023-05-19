@@ -13,10 +13,13 @@ SRCS = $(SRC)/cub3d.c \
 		$(SRC)/utils.c \
 		$(SRC)/render.c \
 		$(SRC)/draw.c \
-		$(SRC)/redraw.c \
+		$(SRC)/draw2.c \
 		$(SRC)/keys_handler.c \
 		$(SRC)/keys_handler_P_2.c \
 		$(SRC)/draw_wall.c \
+		$(SRC)/helpers.c \
+		$(SRC)/init.c \
+		$(SRC)/handler.c \
 		$(SRC)/keys_handler_P_3.c \
 		map_utils/map_parsing.c \
 		map_utils/map_parsing_part_2.c \
