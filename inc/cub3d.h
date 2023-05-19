@@ -301,4 +301,9 @@ void	loop_func(void *data);
 void	mouse_handler(double xpos, double ypos, void *param);
 int	key_press_handler(void *param);
 void	draw_wall(t_vars *vars,  t_ray_info	ray, double lineH, int hororver);
+int	draw_wall_data(t_draw_value *info, int lineH);
+void	decide_vertical_textures(t_vars *vars, t_draw_value *info, int ry);
+void	decide_horizontal_textures(t_vars *vars, t_draw_value *info, int rx);
+void	draw_it(t_vars *vars, t_draw_value *info, int lineH);
+int32_t	collect_color(uint8_t *pixels, int index);
 # endif
