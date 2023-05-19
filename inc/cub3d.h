@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 16:11:59 by aechaoub          #+#    #+#             */
-/*   Updated: 2023/05/19 16:19:31 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:34:35 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,6 @@ typedef struct s_line
 	int				map_height;
 }					t_line;
 
-// typedef struct s_map_info {
-//     int **map;
-//     double x_player;
-//     double y_player;
-//     double angle_player;
-//     int x_map_size;
-//     int y_map_size;
-// }				t_map_info;
 typedef struct s_map_info
 {
 	int				**map;
@@ -237,7 +229,7 @@ typedef struct s_vars
 	int				g_ray_ds[513];
 }					t_vars;
 
-t_vars				*g_vars;
+extern t_vars	*g_vars;
 
 typedef struct s_ray_info
 {

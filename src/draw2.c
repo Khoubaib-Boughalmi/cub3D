@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/19 15:20:12 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:43:36 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	redraw(t_vars *vars)
 	char	*str;
 	char	*tmp;
 
+	tmp = NULL;
+	str = NULL;
 	key_press_handler(vars);
 	mlx_delete_image(g_vars->mlx, g_vars->weapon_img);
 	clean_window(vars);
