@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
+/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 15:14:03 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/19 19:58:08 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/19 21:15:23 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	key_press_handler(void *param)
 		for_key_d(vars);
 	return (0);
 }
-
 
 void	loop_func(void *data)
 {

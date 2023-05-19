@@ -5,7 +5,7 @@ NO ./textures/huge_1.png
 
 
 EA ./textures/huge_2.png
-SO ./textures/wall_d.png
+SO ./textures/wall.png
 WE ./textures/huge_4.png
 F 125,0,125
 
