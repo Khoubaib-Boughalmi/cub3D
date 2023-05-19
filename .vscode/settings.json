@@ -9,6 +9,8 @@
         "get_next_line.h": "c",
         "libft.h": "c",
         "unistd.h": "c",
-        "ios": "c"
+        "ios": "c",
+        "stdlib.h": "c",
+        "fcntl.h": "c"
     }
 }

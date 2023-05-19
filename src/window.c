@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
+/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 15:43:47 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/18 21:01:14 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/18 22:05:04 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,11 @@ void	draw_initial_gun(t_vars *vars)
 {
 	g_vars->weapon_texture = \
 	mlx_load_png("./src/textures/kortas/StechkinEx01.png");
+	if(!g_vars->weapon_texture)
+	{
+		printf("Error image \n");
+		exit(0);
+	}
 	g_vars->weapon_img = mlx_texture_to_image(g_vars->mlx, \
 	g_vars->weapon_texture);
 	mlx_image_to_window(vars->mlx, vars->weapon_img, 50, 257);
