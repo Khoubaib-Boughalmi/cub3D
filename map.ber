@@ -4,11 +4,10 @@ NO ./src/textures/huge_1.png
 
 
 
-EA ./src/textures/huge_2.png
-SO ./src/textures/wall_d.png
+EA ./src/textures/wall.png
+SO ./src/textures/huge_2.png
 WE ./src/textures/huge_4.png
-F 125,0,125
-
+F 255,255,255
         111111111111111111111111111111111
         10010000000100000000#000000000001
         100d00000001000000000000000000001
