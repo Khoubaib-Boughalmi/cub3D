@@ -66,4 +66,4 @@ fclean: clean
 	rm -rf $(NAME)
 	make -C ./libft fclean
 
-.PHONY: all re clean fclean val
+.PHONY: all re clean fclean
