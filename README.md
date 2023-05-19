@@ -22,7 +22,7 @@ This gif showcases the immersive gameplay experience you can expect from Cub3D. 
 To run the Cub3D project, follow these steps:
 1. Clone the Cub3D repository.
 2. Build the project by running the `make bonus` command.
-3. Execute the program by running the `./cub3D map.cub` command.
+3. Execute the program by running the `./cub3D_bonus map_bonus.cub` command.
 
 *Make sure to provide the map.cub file as an argument when running the ./cub3D command. This file should contain the necessary information to generate the maze and configure the game.*
 
