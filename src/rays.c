@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 16:08:47 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/19 16:37:56 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/19 18:59:50 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,4 @@ void	get_shortest_intersection(t_vars *vars, t_ray_info *ray, int i)
 	line.map_width = vars->img->width;
 	line.color = create_color(255, 255, 0, 255);
 	vars->g_ray_ds[i] = ray->f_dist;
-	if (vars->keyboard.show_map)
-		put_line(&line);
 }

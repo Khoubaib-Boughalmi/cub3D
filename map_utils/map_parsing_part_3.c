@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 22:09:08 by aechaoub          #+#    #+#             */
-/*   Updated: 2023/05/18 14:53:01 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/19 19:03:07 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,8 @@ void	set_map_value(char **map, t_map_info *data, int i, int j)
 		data->map[i][j] = 1;
 	else if (map[i][j] == ' ')
 		data->map[i][j] = -1;
-	else if (map[i][j] == 'd')
-		data->map[i][j] = 500;
 	else if (map[i][j] == '0')
 		data->map[i][j] = 0;
-	else if (map[i][j] == '#')
-	{
-		if (data->number_of_sprites < 15)
-			data->number_of_sprites++;
-		data->map[i][j] = -2;
-	}
 	else
 		fillmap_exit(map, data);
 }

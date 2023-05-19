@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 15:43:47 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/19 16:39:57 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/19 18:37:49 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	draw_one_sprite(t_vars *vars)
 void	draw_initial_gun(t_vars *vars)
 {
 	g_vars->weapon_texture = \
-	mlx_load_png("./src/textures/kortas/StechkinEx01.png");
+	mlx_load_png("./textures/kortas/StechkinEx01.png");
 	if (!g_vars->weapon_texture)
 	{
 		printf("Error image \n");

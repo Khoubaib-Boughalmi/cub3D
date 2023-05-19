@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
+/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 22:09:08 by aechaoub          #+#    #+#             */
-/*   Updated: 2023/05/18 15:26:56 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/19 17:37:13 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,15 @@ char	**get_the_map_from_last_funct(t_map_info *data, char **splited)
 	return (map);
 }
 
+void	checkext(char *av)
+{
+	if (ft_strncmp(av + ft_strlen(av) - 4, ".cub", 5))
+	{
+		printf("The map description file must end with the .cub extension\n");
+		exit(0);
+	}
+}
+
 int	cool(char **av, t_map_info *data)
 {
 	char	*g;
@@ -100,6 +109,7 @@ int	cool(char **av, t_map_info *data)
 	char	**splited;
 	char	**map;
 
+	checkext(av[1]);
 	fd = open(av[1], O_RDONLY);
 	data->y_map_size = 0;
 	data->x_map_size = 0;

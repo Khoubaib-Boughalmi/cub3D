@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
+/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/19 16:32:28 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/19 19:00:10 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	randomize_the_sprites_texture(int sprite, int i)
 {
 	if (i % 2 == 0)
 		g_vars->sprites[sprite].path = \
-		ft_strdup("./src/textures/sprites/");
+		ft_strdup("./textures/sprites/");
 	else
 		g_vars->sprites[sprite].path = \
-		ft_strdup("./src/textures/sprites/g");
+		ft_strdup("./textures/sprites/g");
 }
 
 void	randomize_the_sprites(t_map_info *data)
@@ -63,7 +63,6 @@ int	main(int argc, char **argv)
 	cool(argv, &data);
 	if (!init_vars(&data))
 		return (0);
-	randomize_the_sprites(&data);
 	render_window(g_vars);
 	return (0);
 }

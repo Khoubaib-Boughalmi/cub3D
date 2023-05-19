@@ -6,40 +6,17 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:40:35 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/19 16:16:15 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/19 19:17:31 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	mouse_click(mouse_key_t button, action_t action, modifier_key_t mods,
-		void *param)
-{
-	t_vars	*vars;
-
-	(void)mods;
-	vars = (t_vars *)param;
-	if (button == 0 && action == 1 && vars->player.bullet
-		&& !vars->player.reload)
-	{
-		vars->player.bullet--;
-		vars->player.shoot = 8;
-		show_gun_magazine(vars);
-	}
-	else if (button == 0 && action == 1 && !vars->player.bullet
-		&& !vars->player.reload)
-	{
-		vars->player.bullet = 8;
-		vars->player.reload = 42;
-		show_gun_magazine(vars);
-	}
-}
-
 void	check_textures(void)
 {
 	if (!g_vars->so_wall_texture || !g_vars->ea_wall_texture
 		|| !g_vars->we_wall_texture || !g_vars->no_wall_texture
-		|| !g_vars->door_texture || !g_vars->ammo_texture || !g_vars->ammo_img)
+		|| !g_vars->ammo_texture || !g_vars->ammo_img)
 	{
 		free_g_map(g_vars->map.map, g_vars->map.height);
 		exit(0);
@@ -53,8 +30,7 @@ void	initialize_textures(void)
 	g_vars->ea_wall_texture = mlx_load_png(g_vars->map_info.we_texure);
 	g_vars->we_wall_texture = mlx_load_png(g_vars->map_info.ea_texure);
 	g_vars->no_wall_texture = mlx_load_png(g_vars->map_info.no_texure);
-	g_vars->door_texture = mlx_load_png("./src/textures/doorx.png");
-	g_vars->ammo_texture = mlx_load_png("./src/textures/bullet.png");
+	g_vars->ammo_texture = mlx_load_png("./textures/bullet.png");
 	g_vars->ammo_img = mlx_texture_to_image(g_vars->mlx, g_vars->ammo_texture);
 	check_textures();
 	free(g_vars->map_info.no_texure);
@@ -65,16 +41,9 @@ void	initialize_textures(void)
 
 void	my_mlx_hooks(t_vars *vars)
 {
-	if (vars->keyboard.cursor)
-		mlx_set_cursor_mode(vars->mlx, MLX_MOUSE_NORMAL);
-	else
-		mlx_set_cursor_mode(vars->mlx, MLX_MOUSE_DISABLED);
 	mlx_key_hook(vars->mlx, (mlx_keyfunc)key_press_handler_2, vars);
-	mlx_cursor_hook(vars->mlx, (mlx_cursorfunc)mouse_handler, vars);
-	mlx_mouse_hook(vars->mlx, (mlx_mousefunc)mouse_click, vars);
 	mlx_image_to_window(vars->mlx, vars->img, 0, 0);
 	mlx_loop_hook(vars->mlx, &loop_func, vars);
-	show_gun_magazine(vars);
 	mlx_loop(vars->mlx);
 	mlx_terminate(vars->mlx);
 }

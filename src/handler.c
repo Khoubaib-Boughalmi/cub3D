@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 15:14:03 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/19 16:36:40 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/19 19:15:06 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,30 +38,6 @@ int	key_press_handler(void *param)
 	return (0);
 }
 
-void	mouse_handler(double xpos, double ypos, void *param)
-{
-	t_vars	*vars;
-
-	vars = (t_vars *)param;
-	(void)ypos;
-	if (xpos > vars->player.prev_xpos)
-	{
-		vars->player.angle += 0.07;
-		if (vars->player.angle > 2 * M_PI)
-			vars->player.angle -= 2 * M_PI;
-		vars->player.dx = 5 * cos(vars->player.angle);
-		vars->player.dy = 5 * sin(vars->player.angle);
-	}
-	if (xpos < vars->player.prev_xpos)
-	{
-		vars->player.angle -= 0.07;
-		if (vars->player.angle < 0)
-			vars->player.angle += 2 * M_PI;
-		vars->player.dx = 5 * cos(vars->player.angle);
-		vars->player.dy = 5 * sin(vars->player.angle);
-	}
-	vars->player.prev_xpos = xpos;
-}
 
 void	loop_func(void *data)
 {

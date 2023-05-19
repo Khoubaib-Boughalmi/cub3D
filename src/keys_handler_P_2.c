@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 17:18:57 by aechaoub          #+#    #+#             */
-/*   Updated: 2023/05/19 16:11:00 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/19 19:00:00 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,25 +63,10 @@ int	key_press_handler_2(mlx_key_data_t keydata, void *param)
 
 	(void)keydata;
 	vars = (t_vars *)param;
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_SPACE))
-		for_key_space(vars);
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_R))
-	{
-		if (!vars->player.reload && vars->player.bullet != 8)
-		{
-			vars->player.reload = 42;
-			vars->player.bullet = 8;
-			show_gun_magazine(vars);
-		}
-	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE))
 	{
 		free_g_map(g_vars->map.map, g_vars->map.height);
 		exit(0);
 	}
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_TAB))
-		for_key_tab(vars);
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_F))
-		for_key_f(vars);
 	return (0);
 }
