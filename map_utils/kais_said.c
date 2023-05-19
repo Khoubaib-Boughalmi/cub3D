@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   kais_said.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
+/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 18:28:05 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/17 21:43:04 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:13:07 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ void	check_num_line(char **wow)
 void	assign_texture_values(char **split_line, t_map_info *data)
 {
 	if (!ft_strncmp(split_line[0], "NO", ft_strlen(split_line[0])))
-		data->NO_texure = ft_strdup(split_line[1]);
+		data->no_texure = ft_strdup(split_line[1]);
 	if (!ft_strncmp(split_line[0], "SO", ft_strlen(split_line[0])))
-		data->SO_texure = ft_strdup(split_line[1]);
+		data->so_texure = ft_strdup(split_line[1]);
 	if (!ft_strncmp(split_line[0], "EA", ft_strlen(split_line[0])))
-		data->EA_texure = ft_strdup(split_line[1]);
+		data->ea_texure = ft_strdup(split_line[1]);
 	if (!ft_strncmp(split_line[0], "WE", ft_strlen(split_line[0])))
-		data->WE_texure = ft_strdup(split_line[1]);
+		data->we_texure = ft_strdup(split_line[1]);
 }
 
 void	fill_texture_info_core_norm(char **wow, char **options_check, \

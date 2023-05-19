@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
+/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 15:12:53 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/19 16:02:17 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:13:07 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	init_map_info(t_map_info *data)
 	g_vars->map_info.f_color.b = data->f_color.b;
 	g_vars->map_info.f_color.r = data->f_color.r;
 	g_vars->map_info.f_color.g = data->f_color.g;
-	g_vars->map_info.NO_texure = data->NO_texure;
-	g_vars->map_info.SO_texure = data->SO_texure;
-	g_vars->map_info.WE_texure = data->WE_texure;
-	g_vars->map_info.EA_texure = data->EA_texure;
+	g_vars->map_info.no_texure = data->no_texure;
+	g_vars->map_info.so_texure = data->so_texure;
+	g_vars->map_info.we_texure = data->we_texure;
+	g_vars->map_info.ea_texure = data->ea_texure;
 }
 
 int	init_vars(t_map_info *data)

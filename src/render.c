@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:40:35 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/19 16:07:29 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:16:15 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	mouse_click(mouse_key_t button, action_t action, modifier_key_t mods,
 
 void	check_textures(void)
 {
-	if (!g_vars->SO_wall_texture || !g_vars->EA_wall_texture
-		|| !g_vars->WE_wall_texture || !g_vars->NO_wall_texture
+	if (!g_vars->so_wall_texture || !g_vars->ea_wall_texture
+		|| !g_vars->we_wall_texture || !g_vars->no_wall_texture
 		|| !g_vars->door_texture || !g_vars->ammo_texture || !g_vars->ammo_img)
 	{
 		free_g_map(g_vars->map.map, g_vars->map.height);
@@ -49,18 +49,18 @@ void	check_textures(void)
 void	initialize_textures(void)
 {
 	g_vars->player.reload = 0;
-	g_vars->SO_wall_texture = mlx_load_png(g_vars->map_info.SO_texure);
-	g_vars->EA_wall_texture = mlx_load_png(g_vars->map_info.WE_texure);
-	g_vars->WE_wall_texture = mlx_load_png(g_vars->map_info.EA_texure);
-	g_vars->NO_wall_texture = mlx_load_png(g_vars->map_info.NO_texure);
+	g_vars->so_wall_texture = mlx_load_png(g_vars->map_info.so_texure);
+	g_vars->ea_wall_texture = mlx_load_png(g_vars->map_info.we_texure);
+	g_vars->we_wall_texture = mlx_load_png(g_vars->map_info.ea_texure);
+	g_vars->no_wall_texture = mlx_load_png(g_vars->map_info.no_texure);
 	g_vars->door_texture = mlx_load_png("./src/textures/doorx.png");
 	g_vars->ammo_texture = mlx_load_png("./src/textures/bullet.png");
 	g_vars->ammo_img = mlx_texture_to_image(g_vars->mlx, g_vars->ammo_texture);
 	check_textures();
-	free(g_vars->map_info.NO_texure);
-	free(g_vars->map_info.SO_texure);
-	free(g_vars->map_info.WE_texure);
-	free(g_vars->map_info.EA_texure);
+	free(g_vars->map_info.no_texure);
+	free(g_vars->map_info.so_texure);
+	free(g_vars->map_info.we_texure);
+	free(g_vars->map_info.ea_texure);
 }
 
 void	my_mlx_hooks(t_vars *vars)

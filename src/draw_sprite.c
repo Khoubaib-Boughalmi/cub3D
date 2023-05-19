@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 21:09:42 by aechaoub          #+#    #+#             */
-/*   Updated: 2023/05/18 21:35:54 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:14:34 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ void	draw_the_sprite_while(t_vars *vars, t_sp *sp, t_sprite_value *info)
 	while (info->time < (int)sp->porce_angle + (sp->line_height / 10)
 		&& info->time < 512)
 	{
-		if (sp->v_dist < g_ray_ds[info->time])
+		if (sp->v_dist < vars->g_ray_ds[info->time])
 		{
-			g_ray_ds[info->time] = sp->v_dist;
+			vars->g_ray_ds[info->time] = sp->v_dist;
 			info->x1 = info->time * 2 + 2;
 			draw_the_sprite_while_in_while(vars, sp, info);
 		}

@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 17:18:57 by aechaoub          #+#    #+#             */
-/*   Updated: 2023/05/19 16:09:30 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:11:00 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ int	key_press_handler_2(mlx_key_data_t keydata, void *param)
 			show_gun_magazine(vars);
 		}
 	}
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE)) // free shit
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE))
 	{
-		free_g_map(g_vars->map.map,g_vars->map.height);
+		free_g_map(g_vars->map.map, g_vars->map.height);
 		exit(0);
 	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_TAB))

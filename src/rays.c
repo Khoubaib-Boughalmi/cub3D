@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
+/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 16:08:47 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/19 16:03:01 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:17:58 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,20 @@ void	calculate_ver_intersect(t_vars *vars, t_ray_info *ray)
 	t_wall	wall;
 
 	set_initial_vwall_value(vars, ray, &wall);
-	ray->nTan = -tan(ray->ra);
+	ray->ntan = -tan(ray->ra);
 	if (ray->ra > PI2 && ray->ra < PI3)
 	{
 		ray->rx = (((int)vars->player.x / 64) * 64) - 0.0001;
-		ray->ry = (vars->player.x - ray->rx) * ray->nTan + vars->player.y;
+		ray->ry = (vars->player.x - ray->rx) * ray->ntan + vars->player.y;
 		ray->xo = -64;
-		ray->yo = -ray->xo * ray->nTan;
+		ray->yo = -ray->xo * ray->ntan;
 	}
 	if (ray->ra < PI2 || ray->ra > PI3)
 	{
 		ray->rx = (((int)vars->player.x / 64) * 64) + 64;
-		ray->ry = (vars->player.x - ray->rx) * ray->nTan + vars->player.y;
+		ray->ry = (vars->player.x - ray->rx) * ray->ntan + vars->player.y;
 		ray->xo = 64;
-		ray->yo = -ray->xo * ray->nTan;
+		ray->yo = -ray->xo * ray->ntan;
 	}
 	if (ray->ra == PI2 || ray->ra == PI3)
 	{
@@ -78,20 +78,20 @@ void	calculate_hor_intersect(t_vars *vars, t_ray_info *ray)
 	t_wall	wall;
 
 	set_initial_hwall_value(vars, ray, &wall);
-	ray->aTan = -1 / tan(ray->ra);
+	ray->atan = -1 / tan(ray->ra);
 	if (ray->ra > PI)
 	{
 		ray->ry = (((int)vars->player.y / 64) * 64) - 0.0001;
-		ray->rx = (vars->player.y - ray->ry) * ray->aTan + vars->player.x;
+		ray->rx = (vars->player.y - ray->ry) * ray->atan + vars->player.x;
 		ray->yo = -64;
-		ray->xo = -ray->yo * ray->aTan;
+		ray->xo = -ray->yo * ray->atan;
 	}
 	if (ray->ra < PI)
 	{
 		ray->ry = (((int)vars->player.y / 64) * 64) + 64;
-		ray->rx = (vars->player.y - ray->ry) * ray->aTan + vars->player.x;
+		ray->rx = (vars->player.y - ray->ry) * ray->atan + vars->player.x;
 		ray->yo = 64;
-		ray->xo = -ray->yo * ray->aTan;
+		ray->xo = -ray->yo * ray->atan;
 	}
 	if (ray->ra == 0 || ray->ra == PI)
 	{
@@ -125,7 +125,7 @@ void	get_shortest_intersection(t_vars *vars, t_ray_info *ray, int i)
 	line.map_height = vars->img->height;
 	line.map_width = vars->img->width;
 	line.color = create_color(255, 255, 0, 255);
-	g_ray_ds[i] = ray->f_dist;
+	vars->g_ray_ds[i] = ray->f_dist;
 	if (vars->keyboard.show_map)
 		put_line(&line);
 }

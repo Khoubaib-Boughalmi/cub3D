@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 19:58:19 by aechaoub          #+#    #+#             */
-/*   Updated: 2023/05/19 15:41:58 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:16:15 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ void	draw_it(t_vars *vars, t_draw_value *info, int lineH)
 void	decide_horizontal_textures(t_vars *vars, t_draw_value *info, int rx)
 {
 	if (vars->player.x > rx)
-		info->imgtxet = vars->EA_wall_texture;
+		info->imgtxet = vars->ea_wall_texture;
 	else
-		info->imgtxet = vars->WE_wall_texture;
+		info->imgtxet = vars->we_wall_texture;
 	if (vars->player.angle > PI / 2 && vars->player.angle < 3 * PI / 2)
 		info->porcentsage = 1 - info->porcentsage;
 }
@@ -51,9 +51,9 @@ void	decide_horizontal_textures(t_vars *vars, t_draw_value *info, int rx)
 void	decide_vertical_textures(t_vars *vars, t_draw_value *info, int ry)
 {
 	if (vars->player.y > ry)
-		info->imgtxet = vars->NO_wall_texture;
+		info->imgtxet = vars->no_wall_texture;
 	else
-		info->imgtxet = vars->SO_wall_texture;
+		info->imgtxet = vars->so_wall_texture;
 	if (vars->player.angle < PI)
 		info->porcentsage = 1 - info->porcentsage;
 }
