@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map_parsing_part_2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 22:09:08 by aechaoub          #+#    #+#             */
-/*   Updated: 2023/05/18 21:38:44 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/19 19:58:08 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "../../inc/cub3d.h"
 #include "../libft/libft.h"
 #include "get_next_line.h"
 #include <math.h>

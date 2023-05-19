@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_parsing_part_3.c                               :+:      :+:    :+:   */
+/*   map_parsing_part_3_bonus.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -51,8 +51,16 @@ void	set_map_value(char **map, t_map_info *data, int i, int j)
 		data->map[i][j] = 1;
 	else if (map[i][j] == ' ')
 		data->map[i][j] = -1;
+	else if (map[i][j] == 'd')
+		data->map[i][j] = 500;
 	else if (map[i][j] == '0')
 		data->map[i][j] = 0;
+	else if (map[i][j] == '#')
+	{
+		if (data->number_of_sprites < 15)
+			data->number_of_sprites++;
+		data->map[i][j] = -2;
+	}
 	else
 		fillmap_exit(map, data);
 }

@@ -6,11 +6,11 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 20:08:21 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/18 14:28:35 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/19 19:58:08 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "../../inc/cub3d.h"
 
 void	free_split(char **arr)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free_and_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 21:42:06 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/18 14:58:35 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/19 19:58:08 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "../../inc/cub3d.h"
 
 void	free_and_exit(char **split_line, char **options_check, \
 						char **options_list, char **wow)
