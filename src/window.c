@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 15:43:47 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/19 16:17:23 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:39:57 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,23 +45,23 @@ void	draw_one_sprite(t_vars *vars)
 	t_sp		sp;
 	int			i;
 
-	i = 0;
-	while (i < vars->numerof_sprite)
+	i = -1;
+	while (++i < vars->numerof_sprite)
 	{
 		sp.sprite_ax = vars->sprites[i].x;
 		sp.sprite_ay = vars->sprites[i].y;
 		sp.dx = sp.sprite_ax - vars->player.x ;
 		sp.dy = sp.sprite_ay - vars->player.y;
 		sp.angle = atan2(sp.dy, sp.dx);
-		if (sp.angle > vars->player.angle + PI)
-				sp.angle -= 2 * PI;
-		if (sp.angle < vars->player.angle - PI)
-				sp.angle += 2 * PI;
+		if (sp.angle > vars->player.angle + M_PI)
+				sp.angle -= 2 * M_PI;
+		if (sp.angle < vars->player.angle - M_PI)
+				sp.angle += 2 * M_PI;
 		sp.angle_diff = sp.angle - vars->player.angle;
-		sp.porce_angle = sp.angle_diff * 180 / PI;
-		if (sp.angle_diff * 180 / PI <= 50 && sp.angle_diff * 180 / PI >= -50)
+		sp.porce_angle = sp.angle_diff * 180 / M_PI;
+		if (sp.angle_diff * 180 / M_PI <= 50
+			&& sp.angle_diff * 180 / M_PI >= -50)
 			draw_one_sprite_norm(vars, &sp, frame, i);
-		i++;
 	}
 	frame++;
 	if (frame == 8)
