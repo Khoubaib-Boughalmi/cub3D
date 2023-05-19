@@ -14,6 +14,7 @@ SRCS = $(SRC)/cub3d.c \
 		$(SRC)/render.c \
 		$(SRC)/draw.c \
 		$(SRC)/draw2.c \
+		$(SRC)/draw3.c \
 		$(SRC)/keys_handler.c \
 		$(SRC)/keys_handler_P_2.c \
 		$(SRC)/draw_wall.c \

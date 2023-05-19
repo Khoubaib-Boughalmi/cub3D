@@ -171,6 +171,12 @@ typedef struct s_sprite {
 	char *path;
 }				t_sprite;
 
+typedef struct s_wall {
+	double	*x_val;
+	double	*y_val;
+	double	*dist;
+}	t_wall;
+
 typedef struct s_bresenham {
 	int	dx;
 	int	dy;
@@ -323,4 +329,11 @@ void	decide_vertical_textures(t_vars *vars, t_draw_value *info, int ry);
 void	decide_horizontal_textures(t_vars *vars, t_draw_value *info, int rx);
 void	draw_it(t_vars *vars, t_draw_value *info, int lineH);
 int32_t	collect_color(uint8_t *pixels, int index);
+void	calculate_hor_intersect(t_vars *vars, t_ray_info *ray);
+void	calculate_ver_intersect(t_vars *vars, t_ray_info *ray);
+void	ft_initializer(t_vars *vars, t_ray_info *ray, t_wall *wall);
+void	check_for_wall(t_vars *vars, t_ray_info *ray, t_wall *wall);
+void	get_shortest_intersection(t_vars *vars, t_ray_info *ray, int i);
+void	set_initial_hwall_value(t_vars *vars, t_ray_info *ray, t_wall *wall);
+void	set_initial_vwall_value(t_vars *vars, t_ray_info *ray, t_wall *wall);
 # endif
