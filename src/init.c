@@ -6,7 +6,7 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 15:12:53 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/19 15:20:30 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:02:17 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,20 @@ int	init_vars(t_map_info *data)
 	g_vars->keyboard.cursor = 0;
 	init_map_info(data);
 	return (1);
+}
+
+void	set_initial_hwall_value(t_vars *vars, t_ray_info *ray, t_wall *wall)
+{	
+	wall->x_val = &(ray->h_x);
+	wall->y_val = &(ray->h_y);
+	wall->dist = &(ray->h_dist);
+	ft_initializer(vars, ray, wall);
+}
+
+void	set_initial_vwall_value(t_vars *vars, t_ray_info *ray, t_wall *wall)
+{	
+	wall->x_val = &(ray->v_x);
+	wall->y_val = &(ray->v_y);
+	wall->dist = &(ray->v_dist);
+	ft_initializer(vars, ray, wall);
 }

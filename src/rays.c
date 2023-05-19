@@ -6,14 +6,13 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 16:08:47 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/19 15:21:53 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:03:01 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	check_for_wall(t_vars *vars, t_ray_info *ray, \
-double *x_val, double *y_val, double *dist)
+void	check_for_wall(t_vars *vars, t_ray_info *ray, t_wall *wall)
 {
 	while (ray->dof < 100)
 	{
@@ -22,10 +21,10 @@ double *x_val, double *y_val, double *dist)
 		if (ray->mx >= 0 && ray->my >= 0 && ray->mx < vars->map.width \
 		&& ray->my < vars->map.height && vars->map.map[ray->my][ray->mx] >= 1)
 		{
-			*x_val = ray->rx;
-			*y_val = ray->ry;
-			*dist = distance_to_wall(vars->player.x, vars->player.y, \
-			*x_val, *y_val);
+			*wall->x_val = ray->rx;
+			*wall->y_val = ray->ry;
+			*wall->dist = distance_to_wall(vars->player.x, vars->player.y, \
+			*wall->x_val, *wall->y_val);
 			break ;
 		}
 		else
@@ -37,18 +36,19 @@ double *x_val, double *y_val, double *dist)
 	}
 }
 
-void	ft_initializer(t_vars *vars, t_ray_info *ray, double *x_val, \
-double *y_val, double *dist)
+void	ft_initializer(t_vars *vars, t_ray_info *ray, t_wall *wall)
 {
 	ray->dof = 0;
-	*dist = 100000;
-	*x_val = vars->player.x;
-	*y_val = vars->player.y;
+	*wall->dist = 100000;
+	*wall->x_val = vars->player.x;
+	*wall->y_val = vars->player.y;
 }
 
 void	calculate_ver_intersect(t_vars *vars, t_ray_info *ray)
 {	
-	ft_initializer(vars, ray, &(ray->v_x), &(ray->v_y), &(ray->v_dist));
+	t_wall	wall;
+
+	set_initial_vwall_value(vars, ray, &wall);
 	ray->nTan = -tan(ray->ra);
 	if (ray->ra > PI2 && ray->ra < PI3)
 	{
@@ -70,12 +70,14 @@ void	calculate_ver_intersect(t_vars *vars, t_ray_info *ray)
 		ray->ry = vars->player.y;
 		ray->dof = 100;
 	}
-	check_for_wall(vars, ray, &ray->v_x, &ray->v_y, &ray->v_dist);
+	check_for_wall(vars, ray, &wall);
 }
 
 void	calculate_hor_intersect(t_vars *vars, t_ray_info *ray)
 {
-	ft_initializer(vars, ray, &(ray->h_x), &(ray->h_y), &(ray->h_dist));
+	t_wall	wall;
+
+	set_initial_hwall_value(vars, ray, &wall);
 	ray->aTan = -1 / tan(ray->ra);
 	if (ray->ra > PI)
 	{
@@ -97,7 +99,7 @@ void	calculate_hor_intersect(t_vars *vars, t_ray_info *ray)
 		ray->ry = vars->player.y;
 		ray->dof = 100;
 	}
-	check_for_wall(vars, ray, &ray->h_x, &ray->h_y, &ray->h_dist);
+	check_for_wall(vars, ray, &wall);
 }
 
 void	get_shortest_intersection(t_vars *vars, t_ray_info *ray, int i)
@@ -126,32 +128,4 @@ void	get_shortest_intersection(t_vars *vars, t_ray_info *ray, int i)
 	g_ray_ds[i] = ray->f_dist;
 	if (vars->keyboard.show_map)
 		put_line(&line);
-}
-
-void	draw_ray(t_vars *vars)
-{
-	t_ray_info	ray;
-	double		fish_eye_new_angle;
-	double		line_height;
-
-	ray.ray = 0;
-	ray.ra = vars->player.angle - DEG * 30;
-	ft_recalibrate(&(ray.ra));
-	while (ray.ray < 512)
-	{
-		calculate_hor_intersect(vars, &ray);
-		calculate_ver_intersect(vars, &ray);
-		get_shortest_intersection(vars, &ray, ray.ray);
-		fish_eye_new_angle = vars->player.angle - ray.ra;
-		ft_recalibrate(&fish_eye_new_angle);
-		ray.f_dist = ray.f_dist * cos(fish_eye_new_angle);
-		line_height = (64 * 800) / ray.f_dist;
-		if (ray.v_dist > ray.h_dist)
-			draw_wall(vars, ray, line_height, 0);
-		else
-			draw_wall(vars, ray, line_height, 1);
-		ray.ra = ray.ra + DEG / 8;
-		ft_recalibrate(&(ray.ra));
-		ray.ray++;
-	}
 }
