@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handler.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
+/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 15:14:03 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/19 15:20:20 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:36:40 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	key_press_handler(void *param)
 	{
 		vars->player.angle -= 0.1;
 		if (vars->player.angle < 0)
-			vars->player.angle += 2 * PI;
+			vars->player.angle += 2 * M_PI;
 		vars->player.dx = 5 * cos(vars->player.angle);
 		vars->player.dy = 5 * sin(vars->player.angle);
 	}
@@ -47,8 +47,8 @@ void	mouse_handler(double xpos, double ypos, void *param)
 	if (xpos > vars->player.prev_xpos)
 	{
 		vars->player.angle += 0.07;
-		if (vars->player.angle > 2 * PI)
-			vars->player.angle -= 2 * PI;
+		if (vars->player.angle > 2 * M_PI)
+			vars->player.angle -= 2 * M_PI;
 		vars->player.dx = 5 * cos(vars->player.angle);
 		vars->player.dy = 5 * sin(vars->player.angle);
 	}
@@ -56,7 +56,7 @@ void	mouse_handler(double xpos, double ypos, void *param)
 	{
 		vars->player.angle -= 0.07;
 		if (vars->player.angle < 0)
-			vars->player.angle += 2 * PI;
+			vars->player.angle += 2 * M_PI;
 		vars->player.dx = 5 * cos(vars->player.angle);
 		vars->player.dy = 5 * sin(vars->player.angle);
 	}

@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 16:08:47 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/19 16:17:58 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:37:56 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,21 @@ void	calculate_ver_intersect(t_vars *vars, t_ray_info *ray)
 
 	set_initial_vwall_value(vars, ray, &wall);
 	ray->ntan = -tan(ray->ra);
-	if (ray->ra > PI2 && ray->ra < PI3)
+	if (ray->ra > M_PI / 2 && ray->ra < 3 * M_PI / 2)
 	{
 		ray->rx = (((int)vars->player.x / 64) * 64) - 0.0001;
 		ray->ry = (vars->player.x - ray->rx) * ray->ntan + vars->player.y;
 		ray->xo = -64;
 		ray->yo = -ray->xo * ray->ntan;
 	}
-	if (ray->ra < PI2 || ray->ra > PI3)
+	if (ray->ra < M_PI / 2 || ray->ra > 3 * M_PI / 2)
 	{
 		ray->rx = (((int)vars->player.x / 64) * 64) + 64;
 		ray->ry = (vars->player.x - ray->rx) * ray->ntan + vars->player.y;
 		ray->xo = 64;
 		ray->yo = -ray->xo * ray->ntan;
 	}
-	if (ray->ra == PI2 || ray->ra == PI3)
+	if (ray->ra == M_PI / 2 || ray->ra == 3 * M_PI / 2)
 	{
 		ray->rx = vars->player.x;
 		ray->ry = vars->player.y;
@@ -79,21 +79,21 @@ void	calculate_hor_intersect(t_vars *vars, t_ray_info *ray)
 
 	set_initial_hwall_value(vars, ray, &wall);
 	ray->atan = -1 / tan(ray->ra);
-	if (ray->ra > PI)
+	if (ray->ra > M_PI)
 	{
 		ray->ry = (((int)vars->player.y / 64) * 64) - 0.0001;
 		ray->rx = (vars->player.y - ray->ry) * ray->atan + vars->player.x;
 		ray->yo = -64;
 		ray->xo = -ray->yo * ray->atan;
 	}
-	if (ray->ra < PI)
+	if (ray->ra < M_PI)
 	{
 		ray->ry = (((int)vars->player.y / 64) * 64) + 64;
 		ray->rx = (vars->player.y - ray->ry) * ray->atan + vars->player.x;
 		ray->yo = 64;
 		ray->xo = -ray->yo * ray->atan;
 	}
-	if (ray->ra == 0 || ray->ra == PI)
+	if (ray->ra == 0 || ray->ra == M_PI)
 	{
 		ray->rx = vars->player.x;
 		ray->ry = vars->player.y;

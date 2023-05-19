@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 16:11:59 by aechaoub          #+#    #+#             */
-/*   Updated: 2023/05/19 16:19:31 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:38:29 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,9 +264,6 @@ typedef struct s_ray_info
 
 }					t_ray_info;
 
-# define PI 3.14159265358979323846
-# define PI2 PI / 2
-# define PI3 3 * PI2
 # define DEG 0.0174533
 
 int					cool(char **av, t_map_info *data);

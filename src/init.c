@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 15:12:53 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/19 16:13:07 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:36:31 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	init_vars(t_map_info *data)
 	g_vars->map.map = data->map;
 	g_vars->map.width = data->x_map_size;
 	g_vars->map.height = data->y_map_size;
-	g_vars->player.angle = data->angle_player * (PI / 180);
+	g_vars->player.angle = data->angle_player * (M_PI / 180);
 	g_vars->player.prev_xpos = 0;
 	g_vars->player.x = data->x_player + 32;
 	g_vars->player.y = data->y_player + 32;

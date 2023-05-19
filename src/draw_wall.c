@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 19:58:19 by aechaoub          #+#    #+#             */
-/*   Updated: 2023/05/19 16:16:15 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:36:25 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	decide_horizontal_textures(t_vars *vars, t_draw_value *info, int rx)
 		info->imgtxet = vars->ea_wall_texture;
 	else
 		info->imgtxet = vars->we_wall_texture;
-	if (vars->player.angle > PI / 2 && vars->player.angle < 3 * PI / 2)
+	if (vars->player.angle > M_PI / 2 && vars->player.angle < 3 * M_PI / 2)
 		info->porcentsage = 1 - info->porcentsage;
 }
 
@@ -54,7 +54,7 @@ void	decide_vertical_textures(t_vars *vars, t_draw_value *info, int ry)
 		info->imgtxet = vars->no_wall_texture;
 	else
 		info->imgtxet = vars->so_wall_texture;
-	if (vars->player.angle < PI)
+	if (vars->player.angle < M_PI)
 		info->porcentsage = 1 - info->porcentsage;
 }
 

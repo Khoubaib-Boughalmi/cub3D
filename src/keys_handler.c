@@ -6,7 +6,7 @@
 /*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 17:03:50 by aechaoub          #+#    #+#             */
-/*   Updated: 2023/05/18 19:20:29 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:36:16 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	for_key_a(t_vars *vars)
 {
 	t_key_value	info;
 
-	info.dxright = 5 * cos(vars->player.angle - PI / 2);
-	info.dyright = 5 * sin(vars->player.angle - PI / 2);
+	info.dxright = 5 * cos(vars->player.angle - M_PI / 2);
+	info.dyright = 5 * sin(vars->player.angle - M_PI / 2);
 	info.x = (int)floor((vars->player.x + (info.dxright * 3)) / 64);
 	info.y = (int)floor((vars->player.y + (info.dyright * 3)) / 64);
 	info.xcheck = (int)floor((vars->player.x + (info.dxright)) / 64);
@@ -55,8 +55,8 @@ void	for_key_d(t_vars *vars)
 {
 	t_key_value	info;
 
-	info.dxright = 5 * cos(vars->player.angle + PI / 2);
-	info.dyright = 5 * sin(vars->player.angle + PI / 2);
+	info.dxright = 5 * cos(vars->player.angle + M_PI / 2);
+	info.dyright = 5 * sin(vars->player.angle + M_PI / 2);
 	info.x = (int)floor((vars->player.x + (info.dxright * 3)) / 64);
 	info.y = (int)floor((vars->player.y + (info.dyright * 3)) / 64);
 	info.xcheck = (int)floor((vars->player.x + (info.dxright)) / 64);
@@ -69,8 +69,8 @@ void	for_key_d(t_vars *vars)
 void	for_key_right(t_vars *vars)
 {
 	vars->player.angle += 0.1;
-	if (vars->player.angle > 2 * PI)
-		vars->player.angle -= 2 * PI;
+	if (vars->player.angle > 2 * M_PI)
+		vars->player.angle -= 2 * M_PI;
 	vars->player.dx = 5 * cos(vars->player.angle);
 	vars->player.dy = 5 * sin(vars->player.angle);
 }

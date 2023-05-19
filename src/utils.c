@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
+/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 19:58:50 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/18 21:43:59 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:36:06 by aechaoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	put_line(t_line *line)
 void	ft_recalibrate(double *ra)
 {
 	if (*ra < 0)
-		*ra += 2 * PI;
-	if (*ra > 2 * PI)
-		*ra -= 2 * PI;
+		*ra += 2 * M_PI;
+	if (*ra > 2 * M_PI)
+		*ra -= 2 * M_PI;
 }
