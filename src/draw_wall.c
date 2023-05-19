@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_wall.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aechaoub <aechaoub@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 19:58:19 by aechaoub          #+#    #+#             */
-/*   Updated: 2023/05/18 20:19:47 by aechaoub         ###   ########.fr       */
+/*   Updated: 2023/05/19 15:18:41 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,30 +80,4 @@ int	draw_wall_data(t_draw_value *info, int lineH)
 	if (info->y2 < 0)
 		info->y2 = 0;
 	return (lineH);
-}
-
-void	draw_wall(t_vars *vars,  t_ray_info	ray, double lineH,
-		int hororver)
-{
-	t_draw_value	info;
-
-	if (hororver == 1)
-		info.porcentsage = ray.ry / 64;
-	if (hororver == 0)
-		info.porcentsage = ray.rx / 64;
-	info.porcentsage -= (int)info.porcentsage;
-	info.x1 = ray.ray * 2 + 2;
-	lineH = draw_wall_data(&info, lineH);
-	if (vars->map.map[(int)floor(ray.ry / 64)][(int)floor(ray.rx / 64)] == 500)
-		info.imgtxet = vars->door_texture;
-	else if (hororver == 0)
-		decide_vertical_textures(vars, &info, ray.ry);
-	else if (hororver == 1)
-		decide_horizontal_textures(vars, &info, ray.rx);
-	info.theline = (int)(info.porcentsage * 512);
-	info.theline *= 4;
-	info.g = (float)512 / info.k;
-	info.rl = 0;
-	info.in = 0;
-	draw_it(vars, &info, lineH);
 }
