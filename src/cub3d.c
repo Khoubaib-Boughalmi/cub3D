@@ -6,11 +6,13 @@
 /*   By: kboughal < kboughal@student.1337.ma>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 20:46:24 by kboughal          #+#    #+#             */
-/*   Updated: 2023/05/19 15:15:03 by kboughal         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:32:28 by kboughal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
+
+t_vars				*g_vars;
 
 void	randomize_the_sprites_texture(int sprite, int i)
 {
