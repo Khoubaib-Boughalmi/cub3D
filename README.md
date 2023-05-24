@@ -33,8 +33,8 @@ The controls for playing Cub3D are as follows:
 - Movement: Use the keys **W**, **A**, **S**, and **D** to move forward, left, backward, and right, respectively.
 - Rotation: Use the left and right arrow keys (**←** and **→**) to rotate the view.
 - Mouse Rotation: Alternatively, you can rotate the view by moving the mouse.
-- Speed boost: Press  **SPACE** to activate a speed boost and move faster.
-- Interaction: Use **SHIFT** to open doors.
+- Speed boost: Press  **SHIFT** to activate a speed boost and move faster.
+- Interaction: Use **SPACE** to open doors.
 - Exit: Press **ESC** or click the red cross to exit the game.
 
 ## Mandatory Part
@@ -73,6 +73,5 @@ The development of Cub3D has drawn inspiration from the following sources:
 
 - The Coding Train: A source of inspiration for raycasting techniques.
 - Wolfenstein 3D: Known for its controversial textures, this game serves as a reference for the Cub3D project.
-- macrespo: Acknowledgment for the design of the life bar.
 
 Note: This documentation provides a high-level overview of the Cub3D project. For more detailed information and implementation specifics, please refer to the project's official documentation or source code.
