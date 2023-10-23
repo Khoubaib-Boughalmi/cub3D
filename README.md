@@ -55,23 +55,5 @@ In addition to the mandatory part, the Cub3D project offers bonus opportunities.
 - Animated sprite: Add animations to the sprite, such as walking or attacking animations, to bring it to life.
 - Rotate the point of view with the mouse: Enable the player to rotate the view using mouse movements, providing a more immersive experience.
 
-  
-
-## Resources
-
-Here are some resources that can be helpful for understanding raycasting techniques:
-
-- [Raycasting - PART 1](https://lodev.org/cgtutor/raycasting.html)
-- [Raycasting - PART 2](https://lodev.org/cgtutor/raycasting2.html)
-- [Raycasting - PART 3](https://lodev.org/cgtutor/raycasting3.html)
-- [Raycasting - PART 4](https://lodev.org/cgtutor/raycasting4.html)
-
-
-## Acknowledgments
-
-The development of Cub3D has drawn inspiration from the following sources:
-
-- The Coding Train: A source of inspiration for raycasting techniques.
-- Wolfenstein 3D: Known for its controversial textures, this game serves as a reference for the Cub3D project.
-
-Note: This documentation provides a high-level overview of the Cub3D project. For more detailed information and implementation specifics, please refer to the project's official documentation or source code.
+- ![Description 1](https://github.com/Khoubaib-Boughalmi/cub3D/blob/main/assets/2.png)
+- ![Description 1](https://github.com/Khoubaib-Boughalmi/cub3D/blob/main/assets/3.png)
