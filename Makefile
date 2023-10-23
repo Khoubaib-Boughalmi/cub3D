@@ -68,7 +68,7 @@ LIBFT = ./libft/libft.a
 DEPENDENCIES = MLX42/build/libmlx42.a -framework Cocoa -framework OpenGL -framework IOKit
 MLX42 = ./MLX42
 INC_MLX := $(MLX42)/include
-glfw=$(shell brew  --prefix glfw)
+glfw=/Users/kboughal/.brew/Cellar/glfw/3.3.8
 
 all: $(NAME)
 
